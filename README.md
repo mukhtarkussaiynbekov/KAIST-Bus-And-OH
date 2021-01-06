@@ -1,4 +1,4 @@
-# KAIST-Bus-And-OH
+# KAIST Bus And Operating Hours
 
 ## Installation
 **Note**: This installation guide was referenced from [The Complete React Native + Hooks Course [2020 edition]](https://www.udemy.com/course/the-complete-react-native-and-redux-course) taught by Stephen Grider.
