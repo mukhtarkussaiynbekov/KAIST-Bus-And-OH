@@ -11,7 +11,7 @@ const HomeScreen = ({navigation}) => {
       />
       <Button
         title="Operating Hours"
-        onPress={() => navigation.navigate('OH')}
+        onPress={() => navigation.navigate('OperatingHours')}
       />
     </ThemeProvider>
   );
