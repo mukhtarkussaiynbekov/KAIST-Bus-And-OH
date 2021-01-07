@@ -7,13 +7,13 @@ import OHScreen from './src/screens/OHScreen';
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
-    Bus: BusScreen,
-    OH: OHScreen
+    Bus: BusScreen, // Bus Timetable Screen
+    OH: OHScreen // Operating Hours (OH) Screen
   },
   {
     initialRouteName: 'Home',
     defaultNavigationOptions: {
-      title: 'App'
+      title: 'Home'
     }
   }
 );
