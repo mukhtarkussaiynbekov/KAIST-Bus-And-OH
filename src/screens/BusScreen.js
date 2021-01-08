@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button, ThemeProvider, Text } from "react-native-elements";
 import Dropdown from "../components/Dropdown";
 
@@ -66,10 +66,60 @@ const busStops = [
   },
 ];
 
+const busTypes = [
+  {
+    name: "OLEV",
+    id: 1,
+  },
+  {
+    name: "Wolpyeong",
+    id: 2,
+  },
+  {
+    name: "Campuses",
+    id: 3,
+  },
+];
+
+const dayTypes = [
+  {
+    name: "Today",
+    id: 1,
+  },
+  {
+    name: "Tomorrow",
+    id: 2,
+  },
+  {
+    name: "Weekdays",
+    id: 3,
+  },
+  {
+    name: "Weekends/Holidays",
+    id: 4,
+  },
+];
+
 const BusScreen = () => {
   return (
     <View>
       <Text>Bus Screen</Text>
+      <View style={styles.topDropdowns}>
+        <View style={{ flex: 1 }}>
+          <Dropdown
+            title="Type"
+            items={busTypes}
+            searchPlaceholderText="Search a bus stop"
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Dropdown
+            title="Day"
+            items={dayTypes}
+            searchPlaceholderText="Search a bus stop"
+          />
+        </View>
+      </View>
       <Dropdown
         title="From"
         items={busStops}
@@ -84,6 +134,11 @@ const BusScreen = () => {
   );
 };
 
-//const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  topDropdowns: {
+    flexDirection: "row",
+    // justifyContent: "space-evenly",
+  },
+});
 
 export default BusScreen;
