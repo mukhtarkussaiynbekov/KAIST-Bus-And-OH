@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { Button, ThemeProvider, Text } from "react-native-elements";
 import Dropdown from "../components/Dropdown";
 
@@ -44,7 +45,7 @@ const busStops = [
     id: 5,
   },
   {
-    name: "Chungnam National University",
+    name: "Chungnam National University (충남태학교)",
     id: 6,
   },
   {
@@ -67,10 +68,19 @@ const busStops = [
 
 const BusScreen = () => {
   return (
-    <ThemeProvider>
+    <View>
       <Text>Bus Screen</Text>
-      <Dropdown title="From" items={busStops} />
-    </ThemeProvider>
+      <Dropdown
+        title="From"
+        items={busStops}
+        searchPlaceholderText="Search a bus stop"
+      />
+      <Dropdown
+        title="To"
+        items={busStops}
+        searchPlaceholderText="Search a bus stop"
+      />
+    </View>
   );
 };
 
