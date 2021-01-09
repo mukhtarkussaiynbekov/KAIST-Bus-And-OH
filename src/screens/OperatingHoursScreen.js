@@ -1,15 +1,19 @@
-// Operating Hours Screen
 import React from 'react';
-import { Button, ThemeProvider, Text } from 'react-native-elements';
+import { StyleSheet } from 'react-native';
+import { ThemeProvider, Text } from 'react-native-elements';
 
-const OHScreen = () => {
-  return (
-    <ThemeProvider>
-      <Text>Operating Hours Screen</Text>
-    </ThemeProvider>
-  );
+const OperatingHoursScreen = () => {
+	return (
+		<ThemeProvider>
+			<Text>Operating Hours Screen</Text>
+		</ThemeProvider>
+	);
 };
 
-//const styles = StyleSheet.create({});
+OperatingHoursScreen.navigationOptions = {
+	title: 'Operating Hours'
+};
 
-export default OHScreen;
+const styles = StyleSheet.create({});
+
+export default OperatingHoursScreen;
