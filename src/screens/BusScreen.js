@@ -105,18 +105,10 @@ const BusScreen = () => {
 		<View>
 			<View style={styles.topDropdowns}>
 				<View style={{ flex: 1 }}>
-					<Dropdown
-						title="Type"
-						items={busTypes}
-						searchPlaceholderText="Search a bus stop"
-					/>
+					<Dropdown title="Type" items={busTypes} hideSearch={true} />
 				</View>
 				<View style={{ flex: 1 }}>
-					<Dropdown
-						title="Day"
-						items={dayTypes}
-						searchPlaceholderText="Search a bus stop"
-					/>
+					<Dropdown title="Day" items={dayTypes} hideSearch={true} />
 				</View>
 			</View>
 			<Dropdown

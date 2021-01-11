@@ -4,7 +4,7 @@ import { Text } from 'react-native-elements';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const Dropdown = ({ title, items, searchPlaceholderText }) => {
+const Dropdown = ({ title, items, searchPlaceholderText, hideSearch }) => {
 	const [selectedItems, setSelectedItems] = useState([]);
 	console.log(selectedItems);
 
@@ -13,7 +13,6 @@ const Dropdown = ({ title, items, searchPlaceholderText }) => {
 			<Text style={styles.title}>{title}</Text>
 			<View style={{ flex: 1 }}>
 				<SectionedMultiSelect
-					headerComponent={<Text>Header</Text>}
 					searchPlaceholderText={searchPlaceholderText}
 					styles={styles}
 					items={items}
@@ -22,6 +21,8 @@ const Dropdown = ({ title, items, searchPlaceholderText }) => {
 					subKey="children"
 					hideConfirm
 					single
+					hideSearch={hideSearch != undefined ? hideSearch : false}
+					modalWithTouchable
 					onSelectedItemsChange={selectedItems =>
 						setSelectedItems(selectedItems)
 					}
@@ -39,11 +40,13 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		paddingLeft: 10
 	},
-	// container: {
-	// 	backgroundColor: 'blue',
-	// 	borderWidth: 15,
-	// 	borderColor: 'black'
-	// },
+	container: {
+		// backgroundColor: 'blue',
+		// borderWidth: 15,
+		// borderColor: 'black'
+		marginTop: 100,
+		paddingTop: 5
+	},
 	title: {
 		// backgroundColor: 'red',
 		alignSelf: 'center',
@@ -61,7 +64,8 @@ const styles = StyleSheet.create({
 		// color: 'yellow'
 	}
 	// modalWrapper: {
-	// 	backgroundColor: 'purple'
+	// 	// backgroundColor: 'purple',
+	// 	// marginTop: 20
 	// }
 });
 
