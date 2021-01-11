@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
 		borderWidth: 10
 	},
 	title: {
-		borderColor: 'red',
-		borderWidth: 10,
+		// borderColor: 'red',
+		// borderWidth: 10,
 		marginLeft: 10
 	}
 });

@@ -103,7 +103,6 @@ const dayTypes = [
 const BusScreen = () => {
 	return (
 		<View>
-			<Text>Bus Screen</Text>
 			<View style={styles.topDropdowns}>
 				<View style={{ flex: 1 }}>
 					<Dropdown

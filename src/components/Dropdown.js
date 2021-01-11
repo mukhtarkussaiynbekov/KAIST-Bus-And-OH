@@ -1,67 +1,68 @@
-import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { Text } from "react-native-elements";
-import SectionedMultiSelect from "react-native-sectioned-multi-select";
-import { MaterialIcons } from "@expo/vector-icons";
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text } from 'react-native-elements';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Dropdown = ({ title, items, searchPlaceholderText }) => {
-  const [selectedItems, setSelectedItems] = useState([]);
-  console.log(selectedItems);
+	const [selectedItems, setSelectedItems] = useState([]);
+	console.log(selectedItems);
 
-  return (
-    <View style={styles.viewContainer}>
-      <Text style={styles.title}>{title}</Text>
-      <View style={{ flex: 1 }}>
-        <SectionedMultiSelect
-          headerComponent={<Text>Header</Text>}
-          searchPlaceholderText={searchPlaceholderText}
-          styles={styles}
-          items={items}
-          IconRenderer={MaterialIcons}
-          uniqueKey="id"
-          subKey="children"
-          hideConfirm
-          single
-          onSelectedItemsChange={(selectedItems) =>
-            setSelectedItems(selectedItems)
-          }
-          selectedItems={selectedItems}
-        />
-      </View>
-    </View>
-  );
+	return (
+		<View style={styles.viewContainer}>
+			<Text style={styles.title}>{title}</Text>
+			<View style={{ flex: 1 }}>
+				<SectionedMultiSelect
+					headerComponent={<Text>Header</Text>}
+					searchPlaceholderText={searchPlaceholderText}
+					styles={styles}
+					items={items}
+					IconRenderer={MaterialIcons}
+					uniqueKey="id"
+					subKey="children"
+					hideConfirm
+					single
+					onSelectedItemsChange={selectedItems =>
+						setSelectedItems(selectedItems)
+					}
+					selectedItems={selectedItems}
+				/>
+			</View>
+		</View>
+	);
 };
 
 const styles = StyleSheet.create({
-  viewContainer: {
-    borderColor: "black",
-    borderWidth: 15,
-    flexDirection: "row",
-    paddingLeft: 10,
-  },
-  container: {
-    backgroundColor: "blue",
-    borderWidth: 15,
-  },
-  title: {
-    backgroundColor: "red",
-    marginRight: 10,
-    alignSelf: "center",
-    fontSize: 16,
-    width: 50,
-  },
-  selectToggle: {
-    backgroundColor: "green",
-    // width: 200,
-  },
-  selectToggleText: {
-    flex: 1,
-    // width: 100,
-    color: "yellow",
-  },
-  modalWrapper: {
-    backgroundColor: "purple",
-  },
+	viewContainer: {
+		// borderColor: "black",
+		// borderWidth: 15,
+		flexDirection: 'row',
+		paddingLeft: 10
+	},
+	// container: {
+	// 	backgroundColor: 'blue',
+	// 	borderWidth: 15,
+	// 	borderColor: 'black'
+	// },
+	title: {
+		// backgroundColor: 'red',
+		alignSelf: 'center',
+		fontSize: 16,
+		width: 40,
+		paddingBottom: 11
+	},
+	// selectToggle: {
+	// 	backgroundColor: 'green'
+	// 	// width: 200,
+	// },
+	selectToggleText: {
+		flex: 1
+		// width: 100,
+		// color: 'yellow'
+	}
+	// modalWrapper: {
+	// 	backgroundColor: 'purple'
+	// }
 });
 
 export default Dropdown;
