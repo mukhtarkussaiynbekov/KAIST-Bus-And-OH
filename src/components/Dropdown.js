@@ -21,7 +21,7 @@ const Dropdown = ({ title, items, searchPlaceholderText, hideSearch }) => {
 					subKey="children"
 					hideConfirm
 					single
-					hideSearch={hideSearch != undefined ? hideSearch : false}
+					hideSearch={hideSearch} // default value is false
 					modalWithTouchable
 					onSelectedItemsChange={selectedItems =>
 						setSelectedItems(selectedItems)

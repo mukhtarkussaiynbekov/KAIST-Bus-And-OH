@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
+import { Ionicons } from '@expo/vector-icons';
 
 const busStops = [
 	// this is the parent or 'item'
@@ -116,6 +117,12 @@ const BusScreen = () => {
 				items={busStops}
 				searchPlaceholderText="Search a bus stop"
 			/>
+			<View style={styles.iconContainer}>
+				<TouchableOpacity>
+					<Ionicons name="swap-vertical" style={styles.icon} />
+				</TouchableOpacity>
+				<Text style={styles.iconGuide}>Press to swap locations</Text>
+			</View>
 			<Dropdown
 				title="To"
 				items={busStops}
@@ -133,6 +140,17 @@ const styles = StyleSheet.create({
 	topDropdowns: {
 		flexDirection: 'row'
 		// justifyContent: "space-evenly",
+	},
+	iconContainer: {
+		flexDirection: 'row',
+		alignSelf: 'center'
+	},
+	icon: {
+		fontSize: 30
+	},
+	iconGuide: {
+		paddingLeft: 20,
+		alignSelf: 'center'
 	}
 });
 
