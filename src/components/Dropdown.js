@@ -14,7 +14,7 @@ const Dropdown = ({
 }) => {
 	const [selectedItem, setSelectedItem] = useState([chosenItem]);
 	if (selectedItem[0] !== chosenItem) {
-		// when swap button is pressed, this component is not re-rendered.
+		// when swap button is pressed, state is not updated.
 		// So, we have to manually update its state.
 		setSelectedItem([chosenItem]);
 	}
