@@ -12,6 +12,9 @@ const campusStops = busOptions['campusStops'];
 
 const reducer = (state, action) => {
 	switch (action.type) {
+		case 'swap_stops':
+			const temp = state.from;
+			return { ...state, from: state.to, to: temp };
 		case 'change_type':
 			return { ...state, type: action.payload };
 		case 'change_day':
@@ -44,7 +47,7 @@ const BusScreen = () => {
 						onSelectedItemChange={selectedItem =>
 							dispatch({ type: 'change_type', payload: selectedItem })
 						}
-						initialSelectedItem={state.type}
+						chosenItem={state.type}
 					/>
 				</View>
 				<View style={{ flex: 1 }}>
@@ -55,7 +58,7 @@ const BusScreen = () => {
 						onSelectedItemChange={selectedItem =>
 							dispatch({ type: 'change_day', payload: selectedItem })
 						}
-						initialSelectedItem={state.day}
+						chosenItem={state.day}
 					/>
 				</View>
 			</View>
@@ -66,10 +69,10 @@ const BusScreen = () => {
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: 'change_from', payload: selectedItem })
 				}
-				initialSelectedItem={state.from}
+				chosenItem={state.from}
 			/>
 			<View style={styles.iconContainer}>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => dispatch({ type: 'swap_stops' })}>
 					<Ionicons name="swap-vertical" style={styles.icon} />
 				</TouchableOpacity>
 				<Text style={styles.iconGuide}>Press to swap locations</Text>
@@ -81,7 +84,7 @@ const BusScreen = () => {
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: 'change_to', payload: selectedItem })
 				}
-				initialSelectedItem={state.to}
+				chosenItem={state.to}
 			/>
 		</View>
 	);

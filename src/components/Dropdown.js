@@ -10,9 +10,14 @@ const Dropdown = ({
 	searchPlaceholderText,
 	hideSearch,
 	onSelectedItemChange,
-	initialSelectedItem
+	chosenItem
 }) => {
-	const [selectedItem, setSelectedItem] = useState([initialSelectedItem]);
+	const [selectedItem, setSelectedItem] = useState([chosenItem]);
+	if (selectedItem[0] !== chosenItem) {
+		// when swap button is pressed, this component is not re-rendered.
+		// So, we have to manually update its state.
+		setSelectedItem([chosenItem]);
+	}
 	return (
 		<View style={styles.viewContainer}>
 			<Text style={styles.title}>{title}</Text>
