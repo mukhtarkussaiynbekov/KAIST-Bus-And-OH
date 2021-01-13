@@ -1,0 +1,16 @@
+{
+	"busTypes": [
+		{
+			"name": "OLEV",
+			"id": 0
+		},
+		{
+			"name": "Wolpyeong",
+			"id": 1
+		},
+		{
+			"name": "Campuses",
+			"id": 2
+		}
+	]
+}

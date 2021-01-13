@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import { Ionicons } from '@expo/vector-icons';
+import busOptions from '../json/busOptions.json';
 
 const busStops = [
 	// this is the parent or 'item'
@@ -67,21 +68,6 @@ const busStops = [
 	}
 ];
 
-const busTypes = [
-	{
-		name: 'OLEV',
-		id: 1
-	},
-	{
-		name: 'Wolpyeong',
-		id: 2
-	},
-	{
-		name: 'Campuses',
-		id: 3
-	}
-];
-
 const dayTypes = [
 	{
 		name: 'Today',
@@ -102,6 +88,9 @@ const dayTypes = [
 ];
 
 const BusScreen = () => {
+	console.log(busOptions);
+	const busTypes = busOptions['busTypes'];
+	console.log(busTypes);
 	return (
 		<View>
 			<View style={styles.topDropdowns}>
