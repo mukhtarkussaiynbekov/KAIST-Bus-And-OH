@@ -27,11 +27,12 @@ const reducer = (state, action) => {
 
 const BusScreen = () => {
 	const [state, dispatch] = useReducer(reducer, {
-		type: 2,
-		day: 0,
-		from: 0,
-		to: 5
+		type: 2, // campuses
+		day: 0, // today
+		from: 0, // main campus
+		to: 5 // munji
 	});
+	console.log(state);
 	return (
 		<View>
 			<View style={styles.topDropdowns}>
@@ -43,16 +44,29 @@ const BusScreen = () => {
 						onSelectedItemChange={selectedItem =>
 							dispatch({ type: 'change_type', payload: selectedItem })
 						}
+						initialSelectedItem={state.type}
 					/>
 				</View>
 				<View style={{ flex: 1 }}>
-					<Dropdown title="Day" items={dayTypes} hideSearch={true} />
+					<Dropdown
+						title="Day"
+						items={dayTypes}
+						hideSearch={true}
+						onSelectedItemChange={selectedItem =>
+							dispatch({ type: 'change_day', payload: selectedItem })
+						}
+						initialSelectedItem={state.day}
+					/>
 				</View>
 			</View>
 			<Dropdown
 				title="From"
 				items={campusStops}
 				searchPlaceholderText="Search a bus stop"
+				onSelectedItemChange={selectedItem =>
+					dispatch({ type: 'change_from', payload: selectedItem })
+				}
+				initialSelectedItem={state.from}
 			/>
 			<View style={styles.iconContainer}>
 				<TouchableOpacity>
@@ -64,6 +78,10 @@ const BusScreen = () => {
 				title="To"
 				items={campusStops}
 				searchPlaceholderText="Search a bus stop"
+				onSelectedItemChange={selectedItem =>
+					dispatch({ type: 'change_to', payload: selectedItem })
+				}
+				initialSelectedItem={state.to}
 			/>
 		</View>
 	);
