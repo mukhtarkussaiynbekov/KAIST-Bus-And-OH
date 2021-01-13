@@ -5,7 +5,7 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Dropdown = ({ title, items, searchPlaceholderText, hideSearch }) => {
-	const [selectedItems, setSelectedItems] = useState([]);
+	const [selectedItem, setSelectedItem] = useState([]);
 
 	return (
 		<View style={styles.viewContainer}>
@@ -22,10 +22,8 @@ const Dropdown = ({ title, items, searchPlaceholderText, hideSearch }) => {
 					single
 					hideSearch={hideSearch} // default value is false
 					modalWithTouchable
-					onSelectedItemsChange={selectedItems =>
-						setSelectedItems(selectedItems)
-					}
-					selectedItems={selectedItems}
+					onSelectedItemsChange={selectedItem => setSelectedItem(selectedItem)}
+					selectedItems={selectedItem}
 				/>
 			</View>
 		</View>
