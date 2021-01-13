@@ -6,7 +6,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const Dropdown = ({ title, items, searchPlaceholderText, hideSearch }) => {
 	const [selectedItems, setSelectedItems] = useState([]);
-	console.log(selectedItems);
 
 	return (
 		<View style={styles.viewContainer}>

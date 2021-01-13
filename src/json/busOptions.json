@@ -12,5 +12,107 @@
 			"name": "Campuses",
 			"id": 2
 		}
+	],
+	"dayTypes": [
+		{
+			"name": "Today",
+			"id": 0
+		},
+		{
+			"name": "Tomorrow",
+			"id": 1
+		},
+		{
+			"name": "Weekdays",
+			"id": 2
+		},
+		{
+			"name": "Weekends/Holidays",
+			"id": 3
+		}
+	],
+	"cityStops": [
+		{
+			"name": "Main Campus (본교)",
+			"id": 0,
+			"children": [
+				{
+					"name": "N6",
+					"id": 1
+				},
+				{
+					"name": "Auditorium",
+					"id": 2
+				},
+				{
+					"name": "W8",
+					"id": 3
+				},
+				{
+					"name": "Duck pond",
+					"id": 4
+				}
+			]
+		},
+		{
+			"name": "Chungnam National University (충남태학교)",
+			"id": 5
+		},
+		{
+			"name": "Wolpyeong St. Exit #1",
+			"id": 6
+		},
+		{
+			"name": "Galleria Department Store",
+			"id": 7
+		},
+		{
+			"name": "Government Complex",
+			"id": 8
+		},
+		{
+			"name": "Wolpyeong St. Exit #3",
+			"id": 9
+		}
+	],
+	"campusStops": [
+		{
+			"name": "Main Campus (본교)",
+			"id": 0,
+			"children": [
+				{
+					"name": "N6",
+					"id": 1
+				},
+				{
+					"name": "Auditorium",
+					"id": 2
+				},
+				{
+					"name": "W8",
+					"id": 3
+				},
+				{
+					"name": "Duck pond",
+					"id": 4
+				}
+			]
+		},
+		{
+			"name": "Munji Campus (문지)",
+			"id": 5
+		},
+		{
+			"name": "Hwaam Campus (화암)",
+			"id": 6
+		},
+		{
+			"name": "Rothen House (로덴 하우스)",
+			"id": 7
+		},
+		{
+			"name": "Faculty Apartment (교수 아파트)",
+			"id": 8
+		}
 	]
 }
