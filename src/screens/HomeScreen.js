@@ -8,14 +8,14 @@ const HomeScreen = ({ navigation }) => {
 		<View style={styles.container}>
 			<ThemeProvider>
 				<Button
-					icon={<Icon name="bus" size={15} color="white" />}
+					icon={<Icon name="bus" size={20} color="white" />}
 					iconContainerStyle={styles.icon}
 					title="Bus Timetable"
 					titleStyle={styles.title}
 					onPress={() => navigation.navigate('Bus')}
 				/>
 				<Button
-					icon={<Icon name="home" size={15} color="white" />}
+					icon={<Icon name="home" size={20} color="white" />}
 					iconContainerStyle={styles.icon}
 					title="Operating Hours"
 					onPress={() => navigation.navigate('OperatingHours')}
