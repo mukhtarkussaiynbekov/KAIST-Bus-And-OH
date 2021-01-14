@@ -4,6 +4,7 @@ import { Text } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import { Ionicons } from '@expo/vector-icons';
 import busOptions from '../json/busOptions.json';
+import TimetableCell from '../components/TimetableCell';
 
 const busTypes = busOptions['busTypes'];
 const dayTypes = busOptions['dayTypes'];
@@ -86,6 +87,7 @@ const BusScreen = () => {
 				}
 				chosenItem={state.to}
 			/>
+			<TimetableCell />
 		</View>
 	);
 };
