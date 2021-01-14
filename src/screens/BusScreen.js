@@ -74,7 +74,7 @@ const BusScreen = () => {
 			/>
 			<View style={styles.iconContainer}>
 				<TouchableOpacity onPress={() => dispatch({ type: 'swap_stops' })}>
-					<Ionicons name="swap-vertical" style={styles.icon} />
+					<Ionicons name="swap-vertical" size={30} />
 				</TouchableOpacity>
 				<Text style={styles.iconGuide}>Press to swap locations</Text>
 			</View>
@@ -104,9 +104,6 @@ const styles = StyleSheet.create({
 	iconContainer: {
 		flexDirection: 'row',
 		alignSelf: 'center'
-	},
-	icon: {
-		fontSize: 30
 	},
 	iconGuide: {
 		paddingLeft: 20,
