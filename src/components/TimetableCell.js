@@ -5,9 +5,9 @@ import { Feather } from '@expo/vector-icons';
 
 const TimetableCell = () => {
 	return (
-		<View>
-			<Text>From: Leave at</Text>
-			<Text>To: Arrive at</Text>
+		<View style={styles.container}>
+			<Text style={styles.time}>From: Leave at</Text>
+			<Text style={styles.time}>To: Arrive at</Text>
 			<Text>Time Left</Text>
 			<TouchableOpacity>
 				<Feather name="bell" size={20} />
@@ -16,6 +16,15 @@ const TimetableCell = () => {
 	);
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	container: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingLeft: 10
+	},
+	time: {
+		flexWrap: 'wrap'
+	}
+});
 
 export default TimetableCell;
