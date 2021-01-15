@@ -1,8 +1,7 @@
 import React, { useReducer } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
-import { Ionicons } from '@expo/vector-icons';
 import busOptions from '../json/busOptions.json';
 import TimetableCell from '../components/TimetableCell';
 
@@ -74,7 +73,13 @@ const BusScreen = () => {
 			/>
 			<View style={styles.iconContainer}>
 				<TouchableOpacity onPress={() => dispatch({ type: 'swap_stops' })}>
-					<Ionicons name="swap-vertical" size={30} />
+					<Icon
+						reverse
+						name="swap-vertical"
+						type="ionicon"
+						color="#517fa4"
+						size={20}
+					/>
 				</TouchableOpacity>
 				<Text style={styles.iconGuide}>Press to swap locations</Text>
 			</View>

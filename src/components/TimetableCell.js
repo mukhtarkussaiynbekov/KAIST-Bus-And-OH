@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native-elements';
-import { Feather } from '@expo/vector-icons';
+import { Text, Icon } from 'react-native-elements';
 
 const TimetableCell = () => {
 	return (
@@ -10,7 +9,7 @@ const TimetableCell = () => {
 			<Text style={styles.time}>To{'\n'}Arrive At</Text>
 			<Text style={styles.time}>Time Left</Text>
 			<TouchableOpacity>
-				<Feather name="bell" size={20} />
+				<Icon name="bell" type="feather" color="#517fa4" size={20} />
 			</TouchableOpacity>
 		</View>
 	);

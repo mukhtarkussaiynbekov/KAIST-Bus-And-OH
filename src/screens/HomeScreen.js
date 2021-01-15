@@ -1,22 +1,35 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, ThemeProvider } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button, ThemeProvider, Icon } from 'react-native-elements';
 
 const HomeScreen = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>
 				<Button
-					icon={<Icon name="bus" size={20} color="white" />}
-					iconContainerStyle={styles.icon}
+					icon={
+						<Icon
+							name="bus"
+							type="font-awesome"
+							size={20}
+							color="white"
+							iconStyle={styles.icon}
+						/>
+					}
 					title="Bus Timetable"
 					titleStyle={styles.title}
 					onPress={() => navigation.navigate('Bus')}
 				/>
 				<Button
-					icon={<Icon name="home" size={20} color="white" />}
-					iconContainerStyle={styles.icon}
+					icon={
+						<Icon
+							name="home"
+							size={20}
+							color="white"
+							type="font-awesome"
+							iconStyle={styles.icon}
+						/>
+					}
 					title="Operating Hours"
 					onPress={() => navigation.navigate('OperatingHours')}
 					titleStyle={styles.title}
@@ -35,13 +48,14 @@ const styles = StyleSheet.create({
 		// borderWidth: 10
 	},
 	icon: {
-		borderColor: 'yellow',
-		borderWidth: 10
+		// borderColor: 'yellow',
+		// borderWidth: 10,
+		marginRight: 10
 	},
 	title: {
 		// borderColor: 'red',
 		// borderWidth: 10,
-		marginLeft: 10
+		// marginLeft: 10
 	}
 });
 
