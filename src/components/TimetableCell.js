@@ -8,7 +8,7 @@ const TimetableCell = () => {
 		<View style={styles.container}>
 			<Text style={styles.time}>From: Leave at</Text>
 			<Text style={styles.time}>To: Arrive at</Text>
-			<Text>Time Left</Text>
+			<Text style={styles.time}>Time Left</Text>
 			<TouchableOpacity>
 				<Feather name="bell" size={20} />
 			</TouchableOpacity>
@@ -20,10 +20,16 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		paddingLeft: 10
+		paddingHorizontal: 10,
+		borderTopWidth: 1,
+		alignItems: 'center',
+		height: 30
 	},
 	time: {
-		flexWrap: 'wrap'
+		flexWrap: 'wrap',
+		width: 110,
+		fontSize: 15,
+		textAlign: 'center'
 	}
 });
 
