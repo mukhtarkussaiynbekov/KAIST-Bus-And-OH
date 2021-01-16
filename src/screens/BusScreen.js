@@ -4,6 +4,7 @@ import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import busOptions from '../json/busOptions.json';
 import TimetableCell from '../components/TimetableCell';
+import { firebase } from '../../firebase';
 
 const busTypes = busOptions['busTypes'];
 const dayTypes = busOptions['dayTypes'];
