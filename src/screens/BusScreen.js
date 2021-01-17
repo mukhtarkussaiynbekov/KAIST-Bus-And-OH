@@ -4,7 +4,7 @@ import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import busOptions from '../json/busOptions.json';
 import TimetableCell from '../components/TimetableCell';
-import { firebase } from '../../firebase';
+import { db } from '../firebase';
 
 const busTypes = busOptions['busTypes'];
 const dayTypes = busOptions['dayTypes'];
@@ -13,6 +13,10 @@ const getBusStops = (busOptions, busTypes, typeIndex) => {
 	const busType = busTypes[typeIndex];
 	const busStopsIdentifier = busType['busStopsReference'];
 	return busOptions[busStopsIdentifier];
+};
+
+const getTimetable = () => {
+	console.log(db.ref('busTimetable/munji/connections'));
 };
 
 const reducer = (state, action) => {
@@ -42,6 +46,7 @@ const BusScreen = () => {
 		to: 5, // munji
 		busStops: getBusStops(busOptions, busTypes, 2) // campus stops
 	});
+	getTimetable();
 	//console.log(state);
 	return (
 		<View>
