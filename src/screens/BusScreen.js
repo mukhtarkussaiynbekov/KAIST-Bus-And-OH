@@ -5,33 +5,46 @@ import Dropdown from '../components/Dropdown';
 import busOptions from '../json/busOptions.json';
 import TimetableCell from '../components/TimetableCell';
 import { db } from '../firebase';
+import {
+	BUS_STOPS_REFERENCE,
+	BUS_TYPES,
+	DAY_TYPES,
+	BUS_STOP_CONNECTIONS,
+	SWAP_STOPS,
+	CHANGE_TYPE,
+	CHANGE_FROM,
+	CHANGE_TO,
+	CHANGE_DAY
+} from '../constants';
 
-const busTypes = busOptions['busTypes'];
-const dayTypes = busOptions['dayTypes'];
+const busTypes = busOptions[BUS_TYPES];
+const dayTypes = busOptions[DAY_TYPES];
 
 const getBusStops = (busOptions, busTypes, typeIndex) => {
 	const busType = busTypes[typeIndex];
-	const busStopsIdentifier = busType['busStopsReference'];
+	const busStopsIdentifier = busType[BUS_STOPS_REFERENCE];
 	return busOptions[busStopsIdentifier];
 };
 
 const getTimetable = () => {
-	console.log(db.ref('busTimetable/munji/connections'));
+	db.ref('/busTimetable/munji').on('value', snapshot => {
+		console.log(snapshot.val()[BUS_STOP_CONNECTIONS]);
+	});
 };
 
 const reducer = (state, action) => {
 	switch (action.type) {
-		case 'swap_stops':
+		case SWAP_STOPS:
 			const temp = state.from;
 			return { ...state, from: state.to, to: temp };
-		case 'change_type':
+		case CHANGE_TYPE:
 			const busStops = getBusStops(busOptions, busTypes, action.payload);
 			return { ...state, type: action.payload, busStops: busStops };
-		case 'change_day':
+		case CHANGE_DAY:
 			return { ...state, day: action.payload };
-		case 'change_from':
+		case CHANGE_FROM:
 			return { ...state, from: action.payload };
-		case 'change_to':
+		case CHANGE_TO:
 			return { ...state, to: action.payload };
 		default:
 			return state;
@@ -57,7 +70,7 @@ const BusScreen = () => {
 						items={busTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
-							dispatch({ type: 'change_type', payload: selectedItem })
+							dispatch({ type: CHANGE_TYPE, payload: selectedItem })
 						}
 						chosenItem={state.type}
 					/>
@@ -68,7 +81,7 @@ const BusScreen = () => {
 						items={dayTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
-							dispatch({ type: 'change_day', payload: selectedItem })
+							dispatch({ type: CHANGE_DAY, payload: selectedItem })
 						}
 						chosenItem={state.day}
 					/>
@@ -79,12 +92,12 @@ const BusScreen = () => {
 				items={state.busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
-					dispatch({ type: 'change_from', payload: selectedItem })
+					dispatch({ type: CHANGE_FROM, payload: selectedItem })
 				}
 				chosenItem={state.from}
 			/>
 			<View style={styles.iconContainer}>
-				<TouchableOpacity onPress={() => dispatch({ type: 'swap_stops' })}>
+				<TouchableOpacity onPress={() => dispatch({ type: SWAP_STOPS })}>
 					<Icon
 						reverse
 						name="swap-vertical"
@@ -100,7 +113,7 @@ const BusScreen = () => {
 				items={state.busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
-					dispatch({ type: 'change_to', payload: selectedItem })
+					dispatch({ type: CHANGE_TO, payload: selectedItem })
 				}
 				chosenItem={state.to}
 			/>
