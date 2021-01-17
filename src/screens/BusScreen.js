@@ -8,9 +8,12 @@ import { firebase } from '../../firebase';
 
 const busTypes = busOptions['busTypes'];
 const dayTypes = busOptions['dayTypes'];
-const cityStops = busOptions['cityStops'];
-const campusStops = busOptions['campusStops'];
-const olevStops = busOptions['olevStops'];
+
+const getBusStops = (busOptions, busTypes, typeIndex) => {
+	const busType = busTypes[typeIndex];
+	const busStopsIdentifier = busType['busStopsReference'];
+	return busOptions[busStopsIdentifier];
+};
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -18,8 +21,8 @@ const reducer = (state, action) => {
 			const temp = state.from;
 			return { ...state, from: state.to, to: temp };
 		case 'change_type':
-			let busStops = busOptions[action.payload];
-			return { ...state, type: action.payload };
+			const busStops = getBusStops(busOptions, busTypes, action.payload);
+			return { ...state, type: action.payload, busStops: busStops };
 		case 'change_day':
 			return { ...state, day: action.payload };
 		case 'change_from':
@@ -37,9 +40,9 @@ const BusScreen = () => {
 		day: 0, // today
 		from: 0, // main campus
 		to: 5, // munji
-		busStops: campusStops
+		busStops: getBusStops(busOptions, busTypes, 2) // campus stops
 	});
-	console.log(state);
+	//console.log(state);
 	return (
 		<View>
 			<View style={styles.topDropdowns}>
@@ -68,7 +71,7 @@ const BusScreen = () => {
 			</View>
 			<Dropdown
 				title="From"
-				items={campusStops}
+				items={state.busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: 'change_from', payload: selectedItem })
@@ -89,7 +92,7 @@ const BusScreen = () => {
 			</View>
 			<Dropdown
 				title="To"
-				items={campusStops}
+				items={state.busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: 'change_to', payload: selectedItem })
