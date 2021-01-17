@@ -2,15 +2,18 @@
 	"busTypes": [
 		{
 			"name": "OLEV",
-			"id": 0
+			"id": 0,
+			"busStopsReference": "olevStops"
 		},
 		{
 			"name": "Wolpyeong",
-			"id": 1
+			"id": 1,
+			"busStopsReference": "cityStops"
 		},
 		{
 			"name": "Campuses",
-			"id": 2
+			"id": 2,
+			"busStopsReference": "campusStops"
 		}
 	],
 	"dayTypes": [
@@ -113,6 +116,48 @@
 		{
 			"name": "Faculty Apartment (교수 아파트)",
 			"id": 8
+		}
+	],
+	"olevStops": [
+		{
+			"name": "Kai-Maru Cafeteria",
+			"id": 0
+		},
+		{
+			"name": "Sports Complex",
+			"id": 1
+		},
+		{
+			"name": "Creative Learning B/D (E11)",
+			"id": 2
+		},
+		{
+			"name": "Biomedical Center",
+			"id": 3
+		},
+		{
+			"name": "Pappalardo",
+			"id": 4
+		},
+		{
+			"name": "Nanofab",
+			"id": 5
+		},
+		{
+			"name": "Main gate",
+			"id": 6
+		},
+		{
+			"name": "Materials S&E B/D",
+			"id": 7
+		},
+		{
+			"name": "Heemang/Dasom Hall",
+			"id": 8
+		},
+		{
+			"name": "Nanum Hall",
+			"id": 9
 		}
 	]
 }

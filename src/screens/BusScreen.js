@@ -10,6 +10,7 @@ const busTypes = busOptions['busTypes'];
 const dayTypes = busOptions['dayTypes'];
 const cityStops = busOptions['cityStops'];
 const campusStops = busOptions['campusStops'];
+const olevStops = busOptions['olevStops'];
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -17,6 +18,7 @@ const reducer = (state, action) => {
 			const temp = state.from;
 			return { ...state, from: state.to, to: temp };
 		case 'change_type':
+			let busStops = busOptions[action.payload];
 			return { ...state, type: action.payload };
 		case 'change_day':
 			return { ...state, day: action.payload };
@@ -34,7 +36,8 @@ const BusScreen = () => {
 		type: 2, // campuses
 		day: 0, // today
 		from: 0, // main campus
-		to: 5 // munji
+		to: 5, // munji
+		busStops: campusStops
 	});
 	console.log(state);
 	return (
