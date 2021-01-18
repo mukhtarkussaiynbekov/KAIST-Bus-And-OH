@@ -27,24 +27,52 @@ const getBusStops = (busOptions, busTypes, typeIndex) => {
 	return busOptions[busStopsIdentifier];
 };
 
-const getTimetable = (busOptions, busTypes, dayTypes, state) => {};
+const getTimetable = (busOptions, busTypes, dayTypes, database) => {
+	return database.busTimetable.campuses.munjiMain.departureTimes.weekends;
+};
 
 const reducer = (state, action) => {
 	switch (action.type) {
 		case DATA_FETCH_SUCCESS:
-			return { ...state, database: action.payload };
+			return {
+				...state,
+				database: action.payload,
+				timetable: getTimetable(busOptions, busTypes, dayTypes, action.payload)
+			};
 		case SWAP_STOPS:
 			const temp = state.from;
-			return { ...state, from: state.to, to: temp };
+			return {
+				...state,
+				from: state.to,
+				to: temp,
+				timetable: getTimetable(busOptions, busTypes, dayTypes, state.database)
+			};
 		case CHANGE_TYPE:
 			const busStops = getBusStops(busOptions, busTypes, action.payload);
-			return { ...state, type: action.payload, busStops: busStops };
+			return {
+				...state,
+				type: action.payload,
+				busStops: busStops,
+				timetable: getTimetable(busOptions, busTypes, dayTypes, state.database)
+			};
 		case CHANGE_DAY:
-			return { ...state, day: action.payload };
+			return {
+				...state,
+				day: action.payload,
+				timetable: getTimetable(busOptions, busTypes, dayTypes, state.database)
+			};
 		case CHANGE_FROM:
-			return { ...state, from: action.payload };
+			return {
+				...state,
+				from: action.payload,
+				timetable: getTimetable(busOptions, busTypes, dayTypes, state.database)
+			};
 		case CHANGE_TO:
-			return { ...state, to: action.payload };
+			return {
+				...state,
+				to: action.payload,
+				timetable: getTimetable(busOptions, busTypes, dayTypes, state.database)
+			};
 		default:
 			return state;
 	}
@@ -63,7 +91,8 @@ const BusScreen = () => {
 	useEffect(() => {
 		getUpdates(dispatch);
 	}, []);
-	console.log(state.database);
+	// console.log(state.database);
+	console.log(state.timetable);
 	return (
 		<View>
 			<View style={styles.topDropdowns}>
