@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import busOptions from '../json/busOptions.json';
@@ -149,7 +149,24 @@ const BusScreen = () => {
 				}
 				chosenItem={state.to}
 			/>
-			<TimetableCell />
+			<TimetableCell
+				firstColumnText={'From\nLeave At'}
+				secondColumnText={'To\nArrive At'}
+				thirdColumnText="Time Left"
+			/>
+			<FlatList
+				data={state.timetable}
+				keyExtractor={time => time}
+				renderItem={({ item }) => {
+					return (
+						<TimetableCell
+							firstColumnText={item}
+							secondColumnText={item}
+							thirdColumnText={item}
+						/>
+					);
+				}}
+			/>
 		</View>
 	);
 };

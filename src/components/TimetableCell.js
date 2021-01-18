@@ -2,12 +2,16 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 
-const TimetableCell = () => {
+const TimetableCell = ({
+	firstColumnText,
+	secondColumnText,
+	thirdColumnText
+}) => {
 	return (
 		<View style={styles.container}>
-			<Text style={styles.time}>From{'\n'}Leave At</Text>
-			<Text style={styles.time}>To{'\n'}Arrive At</Text>
-			<Text style={styles.time}>Time Left</Text>
+			<Text style={styles.time}>{firstColumnText}</Text>
+			<Text style={styles.time}>{secondColumnText}</Text>
+			<Text style={styles.time}>{thirdColumnText}</Text>
 			<TouchableOpacity>
 				<Icon name="bell" type="feather" color="#517fa4" size={20} />
 			</TouchableOpacity>
