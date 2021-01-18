@@ -1,10 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import busOptions from '../json/busOptions.json';
 import TimetableCell from '../components/TimetableCell';
-import { db } from '../firebase';
+import { getUpdates } from '../firebase';
 import {
 	BUS_STOPS_REFERENCE,
 	BUS_TYPES,
@@ -14,7 +14,8 @@ import {
 	CHANGE_TYPE,
 	CHANGE_FROM,
 	CHANGE_TO,
-	CHANGE_DAY
+	CHANGE_DAY,
+	DATA_FETCH_SUCCESS
 } from '../constants';
 
 const busTypes = busOptions[BUS_TYPES];
@@ -26,14 +27,10 @@ const getBusStops = (busOptions, busTypes, typeIndex) => {
 	return busOptions[busStopsIdentifier];
 };
 
-const getTimetable = () => {
-	db.ref('/busTimetable/munji').on('value', snapshot => {
-		console.log(snapshot.val()[BUS_STOP_CONNECTIONS]);
-	});
-};
-
 const reducer = (state, action) => {
 	switch (action.type) {
+		case DATA_FETCH_SUCCESS:
+			return { ...state, database: action.payload };
 		case SWAP_STOPS:
 			const temp = state.from;
 			return { ...state, from: state.to, to: temp };
@@ -57,10 +54,14 @@ const BusScreen = () => {
 		day: 0, // today
 		from: 0, // main campus
 		to: 5, // munji
-		busStops: getBusStops(busOptions, busTypes, 2) // campus stops
+		busStops: getBusStops(busOptions, busTypes, 2), // campus stops
+		database: {},
+		timetable: []
 	});
-	getTimetable();
-	//console.log(state);
+	useEffect(() => {
+		getUpdates(dispatch);
+	}, []);
+	console.log(state.database);
 	return (
 		<View>
 			<View style={styles.topDropdowns}>

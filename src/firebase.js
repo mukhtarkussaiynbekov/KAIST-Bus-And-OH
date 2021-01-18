@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import { DATA_FETCH_SUCCESS } from './constants';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -13,4 +14,11 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-export const db = firebase.database();
+const db = firebase.database();
+
+export const getUpdates = dispatch => {
+	db.ref().on('value', snapshot => {
+		let database = snapshot.val();
+		dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
+	});
+};
