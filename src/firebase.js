@@ -13,12 +13,16 @@ const firebaseConfig = {
 	measurementId: 'G-0SXVPGY5YK'
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+if (firebase.apps.length === 0) {
+	firebase.initializeApp(firebaseConfig);
+}
 
 export const getUpdates = dispatch => {
-	db.ref().on('value', snapshot => {
-		let database = snapshot.val();
-		dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
-	});
+	firebase
+		.database()
+		.ref()
+		.on('value', snapshot => {
+			let database = snapshot.val();
+			dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
+		});
 };

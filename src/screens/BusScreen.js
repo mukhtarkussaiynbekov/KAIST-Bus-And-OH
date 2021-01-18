@@ -27,6 +27,8 @@ const getBusStops = (busOptions, busTypes, typeIndex) => {
 	return busOptions[busStopsIdentifier];
 };
 
+const getTimetable = (busOptions, busTypes, dayTypes, state) => {};
+
 const reducer = (state, action) => {
 	switch (action.type) {
 		case DATA_FETCH_SUCCESS:
