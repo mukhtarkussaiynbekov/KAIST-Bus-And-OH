@@ -110,6 +110,7 @@ const BusScreen = () => {
 	}, []);
 	// console.log(state.database);
 	console.log(state.timetable);
+	// let timer = setInterval(() => console.log('finish'), 60);
 	return (
 		<View>
 			<View style={styles.topDropdowns}>
