@@ -28,7 +28,24 @@ const getBusStops = (busOptions, busTypes, typeIndex) => {
 };
 
 const getTimetable = (busOptions, busTypes, dayTypes, database) => {
-	return database.busTimetable.campuses.munjiMain.departureTimes.weekends;
+	let departureTimes =
+		database.busTimetable.campuses.munjiMain.departureTimes.weekends;
+	console.log(departureTimes);
+	let travelTime = 20;
+	let timetable = [];
+	for (let departTime of departureTimes) {
+		// console.log(time);
+		let [hour, minute] = departTime.split(':').map(str => parseInt(str, 10));
+		let arrivalMinute = minute + travelTime;
+		hour = (hour + Math.floor(arrivalMinute / 60)) % 24;
+		minute = arrivalMinute % 60;
+		let displayHour = hour < 10 ? '0' + hour.toString() : hour.toString();
+		let displayMinute =
+			minute < 10 ? '0' + minute.toString() : minute.toString();
+		let arrivalTime = displayHour + ':' + displayMinute;
+		timetable.push({ leave: departTime, arrive: arrivalTime });
+	}
+	return timetable;
 };
 
 const reducer = (state, action) => {
@@ -156,13 +173,13 @@ const BusScreen = () => {
 			/>
 			<FlatList
 				data={state.timetable}
-				keyExtractor={time => time}
+				keyExtractor={time => time.leave}
 				renderItem={({ item }) => {
 					return (
 						<TimetableCell
-							firstColumnText={item}
-							secondColumnText={item}
-							thirdColumnText={item}
+							firstColumnText={item.leave}
+							secondColumnText={item.arrive}
+							thirdColumnText={item.arrive}
 						/>
 					);
 				}}
