@@ -35,17 +35,9 @@ const getTimetable = (busOptions, busTypes, dayTypes, database) => {
 	let travelTime = 20;
 	let timetable = [];
 	for (let departTime of departureTimes) {
-		console.log(moment(departTime, 'hh:mm'));
-		// console.log(time);
-		let [hour, minute] = departTime.split(':').map(str => parseInt(str, 10));
-		let arrivalMinute = minute + travelTime;
-		hour = (hour + Math.floor(arrivalMinute / 60)) % 24;
-		minute = arrivalMinute % 60;
-		let displayHour = hour < 10 ? '0' + hour.toString() : hour.toString();
-		let displayMinute =
-			minute < 10 ? '0' + minute.toString() : minute.toString();
-		let arrivalTime = displayHour + ':' + displayMinute;
-		timetable.push({ leave: departTime, arrive: arrivalTime });
+		let leaveTime = moment(departTime, 'HH:mm');
+		let arriveTime = leaveTime.clone().add(travelTime, 'm');
+		timetable.push({ leave: leaveTime, arrive: arriveTime });
 	}
 	return timetable;
 };
@@ -110,7 +102,7 @@ const BusScreen = () => {
 	useEffect(() => {
 		getUpdates(dispatch);
 	}, []);
-	console.log(moment());
+	console.log(moment().format('HH:mm'));
 	// console.log(state.database);
 	// console.log(state.timetable);
 	// let timer = setInterval(() => console.log('finish'), 60);
@@ -181,9 +173,9 @@ const BusScreen = () => {
 				renderItem={({ item }) => {
 					return (
 						<TimetableCell
-							firstColumnText={item.leave}
-							secondColumnText={item.arrive}
-							thirdColumnText={item.arrive}
+							firstColumnText={item.leave.format('HH:mm')}
+							secondColumnText={item.arrive.format('HH:mm')}
+							thirdColumnText={item.arrive.format('HH:mm')}
 						/>
 					);
 				}}
