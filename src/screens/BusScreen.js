@@ -17,6 +17,7 @@ import {
 	CHANGE_DAY,
 	DATA_FETCH_SUCCESS
 } from '../constants';
+import moment from 'moment';
 
 const busTypes = busOptions[BUS_TYPES];
 const dayTypes = busOptions[DAY_TYPES];
@@ -34,6 +35,7 @@ const getTimetable = (busOptions, busTypes, dayTypes, database) => {
 	let travelTime = 20;
 	let timetable = [];
 	for (let departTime of departureTimes) {
+		console.log(moment(departTime, 'hh:mm'));
 		// console.log(time);
 		let [hour, minute] = departTime.split(':').map(str => parseInt(str, 10));
 		let arrivalMinute = minute + travelTime;
@@ -108,8 +110,9 @@ const BusScreen = () => {
 	useEffect(() => {
 		getUpdates(dispatch);
 	}, []);
+	console.log(moment());
 	// console.log(state.database);
-	console.log(state.timetable);
+	// console.log(state.timetable);
 	// let timer = setInterval(() => console.log('finish'), 60);
 	return (
 		<View>
