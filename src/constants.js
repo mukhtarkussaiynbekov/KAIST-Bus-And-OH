@@ -9,3 +9,4 @@ export const CHANGE_DAY = 'change_day';
 export const CHANGE_FROM = 'change_from';
 export const CHANGE_TO = 'change_to';
 export const DATA_FETCH_SUCCESS = 'data_fetch_success';
+export const REMOVE_TIME = 'remove_time';

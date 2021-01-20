@@ -15,7 +15,8 @@ import {
 	CHANGE_FROM,
 	CHANGE_TO,
 	CHANGE_DAY,
-	DATA_FETCH_SUCCESS
+	DATA_FETCH_SUCCESS,
+	REMOVE_TIME
 } from '../constants';
 import moment from 'moment';
 
@@ -31,19 +32,28 @@ const getBusStops = (busOptions, busTypes, typeIndex) => {
 const getTimetable = (busOptions, busTypes, dayTypes, database) => {
 	let departureTimes =
 		database.busTimetable.campuses.munjiMain.departureTimes.weekends;
-	console.log(departureTimes);
+	// console.log(departureTimes);
+	// console.log(database['busTimetable']);
 	let travelTime = 20;
 	let timetable = [];
 	for (let departTime of departureTimes) {
 		let leaveTime = moment(departTime, 'HH:mm');
 		let arriveTime = leaveTime.clone().add(travelTime, 'm');
-		timetable.push({ leave: leaveTime, arrive: arriveTime });
+		timetable.push({
+			leave: leaveTime.format('HH:mm'),
+			arrive: arriveTime.format('HH:mm')
+		});
 	}
 	return timetable;
 };
 
 const reducer = (state, action) => {
 	switch (action.type) {
+		case REMOVE_TIME:
+			return {
+				...state,
+				timetable: state.timetable.filter(time => time !== action.payload)
+			};
 		case DATA_FETCH_SUCCESS:
 			return {
 				...state,
@@ -107,7 +117,7 @@ const BusScreen = () => {
 	// console.log(state.timetable);
 	// let timer = setInterval(() => console.log('finish'), 60);
 	return (
-		<View>
+		<>
 			<View style={styles.topDropdowns}>
 				<View style={{ flex: 1 }}>
 					<Dropdown
@@ -166,6 +176,7 @@ const BusScreen = () => {
 				firstColumnText={'From\nLeave At'}
 				secondColumnText={'To\nArrive At'}
 				thirdColumnText="Time Left"
+				isHeader
 			/>
 			<FlatList
 				data={state.timetable}
@@ -173,14 +184,14 @@ const BusScreen = () => {
 				renderItem={({ item }) => {
 					return (
 						<TimetableCell
-							firstColumnText={item.leave.format('HH:mm')}
-							secondColumnText={item.arrive.format('HH:mm')}
-							thirdColumnText={item.arrive.format('HH:mm')}
+							firstColumnText={item.leave}
+							secondColumnText={item.arrive}
+							timeOut={() => dispatch({ type: REMOVE_TIME, payload: item })}
 						/>
 					);
 				}}
 			/>
-		</View>
+		</>
 	);
 };
 
