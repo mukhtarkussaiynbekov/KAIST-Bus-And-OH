@@ -9,6 +9,29 @@ const getTimeLeft = time => {
 	return timeLeft;
 };
 
+const displayTime = time => {
+	let duration = moment.duration(time, 'seconds');
+	let days = duration.days();
+	let hours = duration.hours();
+	let minutes = duration.minutes();
+	let seconds = duration.seconds();
+	if (days > 0) {
+		return (
+			<Text
+				style={styles.time}
+			>{`${days}d:${hours}h:${minutes}m:${seconds}s`}</Text>
+		);
+	} else if (hours > 0) {
+		return (
+			<Text style={styles.time}>{`${hours}h:${minutes}m:${seconds}s`}</Text>
+		);
+	} else if (minutes > 0) {
+		return <Text style={styles.time}>{`${minutes}m:${seconds}s`}</Text>;
+	} else {
+		return <Text style={styles.time}>{`${seconds}s`}</Text>;
+	}
+};
+
 const TimetableCell = ({
 	firstColumnText,
 	secondColumnText,
@@ -39,7 +62,7 @@ const TimetableCell = ({
 		<View style={styles.container}>
 			<Text style={styles.time}>{firstColumnText}</Text>
 			<Text style={styles.time}>{secondColumnText}</Text>
-			<Text style={styles.time}>{timeLeft}s</Text>
+			{displayTime(timeLeft)}
 			<TouchableOpacity>
 				<Icon name="bell" type="feather" color="#517fa4" size={20} />
 			</TouchableOpacity>
