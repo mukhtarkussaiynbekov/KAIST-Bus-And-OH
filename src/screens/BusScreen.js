@@ -18,7 +18,7 @@ import {
 	DATA_FETCH_SUCCESS,
 	REMOVE_TIME
 } from '../constants';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const busTypes = busOptions[BUS_TYPES];
 const dayTypes = busOptions[DAY_TYPES];
@@ -37,7 +37,7 @@ const getTimetable = (busOptions, busTypes, dayTypes, database) => {
 	let travelTime = 20;
 	let timetable = [];
 	for (let departTime of departureTimes) {
-		let leaveTime = moment(departTime, 'HH:mm');
+		let leaveTime = moment(departTime, 'HH:mm').tz('Asia/Seoul');
 		let arriveTime = leaveTime.clone().add(travelTime, 'm');
 		timetable.push({
 			leave: leaveTime.format('HH:mm'),

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const getTimeLeft = time => {
-	let leaveTime = moment(time, 'HH:mm');
-	let timeLeft = leaveTime.clone().diff(moment());
+	let leaveTime = moment.duration(time, 'HH:mm');
+	let now = moment().format('HH:mm:ss');
+	let timeLeft =
+		leaveTime.asSeconds() - moment.duration(now, 'HH:mm:ss').asSeconds();
 	return timeLeft;
 };
 
