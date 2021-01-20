@@ -59,7 +59,13 @@ const TimetableCell = ({
 		// timeOut();
 		return null;
 	}
-	setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setTimeLeft(timeLeft => timeLeft - 1);
+		}, 1000);
+		return () => clearInterval(interval);
+	}, []);
+	// setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
 	return (
 		<View style={styles.container}>
 			<Text style={styles.time}>{firstColumnText}</Text>
