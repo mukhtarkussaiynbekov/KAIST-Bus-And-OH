@@ -5,9 +5,12 @@ import moment from 'moment-timezone';
 
 const getTimeLeft = time => {
 	let leaveTime = moment.duration(time, 'HH:mm');
-	let now = moment().format('HH:mm:ss');
-	let timeLeft =
-		leaveTime.asSeconds() - moment.duration(now, 'HH:mm:ss').asSeconds();
+	let nowFormatted = moment().format('HH:mm:ss');
+	let now = moment.duration(nowFormatted, 'HH:mm:ss');
+	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
+	if (leaveTime.hours() < 4 && now.hours() > leaveTime.hours()) {
+		timeLeft += 24 * 60 * 60;
+	}
 	return timeLeft;
 };
 
@@ -56,8 +59,8 @@ const TimetableCell = ({
 
 	const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
 	if (timeLeft <= 0) {
-		// timeOut();
-		return null;
+		timeOut();
+		// return null;
 	}
 	useEffect(() => {
 		const interval = setInterval(() => {
