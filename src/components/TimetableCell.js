@@ -15,6 +15,9 @@ const getTimeLeft = time => {
 };
 
 const displayTime = time => {
+	if (time <= 0) {
+		return <Text style={styles.time}>-</Text>;
+	}
 	let duration = moment.duration(time, 'seconds');
 	let days = duration.days();
 	let hours = duration.hours();
@@ -58,10 +61,16 @@ const TimetableCell = ({
 	}
 
 	const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
-	if (timeLeft <= 0) {
-		timeOut();
-		// return null;
-	}
+	useEffect(() => {
+		// using useEffect to avoid Warning: Cannot update a component from
+		// inside the function body of a different component.
+		// If you want to call parent function that will update (remove)
+		// current component, then you should call it inside useEffect
+		if (timeLeft <= -300) {
+			timeOut();
+		}
+	}, [timeLeft]);
+
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setTimeLeft(timeLeft => timeLeft - 1);
