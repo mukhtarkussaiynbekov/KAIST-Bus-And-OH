@@ -4,8 +4,8 @@ import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import busOptions from '../json/busOptions.json';
 import TimetableCell from '../components/TimetableCell';
-import { store } from '../store/index';
 import { getUpdates } from '../firebase';
+import { useSelector, useDispatch } from 'react-redux';
 import {
 	BUS_STOPS_REFERENCE,
 	BUS_TYPES,
@@ -110,12 +110,14 @@ const BusScreen = () => {
 	// 	database: {},
 	// 	timetable: []
 	// });
+	const state = useSelector(state => state);
+	const dispatch = useDispatch();
 	useEffect(() => {
-		getUpdates(store.dispatch);
+		getUpdates(dispatch);
 	}, []);
 	console.log(moment().format('HH:mm'));
 	// console.log(state.database);
-	console.log(store.getState());
+	console.log(state);
 	// let timer = setInterval(() => console.log('finish'), 60);
 	return (
 		<>
@@ -126,9 +128,9 @@ const BusScreen = () => {
 						items={busTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
-							store.dispatch({ type: CHANGE_TYPE, payload: selectedItem })
+							dispatch({ type: CHANGE_TYPE, payload: selectedItem })
 						}
-						chosenItem={store.getState().type}
+						chosenItem={state.type}
 					/>
 				</View>
 				<View style={{ flex: 1 }}>
@@ -137,23 +139,23 @@ const BusScreen = () => {
 						items={dayTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
-							store.dispatch({ type: CHANGE_DAY, payload: selectedItem })
+							dispatch({ type: CHANGE_DAY, payload: selectedItem })
 						}
-						chosenItem={store.getState().day}
+						chosenItem={state.day}
 					/>
 				</View>
 			</View>
 			<Dropdown
 				title="From"
-				items={store.getState().busStops}
+				items={state.busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
-					store.dispatch({ type: CHANGE_FROM, payload: selectedItem })
+					dispatch({ type: CHANGE_FROM, payload: selectedItem })
 				}
-				chosenItem={store.getState().from}
+				chosenItem={state.from}
 			/>
 			<View style={styles.iconContainer}>
-				<TouchableOpacity onPress={() => store.dispatch({ type: SWAP_STOPS })}>
+				<TouchableOpacity onPress={() => dispatch({ type: SWAP_STOPS })}>
 					<Icon
 						reverse
 						name="swap-vertical"
@@ -166,12 +168,12 @@ const BusScreen = () => {
 			</View>
 			<Dropdown
 				title="To"
-				items={store.getState().busStops}
+				items={state.busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
-					store.dispatch({ type: CHANGE_TO, payload: selectedItem })
+					dispatch({ type: CHANGE_TO, payload: selectedItem })
 				}
-				chosenItem={store.getState().to}
+				chosenItem={state.to}
 			/>
 			<TimetableCell
 				firstColumnText={'From\nLeave At'}
@@ -180,16 +182,14 @@ const BusScreen = () => {
 				isHeader
 			/>
 			<FlatList
-				data={store.getState().timetable}
+				data={state.timetable}
 				keyExtractor={time => time.leave}
 				renderItem={({ item }) => {
 					return (
 						<TimetableCell
 							firstColumnText={item.leave}
 							secondColumnText={item.arrive}
-							timeOut={() =>
-								store.dispatch({ type: REMOVE_TIME, payload: item })
-							}
+							timeOut={() => dispatch({ type: REMOVE_TIME, payload: item })}
 						/>
 					);
 				}}

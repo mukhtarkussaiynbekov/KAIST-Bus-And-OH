@@ -1,8 +1,11 @@
+import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import BusScreen from './src/screens/BusScreen';
 import OperatingHoursScreen from './src/screens/OperatingHoursScreen';
+import { Provider } from 'react-redux';
+import { store } from './src/store/index';
 
 const navigator = createStackNavigator(
 	{
@@ -18,4 +21,12 @@ const navigator = createStackNavigator(
 	}
 );
 
-export default createAppContainer(navigator);
+const App = createAppContainer(navigator);
+
+export default () => {
+	return (
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+};
