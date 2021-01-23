@@ -14,59 +14,19 @@ const getTimeLeft = time => {
 	return timeLeft;
 };
 
-const displayTime = time => {
-	if (time <= 0) {
-		return <Text style={styles.time}>-</Text>;
-	}
-	let duration = moment.duration(time, 'seconds');
-	let days = duration.days();
-	let hours = duration.hours();
-	let minutes = duration.minutes();
-	let seconds = duration.seconds();
-	if (days > 0) {
-		return (
-			<Text
-				style={styles.time}
-			>{`${days}d:${hours}h:${minutes}m:${seconds}s`}</Text>
-		);
-	} else if (hours > 0) {
-		return (
-			<Text style={styles.time}>{`${hours}h:${minutes}m:${seconds}s`}</Text>
-		);
-	} else if (minutes > 0) {
-		return <Text style={styles.time}>{`${minutes}m:${seconds}s`}</Text>;
-	} else {
-		return <Text style={styles.time}>{`${seconds}s`}</Text>;
-	}
-};
-
 const TimetableCell = ({
 	firstColumnText,
 	secondColumnText,
-	thirdColumnText,
 	isHeader,
 	timeOut
 }) => {
-	if (isHeader) {
-		return (
-			<View style={styles.container}>
-				<Text style={styles.time}>{firstColumnText}</Text>
-				<Text style={styles.time}>{secondColumnText}</Text>
-				<Text style={styles.time}>{thirdColumnText}</Text>
-				<TouchableOpacity>
-					<Icon name="bell" type="feather" color="#517fa4" size={20} />
-				</TouchableOpacity>
-			</View>
-		);
-	}
-
 	const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
 	useEffect(() => {
 		// using useEffect to avoid Warning: Cannot update a component from
 		// inside the function body of a different component.
 		// If you want to call parent function that will update (remove)
 		// current component, then you should call it inside useEffect
-		if (timeLeft <= -300) {
+		if (timeLeft <= -200) {
 			timeOut();
 		}
 	}, [timeLeft]);
@@ -82,7 +42,6 @@ const TimetableCell = ({
 		<View style={styles.container}>
 			<Text style={styles.time}>{firstColumnText}</Text>
 			<Text style={styles.time}>{secondColumnText}</Text>
-			{displayTime(timeLeft)}
 			<TouchableOpacity>
 				<Icon name="bell" type="feather" color="#517fa4" size={20} />
 			</TouchableOpacity>

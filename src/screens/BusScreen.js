@@ -80,7 +80,6 @@ const BusScreen = () => {
 			<TimetableCell
 				firstColumnText={'From\nLeave At'}
 				secondColumnText={'To\nArrive At'}
-				thirdColumnText="Time Left"
 				isHeader
 			/>
 			<FlatList
