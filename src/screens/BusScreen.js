@@ -17,7 +17,8 @@ import {
 } from '../constants';
 
 const BusScreen = () => {
-	const state = useSelector(state => state);
+	const state = useSelector(state => state.bus);
+	console.log(state);
 	const dispatch = useDispatch();
 	const busTypes = busOptions[BUS_TYPES];
 	const dayTypes = busOptions[DAY_TYPES];

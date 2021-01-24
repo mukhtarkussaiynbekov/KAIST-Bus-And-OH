@@ -20,24 +20,27 @@ const TimetableCell = ({
 	isHeader,
 	timeOut
 }) => {
-	const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
-	useEffect(() => {
-		// using useEffect to avoid Warning: Cannot update a component from
-		// inside the function body of a different component.
-		// If you want to call parent function that will update (remove)
-		// current component, then you should call it inside useEffect
-		if (timeLeft <= -200) {
-			timeOut();
-		}
-	}, [timeLeft]);
+	if (!isHeader) {
+		const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
+		useEffect(() => {
+			// using useEffect to avoid Warning: Cannot update a component from
+			// inside the function body of a different component.
+			// If you want to call parent function that will update (remove)
+			// current component, then you should call it inside useEffect
+			if (timeLeft <= -200) {
+				timeOut();
+			}
+		}, [timeLeft]);
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setTimeLeft(timeLeft => timeLeft - 1);
-		}, 1000);
-		return () => clearInterval(interval);
-	}, []);
-	// setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+		useEffect(() => {
+			const interval = setInterval(() => {
+				setTimeLeft(timeLeft => timeLeft - 1);
+			}, 1000);
+			return () => clearInterval(interval);
+		}, []);
+		// setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+	}
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.time}>{firstColumnText}</Text>
