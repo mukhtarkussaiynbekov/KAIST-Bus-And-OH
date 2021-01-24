@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, ThemeProvider, Icon } from 'react-native-elements';
+import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
+import { useSelector } from 'react-redux';
 
 const HomeScreen = ({ navigation }) => {
+	const state = useSelector(state => state);
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>
+				<Text>Next bus leaves at {state.bus.timetable[0].leave}</Text>
 				<Button
 					icon={
 						<Icon
