@@ -4,8 +4,8 @@ import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 const HomeScreen = ({ navigation }) => {
-	const state = useSelector(state => state);
-	console.log(state);
+	const state = useSelector(storeState => storeState);
+	// console.log(state);
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>

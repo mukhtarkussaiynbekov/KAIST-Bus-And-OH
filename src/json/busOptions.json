@@ -3,143 +3,172 @@
 		{
 			"name": "OLEV",
 			"id": 0,
-			"busStopsReference": "olevStops"
+			"name_id": "olevStops"
 		},
 		{
 			"name": "Wolpyeong",
 			"id": 1,
-			"busStopsReference": "cityStops"
+			"name_id": "cityStops"
 		},
 		{
 			"name": "Campuses",
 			"id": 2,
-			"busStopsReference": "campusStops"
+			"name_id": "campusStops"
 		}
 	],
 	"dayTypes": [
 		{
 			"name": "Today",
-			"id": 0
+			"id": 0,
+			"name_id": "today"
 		},
 		{
 			"name": "Tomorrow",
-			"id": 1
+			"id": 1,
+			"name_id": "tomorrow"
 		},
 		{
 			"name": "Weekdays",
-			"id": 2
+			"id": 2,
+			"name_id": "weekdays"
 		},
 		{
-			"name": "Weekends/Holidays",
-			"id": 3
+			"name": "Weekends",
+			"id": 3,
+			"name_id": "weekends"
 		}
 	],
 	"cityStops": [
 		{
 			"name": "Main Campus (본교)",
 			"id": 0,
+			"name_id": "main",
 			"children": [
 				{
 					"name": "N6",
-					"id": 1
+					"id": 1,
+					"name_id": "n6"
 				},
 				{
 					"name": "Auditorium",
-					"id": 2
+					"id": 2,
+					"name_id": "auditorium"
 				},
 				{
 					"name": "W8",
-					"id": 3
+					"id": 3,
+					"name_id": "w8"
 				},
 				{
 					"name": "Duck pond",
-					"id": 4
+					"id": 4,
+					"name_id": "duckPond"
 				}
 			]
 		},
 		{
 			"name": "Chungnam National University (충남태학교)",
-			"id": 5
+			"id": 5,
+			"name_id": "chungnam"
 		},
 		{
 			"name": "Wolpyeong St. Exit #1",
-			"id": 6
+			"id": 6,
+			"name_id": "wolpyeong1"
 		},
 		{
 			"name": "Galleria Department Store",
-			"id": 7
+			"id": 7,
+			"name_id": "galleria"
 		},
 		{
 			"name": "Government Complex",
-			"id": 8
+			"id": 8,
+			"name_id": "governmentComplex"
 		},
 		{
 			"name": "Wolpyeong St. Exit #3",
-			"id": 9
+			"id": 9,
+			"name_id": "wolpyeong3"
 		}
 	],
 	"campusStops": [
 		{
 			"name": "Main Campus (본교)",
-			"id": 0
+			"id": 0,
+			"name_id": "main"
 		},
 		{
 			"name": "Munji Campus (문지)",
-			"id": 1
+			"id": 1,
+			"name_id": "munji"
 		},
 		{
 			"name": "Hwaam Campus (화암)",
-			"id": 2
+			"id": 2,
+			"name_id": "hwaam"
 		},
 		{
 			"name": "Rothen House (로덴 하우스)",
-			"id": 3
+			"id": 3,
+			"name_id": "rothenHouse"
 		},
 		{
 			"name": "Faculty Apartment (교수 아파트)",
-			"id": 4
+			"id": 4,
+			"name_id": "facultyApartment"
 		}
 	],
 	"olevStops": [
 		{
 			"name": "Kai-Maru Cafeteria",
-			"id": 0
+			"id": 0,
+			"name_id": "kaimaru"
 		},
 		{
 			"name": "Sports Complex",
-			"id": 1
+			"id": 1,
+			"name_id": "sportsComplex"
 		},
 		{
 			"name": "Creative Learning B/D (E11)",
-			"id": 2
+			"id": 2,
+			"name_id": "e11"
 		},
 		{
 			"name": "Biomedical Center",
-			"id": 3
+			"id": 3,
+			"name_id": "biomedicalCenter"
 		},
 		{
 			"name": "Pappalardo",
-			"id": 4
+			"id": 4,
+			"name_id": "pappalardo"
 		},
 		{
 			"name": "Nanofab",
-			"id": 5
+			"id": 5,
+			"name_id": "nanofab"
 		},
 		{
 			"name": "Main gate",
-			"id": 6
+			"id": 6,
+			"name_id": "mainGate"
 		},
 		{
 			"name": "Materials S&E B/D",
-			"id": 7
+			"id": 7,
+			"name_id": "materialsBuilding"
 		},
 		{
 			"name": "Heemang/Dasom Hall",
-			"id": 8
+			"id": 8,
+			"name_id": "heemang"
 		},
 		{
 			"name": "Nanum Hall",
-			"id": 9
+			"id": 9,
+			"name_id": "nanum"
 		}
 	]
 }

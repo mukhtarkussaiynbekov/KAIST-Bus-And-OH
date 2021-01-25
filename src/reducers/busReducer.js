@@ -1,28 +1,55 @@
-import busOptions from '../json/busOptions.json';
+import busOptionsLocal from '../json/busOptions.json';
+import busTimetableLocal from '../json/busTimetable.json';
 import {
-	BUS_STOPS_REFERENCE,
+	CHILDREN,
+	ID,
+	NAME_ID,
 	BUS_TYPES,
 	DAY_TYPES,
-	BUS_STOP_CONNECTIONS,
 	SWAP_STOPS,
 	CHANGE_TYPE,
 	CHANGE_FROM,
 	CHANGE_TO,
 	CHANGE_DAY,
 	DATA_FETCH_SUCCESS,
-	REMOVE_TIME
+	REMOVE_TIME,
+	TODAY,
+	TOMORROW
 } from '../constants';
 import moment from 'moment-timezone';
 
-const getBusStops = (busOptions, busTypes, typeIndex) => {
-	const busType = busTypes[typeIndex];
-	const busStopsIdentifier = busType[BUS_STOPS_REFERENCE];
-	return busOptions[busStopsIdentifier];
+const getObjectByID = (objectsList, id) => {
+	for (let object of objectsList) {
+		if (object[ID] === id) {
+			return object;
+		}
+		if (CHILDREN in object) {
+			for (let child of CHILDREN) {
+				if (child[ID] === id) {
+					return child;
+				}
+			}
+		}
+	}
+};
+
+const getNameID = (objectsList, id) => {
+	const object = getObjectByID(objectsList, id);
+	const nameID = object[NAME_ID];
+	return nameID;
+};
+
+const getNameIDValue = (objectsContainer, nameID) => {
+	return objectsContainer[nameID];
 };
 
 const getTimetable = state => {
-	let departureTimes =
-		database.busTimetable.campuses.munjiMain.departureTimes.weekends;
+	let dayType = getNameID(state.dayType.items, state.dayType.selected);
+	if (dayType === TODAY || dayType == TOMORROW) {
+		return [];
+	}
+	let busType = getNameID(state.busType.items, state.busType.selected);
+	let listOfBusStops = getNameIDValue(state.timetableAll, busType);
 	// console.log(departureTimes);
 	// console.log(database['busTimetable']);
 	let travelTime = 20;
@@ -39,19 +66,24 @@ const getTimetable = state => {
 };
 
 const INITIAL_STATE = {
+	busOptions: busOptionsLocal,
+	timetableAll: busTimetableLocal,
 	busType: {
 		selected: 2, // campuses
-		items: busOptions[BUS_TYPES]
+		items: busOptionsLocal[BUS_TYPES]
 	},
 	dayType: {
 		selected: 0, // today
-		items: busOptions[DAY_TYPES]
+		items: busOptionsLocal[DAY_TYPES]
 	},
 	busStops: {
-		items: getBusStops(busOptions, busOptions[BUS_TYPES], 2), // campus stops
+		items: getNameIDValue(
+			busOptionsLocal,
+			getNameID(busOptionsLocal[BUS_TYPES], 2)
+		), // campus stops
 		from: 0, // main campus
-		to: 5, // munji
-		timetable: ['08:00']
+		to: 1, // munji
+		timetable: []
 	}
 };
 
@@ -78,7 +110,7 @@ export default (state = INITIAL_STATE, action) => {
 				...state,
 				busStops: {
 					...state.busStops,
-					from: state.to,
+					from: state.busStops.to,
 					to: temp
 					// timetable: getTimetable(
 					// 	busOptions,
@@ -88,10 +120,9 @@ export default (state = INITIAL_STATE, action) => {
 				}
 			};
 		case CHANGE_TYPE:
-			const busStops = getBusStops(
-				busOptions,
-				state.busType.items,
-				action.payload
+			const busStops = getNameIDValue(
+				state.busOptions,
+				getNameID(state.busType.items, action.payload)
 			);
 			return {
 				...state,

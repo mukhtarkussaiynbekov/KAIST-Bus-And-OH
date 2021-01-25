@@ -1,5 +1,5 @@
 {
-	"campuses": [
+	"campusStops": [
 		{
 			"route": ["munji", "hwaam", "munji", "rothenHouse", "main"],
 			"departureTimes": {
