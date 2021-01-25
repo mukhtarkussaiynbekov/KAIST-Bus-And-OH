@@ -5,10 +5,11 @@ import { useSelector } from 'react-redux';
 
 const HomeScreen = ({ navigation }) => {
 	const state = useSelector(state => state);
+	console.log(state);
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>
-				<Text>Next bus leaves at {state.bus.timetable[0].leave}</Text>
+				{/* <Text>Next bus leaves at {state.busStops.timetable[0].leave}</Text> */}
 				<Button
 					icon={
 						<Icon

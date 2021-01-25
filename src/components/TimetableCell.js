@@ -18,9 +18,10 @@ const TimetableCell = ({
 	firstColumnText,
 	secondColumnText,
 	isHeader,
-	timeOut
+	timeOut,
+	showFullTimetable
 }) => {
-	if (!isHeader) {
+	if (!isHeader && !showFullTimetable) {
 		const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
 		useEffect(() => {
 			// using useEffect to avoid Warning: Cannot update a component from
@@ -53,7 +54,8 @@ const TimetableCell = ({
 };
 
 TimetableCell.defaultProps = {
-	isHeader: false
+	isHeader: false,
+	showFullTimetable: false
 };
 
 const styles = StyleSheet.create({

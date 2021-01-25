@@ -1,9 +1,40 @@
 {
 	"travelTimes": [
-		{ "stopOne": "munji", "stopTwo": "hwaam", "interval": 10 },
-		{ "stopOne": "munji", "stopTwo": "main", "interval": 20 },
-		{ "stopOne": "munji", "stopTwo": "rothenHouse", "interval": 4 },
-		{ "stopOne": "main", "stopTwo": "facultyApartment", "interval": 15 },
-		{ "stopOne": "facultyApartment", "stopTwo": "munji", "interval": 5 }
+		{
+			"stopOne": "munji",
+			"stopTwo": "hwaam",
+			"interval": 10,
+			"sameOppositeInterval": true
+		},
+		{
+			"stopOne": "munji",
+			"stopTwo": "main",
+			"interval": 20,
+			"sameOppositeInterval": true
+		},
+		{
+			"stopOne": "munji",
+			"stopTwo": "rothenHouse",
+			"interval": 4,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "main",
+			"stopTwo": "facultyApartment",
+			"interval": 15,
+			"sameOppositeInterval": true
+		},
+		{
+			"stopOne": "facultyApartment",
+			"stopTwo": "munji",
+			"interval": 5,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "main",
+			"stopTwo": "hwaam",
+			"interval": 20,
+			"sameOppositeInterval": false
+		}
 	]
 }

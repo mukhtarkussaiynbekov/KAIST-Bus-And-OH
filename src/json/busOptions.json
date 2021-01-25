@@ -81,41 +81,23 @@
 	"campusStops": [
 		{
 			"name": "Main Campus (본교)",
-			"id": 0,
-			"children": [
-				{
-					"name": "N6",
-					"id": 1
-				},
-				{
-					"name": "Auditorium",
-					"id": 2
-				},
-				{
-					"name": "W8",
-					"id": 3
-				},
-				{
-					"name": "Duck pond",
-					"id": 4
-				}
-			]
+			"id": 0
 		},
 		{
 			"name": "Munji Campus (문지)",
-			"id": 5
+			"id": 1
 		},
 		{
 			"name": "Hwaam Campus (화암)",
-			"id": 6
+			"id": 2
 		},
 		{
 			"name": "Rothen House (로덴 하우스)",
-			"id": 7
+			"id": 3
 		},
 		{
 			"name": "Faculty Apartment (교수 아파트)",
-			"id": 8
+			"id": 4
 		}
 	],
 	"olevStops": [

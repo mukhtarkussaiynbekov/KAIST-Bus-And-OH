@@ -2,12 +2,9 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
-import busOptions from '../json/busOptions.json';
 import TimetableCell from '../components/TimetableCell';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-	BUS_TYPES,
-	DAY_TYPES,
 	SWAP_STOPS,
 	CHANGE_TYPE,
 	CHANGE_FROM,
@@ -20,42 +17,40 @@ const BusScreen = () => {
 	const state = useSelector(state => state.bus);
 	console.log(state);
 	const dispatch = useDispatch();
-	const busTypes = busOptions[BUS_TYPES];
-	const dayTypes = busOptions[DAY_TYPES];
 	return (
 		<>
 			<View style={styles.topDropdowns}>
 				<View style={{ flex: 1 }}>
 					<Dropdown
 						title="Type"
-						items={busTypes}
+						items={state.busType.items}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
 							dispatch({ type: CHANGE_TYPE, payload: selectedItem })
 						}
-						chosenItem={state.type}
+						chosenItem={state.busType.selected}
 					/>
 				</View>
 				<View style={{ flex: 1 }}>
 					<Dropdown
 						title="Day"
-						items={dayTypes}
+						items={state.dayType.items}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
 							dispatch({ type: CHANGE_DAY, payload: selectedItem })
 						}
-						chosenItem={state.day}
+						chosenItem={state.dayType.selected}
 					/>
 				</View>
 			</View>
 			<Dropdown
 				title="From"
-				items={state.busStops}
+				items={state.busStops.items}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: CHANGE_FROM, payload: selectedItem })
 				}
-				chosenItem={state.from}
+				chosenItem={state.busStops.from}
 			/>
 			<View style={styles.iconContainer}>
 				<TouchableOpacity onPress={() => dispatch({ type: SWAP_STOPS })}>
@@ -71,12 +66,12 @@ const BusScreen = () => {
 			</View>
 			<Dropdown
 				title="To"
-				items={state.busStops}
+				items={state.busStops.items}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: CHANGE_TO, payload: selectedItem })
 				}
-				chosenItem={state.to}
+				chosenItem={state.busStops.to}
 			/>
 			<TimetableCell
 				firstColumnText={'From\nLeave At'}
@@ -84,7 +79,7 @@ const BusScreen = () => {
 				isHeader
 			/>
 			<FlatList
-				data={state.timetable}
+				data={state.busStops.timetable}
 				keyExtractor={time => time.leave}
 				renderItem={({ item }) => {
 					return (
@@ -92,6 +87,7 @@ const BusScreen = () => {
 							firstColumnText={item.leave}
 							secondColumnText={item.arrive}
 							timeOut={() => dispatch({ type: REMOVE_TIME, payload: item })}
+							showFullTimetable
 						/>
 					);
 				}}
