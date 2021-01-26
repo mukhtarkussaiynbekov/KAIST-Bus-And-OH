@@ -1,5 +1,6 @@
 import busOptionsLocal from '../json/busOptions.json';
 import busTimetableLocal from '../json/busTimetable.json';
+import busTravelTimesLocal from '../json/busTravelTimes.json';
 import {
 	CHILDREN,
 	ID,
@@ -14,7 +15,11 @@ import {
 	DATA_FETCH_SUCCESS,
 	REMOVE_TIME,
 	TODAY,
-	TOMORROW
+	TOMORROW,
+	WEEKDAYS,
+	WEEKENDS,
+	ROUTE,
+	DEPARTURE_TIMES
 } from '../constants';
 import moment from 'moment-timezone';
 
@@ -43,17 +48,67 @@ const getNameIDValue = (objectsContainer, nameID) => {
 	return objectsContainer[nameID];
 };
 
+const mergeSortedArrays = (array1, array2) => {
+	let result = [];
+	let i = 0;
+	let j = 0;
+	while (i < array1.length || j < array2.length) {
+		if (i < array1.length && (j == array2.length || array1[i] < array2[j])) {
+			result.push(array1[i]);
+			i++;
+		} else {
+			result.push(array2[j]);
+			j++;
+		}
+	}
+	return result;
+};
+
+const getObjects = (listOfBusStops, from, to) => {
+	let objects = [];
+	let travelStops = undefined;
+	for (let item of listOfBusStops) {
+		let toIndex = -1;
+		let fromIndex = -1;
+		let route = item[ROUTE];
+		for (let i = route.length; i > 0; i--) {
+			if (route[i] === to) {
+				toIndex = i;
+				break;
+			}
+		}
+		for (let j = toIndex - 1; j >= 0; j--) {
+			if (route[j] === from) {
+				fromIndex = j;
+				break;
+			}
+		}
+		if (fromIndex > -1 && toIndex > -1) {
+			objects.push(item);
+			if (travelStops === undefined) {
+				travelStops = route.slice(fromIndex, toIndex + 1);
+			}
+		}
+	}
+	return [objects, travelStops];
+};
+
 const getTimetable = state => {
 	let dayType = getNameID(state.dayType.items, state.dayType.selected);
 	if (dayType === TODAY || dayType == TOMORROW) {
 		return [];
 	}
 	let busType = getNameID(state.busType.items, state.busType.selected);
-	let listOfBusStops = getNameIDValue(state.timetableAll, busType);
-	// console.log(departureTimes);
-	// console.log(database['busTimetable']);
-	let travelTime = 20;
+	let listOfBusStops = getNameIDValue(state.database.timetableAll, busType);
+	let from = getNameID(state.busStops.items, state.busStops.from);
+	let to = getNameID(state.busStops.items, state.busStops.to);
+	const [objects, travelStops] = getObjects(listOfBusStops, from, to);
+	if (objects.length === 0) {
+		return [];
+	}
+	let travelTime = getTravelTime(travelStops);
 	let timetable = [];
+	let departureTimes = getDepartureTimes(objects);
 	for (let departTime of departureTimes) {
 		let leaveTime = moment(departTime, 'HH:mm').tz('Asia/Seoul');
 		let arriveTime = leaveTime.clone().add(travelTime, 'm');
@@ -66,8 +121,11 @@ const getTimetable = state => {
 };
 
 const INITIAL_STATE = {
-	busOptions: busOptionsLocal,
-	timetableAll: busTimetableLocal,
+	database: {
+		busOptions: busOptionsLocal,
+		timetableAll: busTimetableLocal,
+		travelTimes: busTravelTimesLocal
+	},
 	busType: {
 		selected: 2, // campuses
 		items: busOptionsLocal[BUS_TYPES]

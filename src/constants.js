@@ -14,3 +14,7 @@ export const REMOVE_TIME = 'remove_time';
 
 export const TODAY = 'today';
 export const TOMORROW = 'tomorrow';
+export const WEEKDAYS = 'weekdays';
+export const WEEKENDS = 'weekends';
+export const ROUTE = 'route';
+export const DEPARTURE_TIMES = 'departureTimes';
