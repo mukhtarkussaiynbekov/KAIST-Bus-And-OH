@@ -18,3 +18,9 @@ export const WEEKDAYS = 'weekdays';
 export const WEEKENDS = 'weekends';
 export const ROUTE = 'route';
 export const DEPARTURE_TIMES = 'departureTimes';
+
+export const TRAVEL_TIMES = 'travelTimes';
+export const STOP_ONE = 'stopOne';
+export const STOP_TWO = 'stopTwo';
+export const INTERVAL = 'interval';
+export const SAME_OPPOSITE_INTERVAL = 'sameOppositeInterval';

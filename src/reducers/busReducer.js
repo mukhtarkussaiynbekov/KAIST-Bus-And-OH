@@ -19,7 +19,12 @@ import {
 	WEEKDAYS,
 	WEEKENDS,
 	ROUTE,
-	DEPARTURE_TIMES
+	DEPARTURE_TIMES,
+	TRAVEL_TIMES,
+	STOP_ONE,
+	STOP_TWO,
+	INTERVAL,
+	SAME_OPPOSITE_INTERVAL
 } from '../constants';
 import moment from 'moment-timezone';
 
@@ -64,25 +69,51 @@ const mergeSortedArrays = (array1, array2) => {
 	return result;
 };
 
+const getDepartureTimes = (objects, dayType, from, to) => {
+	let mergedList = [];
+	for (let item of objects) {
+		const [fromIndex, _] = getFromToIndices(from, to, item);
+		let travelStops = item[ROUTE].slice(0, fromIndex);
+		let travelTime = getTravelTime(
+			travelStops,
+			state.database.travelTimes[TRAVEL_TIMES]
+		);
+		let initialDepartureTimes = item[DEPARTURE_TIMES][dayType];
+		let currentDepartureTimes = [];
+		for (let time of initialDepartureTimes) {
+			let leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
+			let currentLeaveTime = leaveTime.clone().add(travelTime, 'm');
+			currentDepartureTimes.push(currentLeaveTime);
+		}
+		mergedList = mergeSortedArrays(mergedList, currentDepartureTimes);
+	}
+	return mergedList;
+};
+
+const getFromToIndices = (from, to, item) => {
+	let toIndex = -1;
+	let fromIndex = -1;
+	let route = item[ROUTE];
+	for (let i = route.length; i > 0; i--) {
+		if (route[i] === to) {
+			toIndex = i;
+			break;
+		}
+	}
+	for (let j = toIndex - 1; j >= 0; j--) {
+		if (route[j] === from) {
+			fromIndex = j;
+			break;
+		}
+	}
+	return [fromIndex, toIndex];
+};
+
 const getObjects = (listOfBusStops, from, to) => {
 	let objects = [];
 	let travelStops = undefined;
 	for (let item of listOfBusStops) {
-		let toIndex = -1;
-		let fromIndex = -1;
-		let route = item[ROUTE];
-		for (let i = route.length; i > 0; i--) {
-			if (route[i] === to) {
-				toIndex = i;
-				break;
-			}
-		}
-		for (let j = toIndex - 1; j >= 0; j--) {
-			if (route[j] === from) {
-				fromIndex = j;
-				break;
-			}
-		}
+		const [fromIndex, toIndex] = getFromToIndices(from, to, item);
 		if (fromIndex > -1 && toIndex > -1) {
 			objects.push(item);
 			if (travelStops === undefined) {
@@ -91,6 +122,29 @@ const getObjects = (listOfBusStops, from, to) => {
 		}
 	}
 	return [objects, travelStops];
+};
+
+const getTimeInterval = (from, to, travelTimeIntervals) => {
+	for (let item of travelTimeIntervals) {
+		if (item[STOP_ONE] === from && item[STOP_TWO] === to) {
+			return item[INTERVAL];
+		}
+		if (item[SAME_OPPOSITE_INTERVAL]) {
+			if (item[STOP_TWO] === from && item[STOP_ONE] === to) {
+				return item[INTERVAL];
+			}
+		}
+	}
+};
+
+const getTravelTime = (travelStops, travelTimeIntervals) => {
+	let travelTime = 0;
+	for (let i = 1; i < travelStops.length; i++) {
+		let from = travelStops[i - 1];
+		let to = travelStops[i];
+		travelTime += getTimeInterval(from, to, travelTimeIntervals);
+	}
+	return travelTime;
 };
 
 const getTimetable = state => {
@@ -106,9 +160,12 @@ const getTimetable = state => {
 	if (objects.length === 0) {
 		return [];
 	}
-	let travelTime = getTravelTime(travelStops);
+	let travelTime = getTravelTime(
+		travelStops,
+		state.database.travelTimes[TRAVEL_TIMES]
+	);
 	let timetable = [];
-	let departureTimes = getDepartureTimes(objects);
+	let departureTimes = getDepartureTimes(objects, dayType, from, to);
 	for (let departTime of departureTimes) {
 		let leaveTime = moment(departTime, 'HH:mm').tz('Asia/Seoul');
 		let arriveTime = leaveTime.clone().add(travelTime, 'm');
@@ -222,6 +279,9 @@ export default (state = INITIAL_STATE, action) => {
 				// timetable: getTimetable(busOptions, busTypes, dayTypes)
 			};
 		default:
-			return state;
+			return {
+				...state,
+				busStops: { ...state.busStops, timetable: getTimetable(state) }
+			};
 	}
 };
