@@ -46,9 +46,11 @@ const TimetableCell = ({
 		<View style={styles.container}>
 			<Text style={styles.time}>{firstColumnText}</Text>
 			<Text style={styles.time}>{secondColumnText}</Text>
-			<TouchableOpacity>
-				<Icon name="bell" type="feather" color="#517fa4" size={20} />
-			</TouchableOpacity>
+			{showFullTimetable ? null : (
+				<TouchableOpacity>
+					<Icon name="bell" type="feather" color="#517fa4" size={20} />
+				</TouchableOpacity>
+			)}
 		</View>
 	);
 };
