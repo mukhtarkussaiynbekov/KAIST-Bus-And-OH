@@ -34,7 +34,7 @@ const getObjectByID = (objectsList, id) => {
 			return object;
 		}
 		if (CHILDREN in object) {
-			for (let child of CHILDREN) {
+			for (let child of object[CHILDREN]) {
 				if (child[ID] === id) {
 					return child;
 				}
@@ -57,20 +57,13 @@ const mergeSortedArrays = (array1, array2) => {
 	let result = [];
 	let i = 0;
 	let j = 0;
-	let k = -1;
 	while (i < array1.length || j < array2.length) {
 		if (i < array1.length && (j == array2.length || array1[i] < array2[j])) {
-			if (k !== -1 && result[k] !== array1[i]) {
-				result.push(array1[i]);
-			}
+			result.push(array1[i]);
 			i++;
-			k++;
 		} else {
-			if (k !== -1 && result[k] !== array2[j]) {
-				result.push(array2[j]);
-			}
+			result.push(array2[j]);
 			j++;
-			k++;
 		}
 	}
 	return result;
@@ -98,7 +91,7 @@ const getDepartureTimes = (objects, dayType, from, to, travelTimes) => {
 const getFromToIndices = (from, to, route) => {
 	let toIndex = -1;
 	let fromIndex = -1;
-	for (let i = route.length; i > 0; i--) {
+	for (let i = route.length - 1; i > 0; i--) {
 		if (route[i] === to) {
 			toIndex = i;
 			break;
@@ -152,24 +145,32 @@ const getTravelTime = (travelStops, travelTimeIntervals) => {
 	return travelTime;
 };
 
+const getUniqueValues = array => {
+	let uniqueValues = [];
+	let seen = {};
+	for (let item of array) {
+		if (!(item in seen)) {
+			seen[item] = true;
+			uniqueValues.push(item);
+		}
+	}
+	return uniqueValues;
+};
+
 const getTimetable = state => {
 	let dayType = getNameID(state.dayType.items, state.dayType.selected);
-	console.log(dayType);
 	if (dayType === TODAY || dayType == TOMORROW) {
 		return [];
 	}
 	let busType = getNameID(state.busType.items, state.busType.selected);
-	console.log(busType);
 	let listOfBusStops = getNameIDValue(state.database.timetableAll, busType);
-	console.log(listOfBusStops);
 	let from = getNameID(state.busStops.items, state.busStops.from);
-	console.log(from);
 	let to = getNameID(state.busStops.items, state.busStops.to);
-	console.log(to);
 	if (from === to) {
 		return [];
 	}
 	const [objects, travelStops] = getObjects(listOfBusStops, from, to);
+	console.log('travelStops: ', travelStops);
 	if (objects.length === 0) {
 		return [];
 	}
@@ -185,8 +186,8 @@ const getTimetable = state => {
 		to,
 		state.database.travelTimes[TRAVEL_TIMES]
 	);
-	for (let departTime of departureTimes) {
-		let leaveTime = moment(departTime, 'HH:mm').tz('Asia/Seoul');
+	let leaveTimes = getUniqueValues(departureTimes);
+	for (let leaveTime of leaveTimes) {
 		let arriveTime = leaveTime.clone().add(travelTime, 'm');
 		timetable.push({
 			leave: leaveTime.format('HH:mm'),
