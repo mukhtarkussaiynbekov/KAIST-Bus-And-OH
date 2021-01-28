@@ -101,6 +101,66 @@
 			"stopTwo": "duckPond",
 			"interval": 3,
 			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "kaimaru",
+			"stopTwo": "sportsComplex",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "sportsComplex",
+			"stopTwo": "e11",
+			"interval": 2,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "e11",
+			"stopTwo": "biomedicalCenter",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "biomedicalCenter",
+			"stopTwo": "pappalardo",
+			"interval": 2,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "pappalardo",
+			"stopTwo": "nanofab",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "nanofab",
+			"stopTwo": "mainGate",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "mainGate",
+			"stopTwo": "materialsBuilding",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "materialsBuilding",
+			"stopTwo": "heemang",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "heemang",
+			"stopTwo": "nanum",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "nanum",
+			"stopTwo": "kaimaru",
+			"interval": 4,
+			"sameOppositeInterval": false
 		}
 	]
 }
