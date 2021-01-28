@@ -12,6 +12,7 @@ import {
 	CHANGE_DAY,
 	REMOVE_TIME
 } from '../constants';
+import { getDayType } from '../reducers/helperFunctions';
 
 const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
@@ -87,7 +88,7 @@ const BusScreen = () => {
 							firstColumnText={item.leave}
 							secondColumnText={item.arrive}
 							timeOut={() => dispatch({ type: REMOVE_TIME, payload: item })}
-							showFullTimetable={state.busType.selected != 0}
+							dayType={getDayType(state.dayType)}
 						/>
 					);
 				}}

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, Icon } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
+import { Text } from 'react-native-elements';
 import moment from 'moment-timezone';
+import { TODAY } from '../constants';
 
 const getTimeLeft = time => {
 	let leaveTime = moment.duration(time, 'HH:mm');
@@ -19,9 +20,9 @@ const TimetableCell = ({
 	secondColumnText,
 	isHeader,
 	timeOut,
-	showFullTimetable
+	dayType
 }) => {
-	if (!isHeader && !showFullTimetable) {
+	if (!isHeader && dayType === TODAY) {
 		const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
 		useEffect(() => {
 			// using useEffect to avoid Warning: Cannot update a component from
@@ -46,11 +47,11 @@ const TimetableCell = ({
 		<View style={styles.container}>
 			<Text style={styles.time}>{firstColumnText}</Text>
 			<Text style={styles.time}>{secondColumnText}</Text>
-			{showFullTimetable ? null : (
+			{/* {showFullTimetable ? null : ( // For the future when implementing notifications.
 				<TouchableOpacity>
 					<Icon name="bell" type="feather" color="#517fa4" size={20} />
 				</TouchableOpacity>
-			)}
+			)} */}
 		</View>
 	);
 };
