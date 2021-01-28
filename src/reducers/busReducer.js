@@ -75,7 +75,7 @@ export default (state = INITIAL_STATE, action) => {
 			};
 		case CHANGE_TYPE:
 			const busStops = getNameIDValue(
-				state.busOptions,
+				state.database.busOptions,
 				getNameID(state.busType.items, action.payload)
 			);
 			const newState2 = {

@@ -130,5 +130,58 @@
 				]
 			}
 		}
+	],
+	"cityStops": [
+		{
+			"route": [
+				"n6",
+				"e15",
+				"w8",
+				"duckPond",
+				"chungnam",
+				"wolpyeong1",
+				"galleria",
+				"governmentComplex"
+			],
+			"departureTimes": {
+				"weekdays": [
+					"09:05",
+					"10:05",
+					"11:05",
+					"13:05",
+					"14:05",
+					"15:05",
+					"16:05",
+					"17:05",
+					"18:05"
+				],
+				"weekends": []
+			}
+		},
+		{
+			"route": [
+				"galleria",
+				"governmentComplex",
+				"wolpyeong3",
+				"duckPond",
+				"e14",
+				"e15",
+				"n6"
+			],
+			"departureTimes": {
+				"weekdays": [
+					"09:25",
+					"10:25",
+					"11:25",
+					"13:25",
+					"14:25",
+					"15:25",
+					"16:25",
+					"17:25",
+					"18:25"
+				],
+				"weekends": []
+			}
+		}
 	]
 }

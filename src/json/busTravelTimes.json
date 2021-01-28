@@ -35,6 +35,72 @@
 			"stopTwo": "hwaam",
 			"interval": 20,
 			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "n6",
+			"stopTwo": "e15",
+			"interval": 1,
+			"sameOppositeInterval": true
+		},
+		{
+			"stopOne": "e15",
+			"stopTwo": "w8",
+			"interval": 2,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "w8",
+			"stopTwo": "duckPond",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "duckPond",
+			"stopTwo": "e14",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "e14",
+			"stopTwo": "e15",
+			"interval": 1,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "duckPond",
+			"stopTwo": "chungnam",
+			"interval": 6,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "chungnam",
+			"stopTwo": "wolpyeong1",
+			"interval": 5,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "wolpyeong1",
+			"stopTwo": "galleria",
+			"interval": 5,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "galleria",
+			"stopTwo": "governmentComplex",
+			"interval": 7,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "governmentComplex",
+			"stopTwo": "wolpyeong3",
+			"interval": 8,
+			"sameOppositeInterval": false
+		},
+		{
+			"stopOne": "wolpyeong3",
+			"stopTwo": "duckPond",
+			"interval": 3,
+			"sameOppositeInterval": false
 		}
 	]
 }
