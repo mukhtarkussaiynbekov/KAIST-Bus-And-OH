@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { TODAY } from '../constants';
@@ -12,23 +12,21 @@ const TimetableCell = ({
 	dayType
 }) => {
 	if (!isHeader && dayType === TODAY) {
-		// using let declaration because we need to change value
-		// internally and do not want to render on screen.
-		// If you need to render it on screen, then use useState hook.
-		// Since we are avoiding rendering component again and again,
-		// we are potentially saving a phone's energy.
-		let timeLeft = getTimeLeft(firstColumnText);
+		const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
 
 		useEffect(() => {
 			// using useEffect to avoid Warning: Cannot update a component from
 			// inside the function body of a different component.
 			// If you want to call parent function that will update (remove)
 			// current component, then you should call it inside useEffect
+			if (timeLeft <= -300) {
+				timeOut();
+			}
+		}, [timeLeft]);
+
+		useEffect(() => {
 			const interval = setInterval(() => {
-				if (timeLeft <= -300) {
-					timeOut();
-				}
-				timeLeft -= 1;
+				setTimeLeft(timeLeft => timeLeft - 1);
 			}, 1000);
 			return () => clearInterval(interval);
 			// we need to clean up after a component is removed. Otherwise, memory leak.

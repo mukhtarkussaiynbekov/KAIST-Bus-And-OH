@@ -6,6 +6,7 @@ import {
 	TOMORROW,
 	WEEKDAYS,
 	WEEKENDS,
+	SPECIAL_HOLIDAY,
 	ROUTE,
 	DEPARTURE_TIMES,
 	TRAVEL_TIMES,
@@ -53,11 +54,25 @@ export const getNameIDValue = (objectsContainer, nameID) => {
 	return objectsContainer[nameID];
 };
 
-export const getDepartureTimes = (object, dayType, travelTimes, fromIndex) => {
+export const getDepartureTimes = (
+	object,
+	dayType,
+	specialHolidays,
+	travelTimes,
+	fromIndex
+) => {
 	let route = object[ROUTE];
 	let travelStops = route.slice(0, fromIndex + 1);
 	let travelTime = getTravelTime(travelStops, travelTimes);
-	let initialDepartureTimes = object[DEPARTURE_TIMES][dayType];
+	const departureTimesObject = object[DEPARTURE_TIMES];
+	const dayClassification = getWeekdaysOrWeekends(dayType);
+	let initialDepartureTimes = departureTimesObject[dayClassification];
+	if (
+		isSpeicalHoliday(dayType, specialHolidays) &&
+		SPECIAL_HOLIDAY in object[DEPARTURE_TIMES]
+	) {
+		initialDepartureTimes = departureTimesObject[SPECIAL_HOLIDAY];
+	}
 	let departureTimes = [];
 	for (let time of initialDepartureTimes) {
 		let leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
@@ -68,6 +83,8 @@ export const getDepartureTimes = (object, dayType, travelTimes, fromIndex) => {
 };
 
 export const getFromToIndices = (from, to, route) => {
+	// returns indices of strings specified by from and to
+	// in the route parameter
 	let toIndex = -1;
 	let fromIndex = -1;
 	for (let i = route.length - 1; i > 0; i--) {
@@ -85,7 +102,7 @@ export const getFromToIndices = (from, to, route) => {
 	return [fromIndex, toIndex];
 };
 
-export const getObjects = (listOfBusStops, from, to) => {
+export const getTimeObjects = (listOfBusStops, from, to) => {
 	let objects = [];
 	for (let item of listOfBusStops) {
 		let route = item[ROUTE];
@@ -135,6 +152,7 @@ export const getUniqueTimeValues = timetable => {
 export const populateTimetable = (
 	objects,
 	dayType,
+	specialHolidays,
 	from,
 	to,
 	travelTimes,
@@ -144,7 +162,13 @@ export const populateTimetable = (
 		const [fromIndex, toIndex] = getFromToIndices(from, to, object[ROUTE]);
 		let travelStops = object[ROUTE].slice(fromIndex, toIndex + 1);
 		let travelTime = getTravelTime(travelStops, travelTimes);
-		let leaveTimes = getDepartureTimes(object, dayType, travelTimes, fromIndex);
+		let leaveTimes = getDepartureTimes(
+			object,
+			dayType,
+			specialHolidays,
+			travelTimes,
+			fromIndex
+		);
 		for (let leaveTime of leaveTimes) {
 			let arriveTime = leaveTime.clone().add(travelTime, 'm');
 			timetable.push({
@@ -155,8 +179,17 @@ export const populateTimetable = (
 	}
 };
 
-export const isSpeicalHoliday = (specialHolidays, dateToCheck) => {
-	let formattedDate = dateToCheck.format('MM/DD');
+export const isSpeicalHoliday = (dateToCheck, specialHolidays) => {
+	if (dateToCheck !== TODAY && dateToCheck !== TOMORROW) {
+		return false;
+	}
+
+	let now = moment().tz('Asia/Seoul');
+	if (dateToCheck === TOMORROW) {
+		now.add(1, 'days');
+	}
+
+	let formattedDate = now.format('MM/DD');
 	for (let date of specialHolidays) {
 		if (date === formattedDate) {
 			return true;
@@ -165,23 +198,22 @@ export const isSpeicalHoliday = (specialHolidays, dateToCheck) => {
 	return false;
 };
 
-export const getDayType = (dayTypeObject, specialHolidays) => {
-	const dayType = getNameID(dayTypeObject.items, dayTypeObject.selected);
+export const getWeekdaysOrWeekends = dayType => {
 	let now = moment().tz('Asia/Seoul');
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
 	switch (dayType) {
-		// TODO: handle case when today or tomorrow is special holiday
 		case TODAY:
 			return day_of_week <= 4 ? WEEKDAYS : WEEKENDS;
 		case TOMORROW:
-			return (day_of_week + 1) % 7 <= 4 ? WEEKDAYS : WEEKENDS;
+			day_of_week = (day_of_week + 1) % 7;
+			return day_of_week <= 4 ? WEEKDAYS : WEEKENDS;
 		default:
 			return dayType;
 	}
 };
 
 export const getTimetable = state => {
-	let dayType = getDayType(state.dayType, state.database.specialHolidays);
+	let dayType = getNameID(state.dayType.items, state.dayType.selected);
 	let busType = getNameID(state.busType.items, state.busType.selected);
 	let listOfBusStops = getNameIDValue(state.database.timetableAll, busType);
 	let from = getNameID(state.busStops.items, state.busStops.from);
@@ -189,7 +221,7 @@ export const getTimetable = state => {
 	if (from === to) {
 		return [];
 	}
-	const objects = getObjects(listOfBusStops, from, to);
+	const objects = getTimeObjects(listOfBusStops, from, to);
 	if (objects.length === 0) {
 		return [];
 	}
@@ -197,6 +229,7 @@ export const getTimetable = state => {
 	populateTimetable(
 		objects,
 		dayType,
+		state.database.specialHolidays.dates,
 		from,
 		to,
 		state.database.travelTimes[TRAVEL_TIMES],
