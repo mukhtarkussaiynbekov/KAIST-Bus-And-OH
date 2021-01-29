@@ -40,9 +40,9 @@
 	],
 	"cityStops": [
 		{
-			"name": "Main Campus (본교)",
+			"name": "Main Campus N6 (본교)",
 			"id": 0,
-			"name_id": "main",
+			"name_id": "n6",
 			"children": [
 				{
 					"name": "N6",

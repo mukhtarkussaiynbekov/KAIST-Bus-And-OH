@@ -1,19 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
-import moment from 'moment-timezone';
 import { TODAY } from '../constants';
-
-const getTimeLeft = time => {
-	let leaveTime = moment.duration(time, 'HH:mm');
-	let nowFormatted = moment().format('HH:mm:ss');
-	let now = moment.duration(nowFormatted, 'HH:mm:ss');
-	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
-	if (leaveTime.hours() < 4 && now.hours() > leaveTime.hours()) {
-		timeLeft += 24 * 60 * 60;
-	}
-	return timeLeft;
-};
+import { getTimeLeft } from '../reducers/helperFunctions';
 
 const TimetableCell = ({
 	firstColumnText,
@@ -23,24 +12,27 @@ const TimetableCell = ({
 	dayType
 }) => {
 	if (!isHeader && dayType === TODAY) {
-		const [timeLeft, setTimeLeft] = useState(getTimeLeft(firstColumnText));
+		// using let declaration because we need to change value
+		// internally and do not want to render on screen.
+		// If you need to render it on screen, then use useState hook.
+		// Since we are avoiding rendering component again and again,
+		// we are potentially saving a phone's energy.
+		let timeLeft = getTimeLeft(firstColumnText);
+
 		useEffect(() => {
 			// using useEffect to avoid Warning: Cannot update a component from
 			// inside the function body of a different component.
 			// If you want to call parent function that will update (remove)
 			// current component, then you should call it inside useEffect
-			if (timeLeft <= -200) {
-				timeOut();
-			}
-		}, [timeLeft]);
-
-		useEffect(() => {
 			const interval = setInterval(() => {
-				setTimeLeft(timeLeft => timeLeft - 1);
+				if (timeLeft <= -300) {
+					timeOut();
+				}
+				timeLeft -= 1;
 			}, 1000);
 			return () => clearInterval(interval);
+			// we need to clean up after a component is removed. Otherwise, memory leak.
 		}, []);
-		// setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
 	}
 
 	return (

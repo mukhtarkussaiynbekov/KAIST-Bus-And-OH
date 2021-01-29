@@ -16,12 +16,21 @@ import {
 } from '../constants';
 import moment from 'moment-timezone';
 
+export const getTimeLeft = time => {
+	// returns time left in seconds
+	let leaveTime = moment.duration(time, 'HH:mm');
+	let nowFormatted = moment().format('HH:mm:ss');
+	let now = moment.duration(nowFormatted, 'HH:mm:ss');
+	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
+	if (leaveTime.hours() < 4 && now.hours() > leaveTime.hours()) {
+		timeLeft += 24 * 60 * 60;
+	}
+	return timeLeft;
+};
+
 export const getObjectByID = (objectsList, id) => {
 	for (let object of objectsList) {
 		if (object[ID] === id) {
-			if (CHILDREN in object) {
-				return object[CHILDREN][0];
-			}
 			return object;
 		}
 		if (CHILDREN in object) {
