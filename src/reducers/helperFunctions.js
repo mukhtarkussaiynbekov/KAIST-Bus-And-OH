@@ -155,7 +155,17 @@ export const populateTimetable = (
 	}
 };
 
-export const getDayType = dayTypeObject => {
+export const isSpeicalHoliday = (specialHolidays, dateToCheck) => {
+	let formattedDate = dateToCheck.format('MM/DD');
+	for (let date of specialHolidays) {
+		if (date === formattedDate) {
+			return true;
+		}
+	}
+	return false;
+};
+
+export const getDayType = (dayTypeObject, specialHolidays) => {
 	const dayType = getNameID(dayTypeObject.items, dayTypeObject.selected);
 	let now = moment().tz('Asia/Seoul');
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
@@ -171,7 +181,7 @@ export const getDayType = dayTypeObject => {
 };
 
 export const getTimetable = state => {
-	let dayType = getDayType(state.dayType);
+	let dayType = getDayType(state.dayType, state.database.specialHolidays);
 	let busType = getNameID(state.busType.items, state.busType.selected);
 	let listOfBusStops = getNameIDValue(state.database.timetableAll, busType);
 	let from = getNameID(state.busStops.items, state.busStops.from);

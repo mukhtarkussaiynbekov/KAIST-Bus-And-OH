@@ -1,6 +1,7 @@
 import busOptionsLocal from '../json/busOptions.json';
 import busTimetableLocal from '../json/busTimetable.json';
 import busTravelTimesLocal from '../json/busTravelTimes.json';
+import specialHolidaysLocal from '../json/specialHolidays.json';
 import {
 	BUS_TYPES,
 	DAY_TYPES,
@@ -18,7 +19,8 @@ const INITIAL_STATE = {
 	database: {
 		busOptions: busOptionsLocal,
 		timetableAll: busTimetableLocal,
-		travelTimes: busTravelTimesLocal
+		travelTimes: busTravelTimesLocal,
+		specialHolidays: specialHolidaysLocal
 	},
 	busType: {
 		selected: 2, // campuses
