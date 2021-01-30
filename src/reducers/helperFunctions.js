@@ -61,7 +61,7 @@ export const getDepartureTimes = (
 	let travelStops = route.slice(0, fromIndex + 1);
 	let travelTime = getTravelTime(travelStops, travelTimes);
 	const departureTimesObject = object[DEPARTURE_TIMES];
-	const dayClassification = getWeekdaysOrWeekends(dayType);
+	const dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
 	if (
 		isSpeicalHoliday(dayType, specialHolidays) &&
@@ -194,7 +194,7 @@ export const isSpeicalHoliday = (dateToCheck, specialHolidays) => {
 	return false;
 };
 
-export const getWeekdaysOrWeekends = dayType => {
+export const getDayClassification = dayType => {
 	let now = moment().tz('Asia/Seoul');
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
 	switch (dayType) {

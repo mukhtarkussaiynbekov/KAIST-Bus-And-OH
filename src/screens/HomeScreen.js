@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
 			...storeState.bus.dayType,
 			selected: getPropValue(storeState.bus.dayType.items, TODAY, NAME_ID, ID)
 		}
-	}); // TODO: handle edge cases when there is no upcoming bus
+	});
 	let from = getPropValue(
 		storeState.bus.busStops.items,
 		storeState.bus.busStops.from,
@@ -41,7 +41,9 @@ const HomeScreen = ({ navigation }) => {
 		<View style={styles.container}>
 			<ThemeProvider>
 				<Text>
-					Next bus from {from} to {to} leaves at {upcomingBusTime.leave}
+					{upcomingBusTime !== undefined
+						? `Next bus from ${from} to ${to} leaves at ${upcomingBusTime.leave}`
+						: `No bus going from ${from} to ${to} today`}
 				</Text>
 				<Button
 					icon={

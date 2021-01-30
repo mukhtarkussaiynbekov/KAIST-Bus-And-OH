@@ -55,8 +55,8 @@ export default (state = INITIAL_STATE, action) => {
 			};
 		// case DATA_FETCH_SUCCESS:
 		// 	return {
-		// 		...state
-		// 		// timetable: getTimetable(busOptions, busTypes, dayTypes, action.payload)
+		// 		...newState
+		// 		busStops: { ...newState.busStops, timetable: getTimetable(newState) }
 		// 	};
 		case SWAP_STOPS:
 			const temp = state.busStops.from;
@@ -76,10 +76,10 @@ export default (state = INITIAL_STATE, action) => {
 				}
 			};
 		case CHANGE_TYPE:
-			const busStops = getNameIDValue(
-				state.database.busOptions,
-				getNameID(state.busType.items, action.payload)
-			);
+			const busStops =
+				state.database.busOptions[
+					getPropValue(state.busType.items, action.payload, ID, NAME_ID)
+				];
 			const newState2 = {
 				...state,
 				busType: {

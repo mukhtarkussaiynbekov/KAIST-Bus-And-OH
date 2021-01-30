@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+import { PersistGate } from 'redux-persist/integration/react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Provider } from 'react-redux';
+import { store, persistor } from './src/store/index';
+import { getUpdates } from './src/firebase';
 import HomeScreen from './src/screens/HomeScreen';
 import BusScreen from './src/screens/BusScreen';
 import OperatingHoursScreen from './src/screens/OperatingHoursScreen';
-import { Provider } from 'react-redux';
-import { store } from './src/store/index';
-import { getUpdates } from './src/firebase';
 
 const navigator = createStackNavigator(
 	{
@@ -30,7 +31,9 @@ export default () => {
 	}, []);
 	return (
 		<Provider store={store}>
-			<App />
+			<PersistGate loading={null} persistor={persistor}>
+				<App />
+			</PersistGate>
 		</Provider>
 	);
 };
