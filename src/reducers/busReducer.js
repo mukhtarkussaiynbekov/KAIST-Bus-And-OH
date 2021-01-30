@@ -44,13 +44,15 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case REMOVE_TIME:
+			const timetable = state.busStops.timetable;
+			const idx = timetable.indexOf(action.payload);
+			let copyTimetable = [...timetable];
+			copyTimetable.splice(idx, 1);
 			return {
 				...state,
 				busStops: {
 					...state.busStops,
-					timetable: state.busStops.timetable.filter(
-						time => time !== action.payload
-					)
+					timetable: copyTimetable
 				}
 			};
 		// case DATA_FETCH_SUCCESS:

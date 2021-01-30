@@ -208,6 +208,17 @@ export const getDayClassification = dayType => {
 	}
 };
 
+export const addMidnightTimes = timetable => {
+	let midnightTimes = [];
+	for (let time of timetable) {
+		const timeLeft = getTimeLeft(time.leave);
+		if (time.leave < '04' && timeLeft >= -300 && timeLeft <= 4 * 60 * 60) {
+			midnightTimes.push(time);
+		}
+	}
+	return [...midnightTimes, ...timetable];
+};
+
 export const getTimetable = state => {
 	let dayType = getPropValue(
 		state.dayType.items,
@@ -246,7 +257,12 @@ export const getTimetable = state => {
 		state.database.travelTimes[TRAVEL_TIMES],
 		timetable
 	);
-	return getUniqueTimeValues(timetable);
+	timetable = getUniqueTimeValues(timetable);
+	let now = moment().tz('Asia/Seoul');
+	if (now.format('HH') < '04') {
+		timetable = addMidnightTimes(timetable);
+	}
+	return timetable;
 };
 
 export const getUpcomingTime = state => {

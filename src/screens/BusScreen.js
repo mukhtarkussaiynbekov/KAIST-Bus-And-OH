@@ -18,7 +18,6 @@ import { getPropValue } from '../reducers/helperFunctions';
 
 const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
-	// console.log(state);
 	const dispatch = useDispatch();
 	return (
 		<>
@@ -111,7 +110,6 @@ BusScreen.navigationOptions = {
 const styles = StyleSheet.create({
 	topDropdowns: {
 		flexDirection: 'row'
-		// justifyContent: "space-evenly",
 	},
 	iconContainer: {
 		flexDirection: 'row',
