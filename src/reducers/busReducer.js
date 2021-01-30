@@ -11,9 +11,11 @@ import {
 	CHANGE_TO,
 	CHANGE_DAY,
 	DATA_FETCH_SUCCESS,
-	REMOVE_TIME
+	REMOVE_TIME,
+	NAME_ID,
+	ID
 } from '../constants';
-import { getNameID, getNameIDValue, getTimetable } from './helperFunctions';
+import { getPropValue, getTimetable } from './helperFunctions';
 
 const INITIAL_STATE = {
 	database: {
@@ -31,10 +33,8 @@ const INITIAL_STATE = {
 		items: busOptionsLocal[DAY_TYPES]
 	},
 	busStops: {
-		items: getNameIDValue(
-			busOptionsLocal,
-			getNameID(busOptionsLocal[BUS_TYPES], 2)
-		), // campus stops
+		items:
+			busOptionsLocal[getPropValue(busOptionsLocal[BUS_TYPES], 2, ID, NAME_ID)], // campus stops
 		from: 0, // main campus
 		to: 1, // munji
 		timetable: []

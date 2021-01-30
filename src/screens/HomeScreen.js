@@ -1,15 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
+import moment from 'moment-timezone';
+import { getPropValue, getUpcomingTime } from '../reducers/helperFunctions';
+import { NAME, TODAY, ID, NAME_ID } from '../constants';
 
 const HomeScreen = ({ navigation }) => {
-	const state = useSelector(storeState => storeState);
-	// console.log(state);
+	const storeState = useSelector(storeState => storeState);
+	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setNow(moment().tz('Asia/Seoul'));
+		}, 1000);
+		return () => clearInterval(interval);
+		// we need to clean up after a component is removed. Otherwise, memory leak.
+	}, []);
+
+	const upcomingBusTime = getUpcomingTime({
+		...storeState.bus,
+		dayType: {
+			...storeState.bus.dayType,
+			selected: getPropValue(storeState.bus.dayType.items, TODAY, NAME_ID, ID)
+		}
+	}); // TODO: handle edge cases when there is no upcoming bus
+	let from = getPropValue(
+		storeState.bus.busStops.items,
+		storeState.bus.busStops.from,
+		ID,
+		NAME
+	);
+	let to = getPropValue(
+		storeState.bus.busStops.items,
+		storeState.bus.busStops.to,
+		ID,
+		NAME
+	);
+
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>
-				{/* <Text>Next bus leaves at {state.busStops.timetable[0].leave}</Text> */}
+				<Text>
+					Next bus from {from} to {to} leaves at {upcomingBusTime.leave}
+				</Text>
 				<Button
 					icon={
 						<Icon

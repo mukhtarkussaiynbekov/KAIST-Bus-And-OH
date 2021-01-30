@@ -29,29 +29,24 @@ export const getTimeLeft = time => {
 	return timeLeft;
 };
 
-export const getObjectByID = (objectsList, id) => {
+export const getPropValue = (
+	objectsList,
+	propValue,
+	propIdentifier,
+	targetPropIdentifier
+) => {
 	for (let object of objectsList) {
-		if (object[ID] === id) {
-			return object;
+		if (object[propIdentifier] === propValue) {
+			return object[targetPropIdentifier];
 		}
 		if (CHILDREN in object) {
 			for (let child of object[CHILDREN]) {
-				if (child[ID] === id) {
-					return child;
+				if (child[propIdentifier] === propValue) {
+					return child[targetPropIdentifier];
 				}
 			}
 		}
 	}
-};
-
-export const getNameID = (objectsList, id) => {
-	const object = getObjectByID(objectsList, id);
-	const nameID = object[NAME_ID];
-	return nameID;
-};
-
-export const getNameIDValue = (objectsContainer, nameID) => {
-	return objectsContainer[nameID];
 };
 
 export const getDepartureTimes = (
@@ -61,6 +56,7 @@ export const getDepartureTimes = (
 	travelTimes,
 	fromIndex
 ) => {
+	// TODO: handle case when it is midnight and there are still upcoming buses.
 	let route = object[ROUTE];
 	let travelStops = route.slice(0, fromIndex + 1);
 	let travelTime = getTravelTime(travelStops, travelTimes);
@@ -213,11 +209,26 @@ export const getWeekdaysOrWeekends = dayType => {
 };
 
 export const getTimetable = state => {
-	let dayType = getNameID(state.dayType.items, state.dayType.selected);
-	let busType = getNameID(state.busType.items, state.busType.selected);
-	let listOfBusStops = getNameIDValue(state.database.timetableAll, busType);
-	let from = getNameID(state.busStops.items, state.busStops.from);
-	let to = getNameID(state.busStops.items, state.busStops.to);
+	let dayType = getPropValue(
+		state.dayType.items,
+		state.dayType.selected,
+		ID,
+		NAME_ID
+	);
+	let busType = getPropValue(
+		state.busType.items,
+		state.busType.selected,
+		ID,
+		NAME_ID
+	);
+	let listOfBusStops = state.database.timetableAll[busType];
+	let from = getPropValue(
+		state.busStops.items,
+		state.busStops.from,
+		ID,
+		NAME_ID
+	);
+	let to = getPropValue(state.busStops.items, state.busStops.to, ID, NAME_ID);
 	if (from === to) {
 		return [];
 	}
@@ -236,4 +247,13 @@ export const getTimetable = state => {
 		timetable
 	);
 	return getUniqueTimeValues(timetable);
+};
+
+export const getUpcomingTime = state => {
+	const timetable = getTimetable(state);
+	for (let time of timetable) {
+		if (getTimeLeft(time.leave) >= 0) {
+			return time;
+		}
+	}
 };

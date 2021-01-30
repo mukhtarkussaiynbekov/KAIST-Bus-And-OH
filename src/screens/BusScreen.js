@@ -5,6 +5,8 @@ import Dropdown from '../components/Dropdown';
 import TimetableCell from '../components/TimetableCell';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+	NAME_ID,
+	ID,
 	SWAP_STOPS,
 	CHANGE_TYPE,
 	CHANGE_FROM,
@@ -12,7 +14,7 @@ import {
 	CHANGE_DAY,
 	REMOVE_TIME
 } from '../constants';
-import { getNameID } from '../reducers/helperFunctions';
+import { getPropValue } from '../reducers/helperFunctions';
 
 const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
@@ -88,7 +90,12 @@ const BusScreen = () => {
 							firstColumnText={item.leave}
 							secondColumnText={item.arrive}
 							timeOut={() => dispatch({ type: REMOVE_TIME, payload: item })}
-							dayType={getNameID(state.dayType.items, state.dayType.selected)}
+							dayType={getPropValue(
+								state.dayType.items,
+								state.dayType.selected,
+								ID,
+								NAME_ID
+							)}
 						/>
 					);
 				}}

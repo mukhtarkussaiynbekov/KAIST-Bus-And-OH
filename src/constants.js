@@ -1,3 +1,4 @@
+export const NAME = 'name';
 export const NAME_ID = 'name_id';
 export const ID = 'id';
 export const CHILDREN = 'children';
