@@ -82,7 +82,7 @@ const BusScreen = () => {
 			/>
 			<FlatList
 				data={state.busStops.timetable}
-				keyExtractor={time => time.leave}
+				keyExtractor={(time, index) => time.leave + index}
 				renderItem={({ item }) => {
 					return (
 						<TimetableCell
