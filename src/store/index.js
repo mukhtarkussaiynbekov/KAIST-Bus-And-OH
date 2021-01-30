@@ -13,3 +13,4 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(persistedReducer);
 export const persistor = persistStore(store);
+// TODO: apply thunk middleware to incorporate firebase. async calls need thunk middleware

@@ -70,13 +70,8 @@ export default (state = INITIAL_STATE, action) => {
 					to: temp
 				}
 			};
-			return {
-				...newState1,
-				busStops: {
-					...newState1.busStops,
-					timetable: getTimetable(newState1)
-				}
-			};
+			newState1.busStops.timetable = getTimetable(newState1);
+			return newState1;
 		case CHANGE_TYPE:
 			const busStops =
 				state.database.busOptions[
@@ -95,10 +90,8 @@ export default (state = INITIAL_STATE, action) => {
 					to: 1
 				}
 			};
-			return {
-				...newState2,
-				busStops: { ...newState2.busStops, timetable: getTimetable(newState2) }
-			};
+			newState2.busStops.timetable = getTimetable(newState2);
+			return newState2;
 		case CHANGE_DAY:
 			const newState3 = {
 				...state,
@@ -107,10 +100,8 @@ export default (state = INITIAL_STATE, action) => {
 					selected: action.payload
 				}
 			};
-			return {
-				...newState3,
-				busStops: { ...newState3.busStops, timetable: getTimetable(newState3) }
-			};
+			newState3.busStops.timetable = getTimetable(newState3);
+			return newState3;
 		case CHANGE_FROM:
 			const newState4 = {
 				...state,
@@ -119,10 +110,8 @@ export default (state = INITIAL_STATE, action) => {
 					from: action.payload
 				}
 			};
-			return {
-				...newState4,
-				busStops: { ...newState4.busStops, timetable: getTimetable(newState4) }
-			};
+			newState4.busStops.timetable = getTimetable(newState4);
+			return newState4;
 		case CHANGE_TO:
 			const newState5 = {
 				...state,
@@ -131,10 +120,8 @@ export default (state = INITIAL_STATE, action) => {
 					to: action.payload
 				}
 			};
-			return {
-				...newState5,
-				busStops: { ...newState5.busStops, timetable: getTimetable(newState5) }
-			};
+			newState5.busStops.timetable = getTimetable(newState5);
+			return newState5;
 		default:
 			return {
 				...state,

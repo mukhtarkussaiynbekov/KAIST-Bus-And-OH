@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment-timezone';
 import { getPropValue, getUpcomingTime } from '../reducers/helperFunctions';
 import { NAME, TODAY, ID, NAME_ID } from '../constants';
+import { getUpdates } from '../firebase';
 
 const HomeScreen = ({ navigation }) => {
 	const storeState = useSelector(storeState => storeState);
+	const dispatch = useDispatch();
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
+		getUpdates(dispatch);
 		const interval = setInterval(() => {
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);

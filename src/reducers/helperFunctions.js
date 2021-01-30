@@ -259,7 +259,7 @@ export const getTimetable = state => {
 	);
 	timetable = getUniqueTimeValues(timetable);
 	let now = moment().tz('Asia/Seoul');
-	if (now.format('HH') < '04') {
+	if (now.format('HH') < '04' && dayType === TODAY) {
 		timetable = addMidnightTimes(timetable);
 	}
 	return timetable;
