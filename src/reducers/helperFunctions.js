@@ -17,13 +17,13 @@ import {
 } from '../constants';
 import moment from 'moment-timezone';
 
-export const getTimeLeft = time => {
+export const getTimeLeft = (time, indexOfItem = 0) => {
 	// returns time left in seconds
 	let leaveTime = moment.duration(time, 'HH:mm');
 	let nowFormatted = moment().format('HH:mm:ss');
 	let now = moment.duration(nowFormatted, 'HH:mm:ss');
 	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
-	if (leaveTime.hours() < 4 && now.hours() > leaveTime.hours()) {
+	if (leaveTime.hours() < 4 && indexOfItem >= 5) {
 		timeLeft += 24 * 60 * 60;
 	}
 	return timeLeft;

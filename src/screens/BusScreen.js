@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
@@ -7,18 +7,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 	NAME_ID,
 	ID,
+	TODAY,
 	SWAP_STOPS,
 	CHANGE_TYPE,
 	CHANGE_FROM,
 	CHANGE_TO,
-	CHANGE_DAY,
-	REMOVE_TIME
+	CHANGE_DAY
 } from '../constants';
-import { getPropValue } from '../reducers/helperFunctions';
+import { getPropValue, getTimeLeft } from '../reducers/helperFunctions';
+import moment from 'moment-timezone';
 
 const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
 	const dispatch = useDispatch();
+	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (now.format('HH:mm:ss') === '00:00:00') {
+				dispatch({ type: '' });
+			}
+			setNow(moment().tz('Asia/Seoul'));
+		}, 1000);
+		return () => clearInterval(interval);
+		// we need to clean up after a component is removed. Otherwise, memory leak.
+	}, []);
 	return (
 		<>
 			<View style={styles.topDropdowns}>
@@ -78,23 +90,27 @@ const BusScreen = () => {
 			<TimetableCell
 				firstColumnText={'From\nLeave At'}
 				secondColumnText={'To\nArrive At'}
-				isHeader
 			/>
 			<FlatList
 				data={state.busStops.timetable}
 				keyExtractor={(time, index) => time.leave + index}
-				renderItem={({ item }) => {
+				renderItem={({ item, index }) => {
+					const dayType = getPropValue(
+						state.dayType.items,
+						state.dayType.selected,
+						ID,
+						NAME_ID
+					);
+					if (dayType === TODAY) {
+						const timeLeft = getTimeLeft(item.leave, index);
+						if (timeLeft <= -300) {
+							return null;
+						}
+					}
 					return (
 						<TimetableCell
 							firstColumnText={item.leave}
 							secondColumnText={item.arrive}
-							timeOut={() => dispatch({ type: REMOVE_TIME, payload: item })}
-							dayType={getPropValue(
-								state.dayType.items,
-								state.dayType.selected,
-								ID,
-								NAME_ID
-							)}
 						/>
 					);
 				}}
