@@ -23,6 +23,9 @@ const BusScreen = () => {
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
 		const interval = setInterval(() => {
+			if (now.format('HH:mm:ss') === '00:00:00') {
+				dispatch({ type: '' });
+			}
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);
 		return () => clearInterval(interval);

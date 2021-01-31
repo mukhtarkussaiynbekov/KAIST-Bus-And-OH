@@ -2,6 +2,7 @@ import {
 	CHILDREN,
 	ID,
 	NAME_ID,
+	YESTERDAY,
 	TODAY,
 	TOMORROW,
 	WEEKDAYS,
@@ -19,16 +20,16 @@ import moment from 'moment-timezone';
 
 export const getTimeLeft = (time, indexOfItem = 0) => {
 	// returns time left in seconds
-	let leaveTime = moment.duration(time, 'HH:mm');
-	let nowFormatted = moment().format('HH:mm:ss');
-	let now = moment.duration(nowFormatted, 'HH:mm:ss');
+	const leaveTime = moment.duration(time, 'HH:mm');
+	const nowFormatted = moment().format('HH:mm:ss');
+	const now = moment.duration(nowFormatted, 'HH:mm:ss');
 	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
-	// below conditions with number 7 are hard coded.
+	// below conditions with numbers 7 and 5 are hard coded.
 	// currently, the last bus leaves after 3AM and
 	// there is no bus at 4AM. You can reduce the
 	// number, but then it will not handle future cases
 	// where school decides to add additional bus times.
-	if (leaveTime.hours() < 7 && indexOfItem > 7) {
+	if (leaveTime.hours() < 7 && indexOfItem >= 5) {
 		timeLeft += 24 * 60 * 60;
 	}
 	return timeLeft;
@@ -61,10 +62,9 @@ export const getDepartureTimes = (
 	travelTimes,
 	fromIndex
 ) => {
-	// TODO: handle case when it is midnight and there are still upcoming buses.
-	let route = object[ROUTE];
-	let travelStops = route.slice(0, fromIndex + 1);
-	let travelTime = getTravelTime(travelStops, travelTimes);
+	const route = object[ROUTE];
+	const travelStops = route.slice(0, fromIndex + 1);
+	const travelTime = getTravelTime(travelStops, travelTimes);
 	const departureTimesObject = object[DEPARTURE_TIMES];
 	const dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
@@ -76,8 +76,8 @@ export const getDepartureTimes = (
 	}
 	let departureTimes = [];
 	for (let time of initialDepartureTimes) {
-		let leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
-		let currentLeaveTime = leaveTime.clone().add(travelTime, 'm');
+		const leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
+		const currentLeaveTime = leaveTime.clone().add(travelTime, 'm');
 		departureTimes.push(currentLeaveTime);
 	}
 	return departureTimes;
@@ -106,7 +106,7 @@ export const getFromToIndices = (from, to, route) => {
 export const getTimeObjects = (listOfBusStops, from, to) => {
 	let objects = [];
 	for (let item of listOfBusStops) {
-		let route = item[ROUTE];
+		const route = item[ROUTE];
 		const [fromIndex, toIndex] = getFromToIndices(from, to, route);
 		if (fromIndex > -1 && toIndex > -1) {
 			objects.push(item);
@@ -131,8 +131,8 @@ export const getTimeInterval = (from, to, travelTimeIntervals) => {
 export const getTravelTime = (travelStops, travelTimeIntervals) => {
 	let travelTime = 0;
 	for (let i = 1; i < travelStops.length; i++) {
-		let from = travelStops[i - 1];
-		let to = travelStops[i];
+		const from = travelStops[i - 1];
+		const to = travelStops[i];
 		travelTime += getTimeInterval(from, to, travelTimeIntervals);
 	}
 	return travelTime;
@@ -161,9 +161,9 @@ export const populateTimetable = (
 ) => {
 	for (let object of objects) {
 		const [fromIndex, toIndex] = getFromToIndices(from, to, object[ROUTE]);
-		let travelStops = object[ROUTE].slice(fromIndex, toIndex + 1);
-		let travelTime = getTravelTime(travelStops, travelTimes);
-		let leaveTimes = getDepartureTimes(
+		const travelStops = object[ROUTE].slice(fromIndex, toIndex + 1);
+		const travelTime = getTravelTime(travelStops, travelTimes);
+		const leaveTimes = getDepartureTimes(
 			object,
 			dayType,
 			specialHolidays,
@@ -171,7 +171,7 @@ export const populateTimetable = (
 			fromIndex
 		);
 		for (let leaveTime of leaveTimes) {
-			let arriveTime = leaveTime.clone().add(travelTime, 'm');
+			const arriveTime = leaveTime.clone().add(travelTime, 'm');
 			timetable.push({
 				leave: leaveTime.format('HH:mm'),
 				arrive: arriveTime.format('HH:mm')
@@ -181,16 +181,18 @@ export const populateTimetable = (
 };
 
 export const isSpeicalHoliday = (dateToCheck, specialHolidays) => {
-	if (dateToCheck !== TODAY && dateToCheck !== TOMORROW) {
+	if (dateToCheck === WEEKDAYS || dateToCheck === WEEKENDS) {
 		return false;
 	}
 
-	let now = moment().tz('Asia/Seoul');
+	const now = moment().tz('Asia/Seoul');
 	if (dateToCheck === TOMORROW) {
 		now.add(1, 'days');
+	} else if (dateToCheck === YESTERDAY) {
+		now.subtract(1, 'days');
 	}
 
-	let formattedDate = now.format('MM/DD');
+	const formattedDate = now.format('MM/DD');
 	for (let date of specialHolidays) {
 		if (date === formattedDate) {
 			return true;
@@ -203,19 +205,23 @@ export const getDayClassification = dayType => {
 	let now = moment().tz('Asia/Seoul');
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
 	switch (dayType) {
+		case YESTERDAY:
+			day_of_week = day_of_week - 1 < 0 ? 6 : day_of_week - 1;
+			break;
 		case TODAY:
-			return day_of_week <= 4 ? WEEKDAYS : WEEKENDS;
+			break;
 		case TOMORROW:
 			day_of_week = (day_of_week + 1) % 7;
-			return day_of_week <= 4 ? WEEKDAYS : WEEKENDS;
+			break;
 		default:
 			return dayType;
 	}
+	return day_of_week <= 4 ? WEEKDAYS : WEEKENDS;
 };
 
-export const addMidnightTimes = timetable => {
+export const addMidnightTimes = (timetable, yesterdayTimetable) => {
 	let midnightTimes = [];
-	for (let time of timetable) {
+	for (let time of yesterdayTimetable) {
 		// same assumption as in getTimeLeft function
 		if (time.leave < '07') {
 			midnightTimes.push(time);
@@ -224,27 +230,29 @@ export const addMidnightTimes = timetable => {
 	return [...midnightTimes, ...timetable];
 };
 
-export const getTimetable = state => {
-	let dayType = getPropValue(
-		state.dayType.items,
-		state.dayType.selected,
-		ID,
-		NAME_ID
-	);
-	let busType = getPropValue(
+export const getTimetable = (state, dayType = undefined) => {
+	if (dayType === undefined) {
+		dayType = getPropValue(
+			state.dayType.items,
+			state.dayType.selected,
+			ID,
+			NAME_ID
+		);
+	}
+	const busType = getPropValue(
 		state.busType.items,
 		state.busType.selected,
 		ID,
 		NAME_ID
 	);
-	let listOfBusStops = state.database.timetableAll[busType];
-	let from = getPropValue(
+	const listOfBusStops = state.database.timetableAll[busType];
+	const from = getPropValue(
 		state.busStops.items,
 		state.busStops.from,
 		ID,
 		NAME_ID
 	);
-	let to = getPropValue(state.busStops.items, state.busStops.to, ID, NAME_ID);
+	const to = getPropValue(state.busStops.items, state.busStops.to, ID, NAME_ID);
 	if (from === to) {
 		return [];
 	}
@@ -264,7 +272,8 @@ export const getTimetable = state => {
 	);
 	timetable = getUniqueTimeValues(timetable);
 	if (dayType === TODAY) {
-		timetable = addMidnightTimes(timetable);
+		const yesterdayTimetable = getTimetable(state, YESTERDAY);
+		timetable = addMidnightTimes(timetable, yesterdayTimetable);
 	}
 	return timetable;
 };

@@ -12,6 +12,7 @@ export const CHANGE_FROM = 'change_from';
 export const CHANGE_TO = 'change_to';
 export const DATA_FETCH_SUCCESS = 'data_fetch_success';
 
+export const YESTERDAY = 'yesterday';
 export const TODAY = 'today';
 export const TOMORROW = 'tomorrow';
 export const WEEKDAYS = 'weekdays';
