@@ -1,6 +1,6 @@
-import busOptionsLocal from '../json/busOptions.json';
-import busTimetableLocal from '../json/busTimetable.json';
-import busTravelTimesLocal from '../json/busTravelTimes.json';
+import busOptionsLocal from '../json/busData/busOptions.json';
+import busTimetableLocal from '../json/busData/busTimetable.json';
+import busTravelTimesLocal from '../json/busData/busTravelTimes.json';
 import specialHolidaysLocal from '../json/specialHolidays.json';
 import {
 	BUS_TYPES,

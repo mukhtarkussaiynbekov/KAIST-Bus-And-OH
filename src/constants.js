@@ -26,3 +26,5 @@ export const STOP_ONE = 'stopOne';
 export const STOP_TWO = 'stopTwo';
 export const INTERVAL = 'interval';
 export const SAME_OPPOSITE_INTERVAL = 'sameOppositeInterval';
+
+export const FACILITIES = 'facilities';

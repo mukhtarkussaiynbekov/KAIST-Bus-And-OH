@@ -1,0 +1,88 @@
+{
+	"dayTypes": [
+		{
+			"name": "Today",
+			"id": 0,
+			"name_id": "today"
+		},
+		{
+			"name": "Tomorrow",
+			"id": 1,
+			"name_id": "tomorrow"
+		},
+		{
+			"name": "Monday",
+			"id": 2,
+			"name_id": "monday"
+		},
+		{
+			"name": "Tuesday",
+			"id": 3,
+			"name_id": "tuesday"
+		},
+		{
+			"name": "Wednesday",
+			"id": 4,
+			"name_id": "wednesday"
+		},
+		{
+			"name": "Thursday",
+			"id": 5,
+			"name_id": "thursday"
+		},
+		{
+			"name": "Friday",
+			"id": 6,
+			"name_id": "friday"
+		},
+		{
+			"name": "Saturday",
+			"id": 7,
+			"name_id": "saturday"
+		},
+		{
+			"name": "Sunday",
+			"id": 8,
+			"name_id": "sunday"
+		}
+	],
+	"facilities": [
+		{
+			"name": "Mejom (N12)",
+			"id": 0,
+			"name_id": "mejom_n12",
+			"children": [
+				{
+					"name": "North (N12)",
+					"id": 1,
+					"name_id": "mejom_n12"
+				},
+				{
+					"name": "N1",
+					"id": 2,
+					"name_id": "mejom_n1"
+				},
+				{
+					"name": "West (W4-1)",
+					"id": 3,
+					"name_id": "mejom_w4"
+				},
+				{
+					"name": "W2",
+					"id": 4,
+					"name_id": "mejom_w2"
+				},
+				{
+					"name": "East (E5)",
+					"id": 5,
+					"name_id": "mejom_e5"
+				},
+				{
+					"name": "Sejong Hall (E7)",
+					"id": 6,
+					"name_id": "mejom_e7"
+				}
+			]
+		}
+	]
+}

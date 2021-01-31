@@ -1,12 +1,33 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ThemeProvider, Text } from 'react-native-elements';
+import { useDispatch, useSelector } from 'react-redux';
+import Dropdown from '../components/Dropdown';
 
 const OperatingHoursScreen = () => {
+	const state = useSelector(storeState => storeState.operatingHours);
+	const dispatch = useDispatch();
 	return (
-		<ThemeProvider>
-			<Text>Operating Hours Screen</Text>
-		</ThemeProvider>
+		<View>
+			<Dropdown
+				title="Day"
+				items={state.dayType.items}
+				hideSearch={true}
+				onSelectedItemChange={selectedItem =>
+					dispatch({ type: 'operatingHoursDay', payload: selectedItem })
+				}
+				chosenItem={state.dayType.selected}
+			/>
+			<Dropdown
+				title="Facility"
+				items={state.facility.items}
+				searchPlaceholderText="Search a facility"
+				onSelectedItemChange={selectedItem =>
+					dispatch({ type: 'changeFacility', payload: selectedItem })
+				}
+				chosenItem={state.facility.selected}
+			/>
+		</View>
 	);
 };
 
