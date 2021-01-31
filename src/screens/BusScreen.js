@@ -23,9 +23,6 @@ const BusScreen = () => {
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
 		const interval = setInterval(() => {
-			if (now.format('HH:mm:ss') === '00:00:00') {
-				dispatch({ type: '' });
-			}
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);
 		return () => clearInterval(interval);
@@ -93,7 +90,7 @@ const BusScreen = () => {
 			/>
 			<FlatList
 				data={state.busStops.timetable}
-				keyExtractor={(time, index) => time.leave + index}
+				keyExtractor={(time, index) => index.toString()}
 				renderItem={({ item, index }) => {
 					const dayType = getPropValue(
 						state.dayType.items,

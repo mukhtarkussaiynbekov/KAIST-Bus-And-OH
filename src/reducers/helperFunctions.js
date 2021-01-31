@@ -23,7 +23,12 @@ export const getTimeLeft = (time, indexOfItem = 0) => {
 	let nowFormatted = moment().format('HH:mm:ss');
 	let now = moment.duration(nowFormatted, 'HH:mm:ss');
 	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
-	if (leaveTime.hours() < 4 && indexOfItem >= 5) {
+	// below conditions with number 7 are hard coded.
+	// currently, the last bus leaves after 3AM and
+	// there is no bus at 4AM. You can reduce the
+	// number, but then it will not handle future cases
+	// where school decides to add additional bus times.
+	if (leaveTime.hours() < 7 && indexOfItem > 7) {
 		timeLeft += 24 * 60 * 60;
 	}
 	return timeLeft;
@@ -211,8 +216,8 @@ export const getDayClassification = dayType => {
 export const addMidnightTimes = timetable => {
 	let midnightTimes = [];
 	for (let time of timetable) {
-		const timeLeft = getTimeLeft(time.leave);
-		if (time.leave < '04' && timeLeft >= -300 && timeLeft <= 4 * 60 * 60) {
+		// same assumption as in getTimeLeft function
+		if (time.leave < '07') {
 			midnightTimes.push(time);
 		}
 	}
@@ -258,8 +263,7 @@ export const getTimetable = state => {
 		timetable
 	);
 	timetable = getUniqueTimeValues(timetable);
-	let now = moment().tz('Asia/Seoul');
-	if (now.format('HH') < '04' && dayType === TODAY) {
+	if (dayType === TODAY) {
 		timetable = addMidnightTimes(timetable);
 	}
 	return timetable;
