@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ThemeProvider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +6,12 @@ import Dropdown from '../components/Dropdown';
 import CountDown from 'react-native-countdown-component';
 import facilityData from '../json/operatingHoursData/operatingHours.json';
 import { getTimeLeftOH } from '../reducers/helperFunctions';
+import moment from 'moment-timezone';
 
 const OperatingHoursScreen = () => {
 	const state = useSelector(storeState => storeState.operatingHours);
 	const dispatch = useDispatch();
+	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	const finish = facilityData['operatingHours'][0]['hours']['Monday']['finish'];
 	const timeLeft = getTimeLeftOH(finish);
 	return (
@@ -34,8 +36,7 @@ const OperatingHoursScreen = () => {
 			/>
 			<CountDown
 				until={timeLeft}
-				onFinish={() => alert('finished')}
-				onPress={() => alert('hello')}
+				onFinish={() => setNow(moment().tz('Asia/Seoul'))}
 				size={30}
 			/>
 		</View>

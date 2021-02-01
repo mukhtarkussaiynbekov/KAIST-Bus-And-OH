@@ -21,7 +21,7 @@ import moment from 'moment-timezone';
 export const getTimeLeft = (time, indexOfItem = 0) => {
 	// returns time left in seconds
 	const leaveTime = moment.duration(time, 'HH:mm');
-	const nowFormatted = moment().format('HH:mm:ss');
+	const nowFormatted = moment().tz('Asia/Seoul').format('HH:mm:ss');
 	const now = moment.duration(nowFormatted, 'HH:mm:ss');
 	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
 	// below conditions with numbers 7 and 5 are hard coded.
