@@ -23,7 +23,12 @@ const BusScreen = () => {
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
 		const interval = setInterval(() => {
-			if (now.format('HH:mm:ss') === '00:00:00') {
+			if (
+				now.format('HH:mm:ss') === '00:00:00' ||
+				now.format('HH:mm:ss') === '00:00:01'
+			) {
+				// added second condition just in case program
+				// might run slowly and miss first condition
 				dispatch({ type: '' });
 			}
 			setNow(moment().tz('Asia/Seoul'));

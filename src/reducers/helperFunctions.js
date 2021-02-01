@@ -286,3 +286,22 @@ export const getUpcomingTime = state => {
 		}
 	}
 };
+
+// Operating Hours helper functions
+
+export const getTimeLeftOH = time => {
+	// returns time left in seconds
+	const leaveTime = moment.duration(time, 'HH:mm');
+	const nowFormatted = moment().format('HH:mm:ss');
+	const now = moment.duration(nowFormatted, 'HH:mm:ss');
+	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
+	// below conditions with numbers 7 and 5 are hard coded.
+	// currently, the last bus leaves after 3AM and
+	// there is no bus at 4AM. You can reduce the
+	// number, but then it will not handle future cases
+	// where school decides to add additional bus times.
+	if (leaveTime.hours() < 7) {
+		timeLeft += 24 * 60 * 60;
+	}
+	return timeLeft;
+};

@@ -1,0 +1,13 @@
+{
+	"operatingHours": [
+		{
+			"name": "mejom_n12",
+			"hours": {
+				"Monday": {
+					"start": "08:30",
+					"finish": "02:00"
+				}
+			}
+		}
+	]
+}
