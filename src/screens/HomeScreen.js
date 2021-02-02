@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
-		getUpdates(dispatch);
+		// getUpdates(dispatch);
 		const interval = setInterval(() => {
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);

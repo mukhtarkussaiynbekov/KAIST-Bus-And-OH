@@ -288,8 +288,9 @@ export const getTimetable = (state, dayType = undefined) => {
 
 export const getUpcomingTime = state => {
 	let timetable = getTimetable(state);
-	for (let time of timetable) {
-		if (getTimeLeft(time.leave) >= 0) {
+	for (const [index, time] of timetable.entries()) {
+		let timeLeft = getTimeLeft(time.leave, index);
+		if (timeLeft >= 0) {
 			return time;
 		}
 	}
