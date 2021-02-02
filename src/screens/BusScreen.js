@@ -21,6 +21,12 @@ const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
 	const dispatch = useDispatch();
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
+	const dayType = getPropValue(
+		state.dayType.items,
+		state.dayType.selected,
+		ID,
+		NAME_ID
+	);
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (
@@ -100,15 +106,9 @@ const BusScreen = () => {
 				data={state.busStops.timetable}
 				keyExtractor={(time, index) => index.toString()}
 				renderItem={({ item, index }) => {
-					const dayType = getPropValue(
-						state.dayType.items,
-						state.dayType.selected,
-						ID,
-						NAME_ID
-					);
 					if (dayType === TODAY) {
-						const timeLeft = getTimeLeft(item.leave, index);
-						if (timeLeft <= -300) {
+						let timeLeft = getTimeLeft(item.leave, index);
+						if (timeLeft < -5) {
 							return null;
 						}
 					}

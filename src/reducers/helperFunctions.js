@@ -18,19 +18,27 @@ import {
 } from '../constants';
 import moment from 'moment-timezone';
 
+export const getHoursAndMinutes = time => {
+	let hours = parseInt(time.slice(0, 2));
+	let minutes = parseInt(time.slice(3));
+	return [hours, minutes];
+};
+
 export const getTimeLeft = (time, indexOfItem = 0) => {
-	// returns time left in seconds
-	const leaveTime = moment.duration(time, 'HH:mm');
-	const nowFormatted = moment().tz('Asia/Seoul').format('HH:mm:ss');
-	const now = moment.duration(nowFormatted, 'HH:mm:ss');
-	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
+	// returns time left in minutes
+	// time is in format HH:mm
+	let [leaveTimeHours, leaveTimeMinutes] = getHoursAndMinutes(time);
+	let now = moment().format('HH:mm');
+	let [nowHours, nowMinutes] = getHoursAndMinutes(now);
+	let timeLeft =
+		leaveTimeHours * 60 + leaveTimeMinutes - (nowHours * 60 + nowMinutes);
 	// below conditions with numbers 7 and 5 are hard coded.
 	// currently, the last bus leaves after 3AM and
 	// there is no bus at 4AM. You can reduce the
 	// number, but then it will not handle future cases
 	// where school decides to add additional bus times.
-	if (leaveTime.hours() < 7 && indexOfItem >= 5) {
-		timeLeft += 24 * 60 * 60;
+	if (leaveTimeHours < 7 && indexOfItem >= 5) {
+		timeLeft += 24 * 60;
 	}
 	return timeLeft;
 };
@@ -62,11 +70,11 @@ export const getDepartureTimes = (
 	travelTimes,
 	fromIndex
 ) => {
-	const route = object[ROUTE];
-	const travelStops = route.slice(0, fromIndex + 1);
-	const travelTime = getTravelTime(travelStops, travelTimes);
-	const departureTimesObject = object[DEPARTURE_TIMES];
-	const dayClassification = getDayClassification(dayType);
+	let route = object[ROUTE];
+	let travelStops = route.slice(0, fromIndex + 1);
+	let travelTime = getTravelTime(travelStops, travelTimes);
+	let departureTimesObject = object[DEPARTURE_TIMES];
+	let dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
 	if (
 		isSpeicalHoliday(dayType, specialHolidays) &&
@@ -76,8 +84,8 @@ export const getDepartureTimes = (
 	}
 	let departureTimes = [];
 	for (let time of initialDepartureTimes) {
-		const leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
-		const currentLeaveTime = leaveTime.clone().add(travelTime, 'm');
+		let leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
+		let currentLeaveTime = leaveTime.clone().add(travelTime, 'm');
 		departureTimes.push(currentLeaveTime);
 	}
 	return departureTimes;
@@ -106,8 +114,8 @@ export const getFromToIndices = (from, to, route) => {
 export const getTimeObjects = (listOfBusStops, from, to) => {
 	let objects = [];
 	for (let item of listOfBusStops) {
-		const route = item[ROUTE];
-		const [fromIndex, toIndex] = getFromToIndices(from, to, route);
+		let route = item[ROUTE];
+		let [fromIndex, toIndex] = getFromToIndices(from, to, route);
 		if (fromIndex > -1 && toIndex > -1) {
 			objects.push(item);
 		}
@@ -131,8 +139,8 @@ export const getTimeInterval = (from, to, travelTimeIntervals) => {
 export const getTravelTime = (travelStops, travelTimeIntervals) => {
 	let travelTime = 0;
 	for (let i = 1; i < travelStops.length; i++) {
-		const from = travelStops[i - 1];
-		const to = travelStops[i];
+		let from = travelStops[i - 1];
+		let to = travelStops[i];
 		travelTime += getTimeInterval(from, to, travelTimeIntervals);
 	}
 	return travelTime;
@@ -160,10 +168,10 @@ export const populateTimetable = (
 	timetable
 ) => {
 	for (let object of objects) {
-		const [fromIndex, toIndex] = getFromToIndices(from, to, object[ROUTE]);
-		const travelStops = object[ROUTE].slice(fromIndex, toIndex + 1);
-		const travelTime = getTravelTime(travelStops, travelTimes);
-		const leaveTimes = getDepartureTimes(
+		let [fromIndex, toIndex] = getFromToIndices(from, to, object[ROUTE]);
+		let travelStops = object[ROUTE].slice(fromIndex, toIndex + 1);
+		let travelTime = getTravelTime(travelStops, travelTimes);
+		let leaveTimes = getDepartureTimes(
 			object,
 			dayType,
 			specialHolidays,
@@ -171,7 +179,7 @@ export const populateTimetable = (
 			fromIndex
 		);
 		for (let leaveTime of leaveTimes) {
-			const arriveTime = leaveTime.clone().add(travelTime, 'm');
+			let arriveTime = leaveTime.clone().add(travelTime, 'm');
 			timetable.push({
 				leave: leaveTime.format('HH:mm'),
 				arrive: arriveTime.format('HH:mm')
@@ -185,14 +193,14 @@ export const isSpeicalHoliday = (dateToCheck, specialHolidays) => {
 		return false;
 	}
 
-	const now = moment().tz('Asia/Seoul');
+	let now = moment().tz('Asia/Seoul');
 	if (dateToCheck === TOMORROW) {
 		now.add(1, 'days');
 	} else if (dateToCheck === YESTERDAY) {
 		now.subtract(1, 'days');
 	}
 
-	const formattedDate = now.format('MM/DD');
+	let formattedDate = now.format('MM/DD');
 	for (let date of specialHolidays) {
 		if (date === formattedDate) {
 			return true;
@@ -239,24 +247,24 @@ export const getTimetable = (state, dayType = undefined) => {
 			NAME_ID
 		);
 	}
-	const busType = getPropValue(
+	let busType = getPropValue(
 		state.busType.items,
 		state.busType.selected,
 		ID,
 		NAME_ID
 	);
-	const listOfBusStops = state.database.timetableAll[busType];
-	const from = getPropValue(
+	let listOfBusStops = state.database.timetableAll[busType];
+	let from = getPropValue(
 		state.busStops.items,
 		state.busStops.from,
 		ID,
 		NAME_ID
 	);
-	const to = getPropValue(state.busStops.items, state.busStops.to, ID, NAME_ID);
+	let to = getPropValue(state.busStops.items, state.busStops.to, ID, NAME_ID);
 	if (from === to) {
 		return [];
 	}
-	const objects = getTimeObjects(listOfBusStops, from, to);
+	let objects = getTimeObjects(listOfBusStops, from, to);
 	if (objects.length === 0) {
 		return [];
 	}
@@ -272,14 +280,14 @@ export const getTimetable = (state, dayType = undefined) => {
 	);
 	timetable = getUniqueTimeValues(timetable);
 	if (dayType === TODAY) {
-		const yesterdayTimetable = getTimetable(state, YESTERDAY);
+		let yesterdayTimetable = getTimetable(state, YESTERDAY);
 		timetable = addMidnightTimes(timetable, yesterdayTimetable);
 	}
 	return timetable;
 };
 
 export const getUpcomingTime = state => {
-	const timetable = getTimetable(state);
+	let timetable = getTimetable(state);
 	for (let time of timetable) {
 		if (getTimeLeft(time.leave) >= 0) {
 			return time;
@@ -291,9 +299,9 @@ export const getUpcomingTime = state => {
 
 export const getTimeLeftOH = time => {
 	// returns time left in seconds
-	const leaveTime = moment.duration(time, 'HH:mm');
-	const nowFormatted = moment().format('HH:mm:ss');
-	const now = moment.duration(nowFormatted, 'HH:mm:ss');
+	let leaveTime = moment.duration(time, 'HH:mm');
+	let nowFormatted = moment().format('HH:mm:ss');
+	let now = moment.duration(nowFormatted, 'HH:mm:ss');
 	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
 	// below conditions with numbers 7 and 5 are hard coded.
 	// currently, the last bus leaves after 3AM and

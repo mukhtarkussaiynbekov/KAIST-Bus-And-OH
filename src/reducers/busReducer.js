@@ -15,6 +15,7 @@ import {
 	ID
 } from '../constants';
 import { getPropValue, getTimetable } from './helperFunctions';
+import _ from 'lodash';
 
 const INITIAL_STATE = {
 	database: {
@@ -48,71 +49,41 @@ export default (state = INITIAL_STATE, action) => {
 		// 		busStops: { ...newState.busStops, timetable: getTimetable(newState) }
 		// 	};
 		case SWAP_STOPS:
-			const temp = state.busStops.from;
-			const newState1 = {
-				...state,
-				busStops: {
-					...state.busStops,
-					from: state.busStops.to,
-					to: temp
-				}
-			};
+			const newState1 = _.cloneDeep(state);
+			const temp = newState1.busStops.from;
+			newState1.busStops.from = newState1.busStops.to;
+			newState1.busStops.to = temp;
 			newState1.busStops.timetable = getTimetable(newState1);
 			return newState1;
 		case CHANGE_TYPE:
+			const newState2 = _.cloneDeep(state);
 			const busStops =
-				state.database.busOptions[
-					getPropValue(state.busType.items, action.payload, ID, NAME_ID)
+				newState2.database.busOptions[
+					getPropValue(newState2.busType.items, action.payload, ID, NAME_ID)
 				];
-			const newState2 = {
-				...state,
-				busType: {
-					...state.busType,
-					selected: action.payload
-				},
-				busStops: {
-					...state.busStops,
-					items: busStops,
-					from: 0,
-					to: 1
-				}
-			};
+			newState2.busStops.items = busStops;
+			newState2.busStops.from = 0;
+			newState2.busStops.to = 1;
 			newState2.busStops.timetable = getTimetable(newState2);
 			return newState2;
 		case CHANGE_DAY:
-			const newState3 = {
-				...state,
-				dayType: {
-					...state.dayType,
-					selected: action.payload
-				}
-			};
+			const newState3 = _.cloneDeep(state);
+			newState3.dayType.selected = action.payload;
 			newState3.busStops.timetable = getTimetable(newState3);
 			return newState3;
 		case CHANGE_FROM:
-			const newState4 = {
-				...state,
-				busStops: {
-					...state.busStops,
-					from: action.payload
-				}
-			};
+			const newState4 = _.cloneDeep(state);
+			newState4.busStops.from = action.payload;
 			newState4.busStops.timetable = getTimetable(newState4);
 			return newState4;
 		case CHANGE_TO:
-			const newState5 = {
-				...state,
-				busStops: {
-					...state.busStops,
-					to: action.payload
-				}
-			};
+			const newState5 = _.cloneDeep(state);
+			newState5.busStops.to = action.payload;
 			newState5.busStops.timetable = getTimetable(newState5);
 			return newState5;
 		default:
-			return {
-				...state,
-				busStops: { ...state.busStops, timetable: getTimetable(state) }
-			};
+			const newState6 = _.cloneDeep(state);
+			newState6.busStops.timetable = getTimetable(newState6);
+			return newState6;
 	}
 };
