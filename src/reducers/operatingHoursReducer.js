@@ -3,7 +3,8 @@ import optionsLocal from '../json/operatingHoursData/operatingHoursOptions.json'
 
 const INITIAL_STATE = {
 	database: {
-		options: optionsLocal
+		options: optionsLocal,
+		realTimeDatabase: {}
 	},
 	dayType: {
 		selected: 0, // today
