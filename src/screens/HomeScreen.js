@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import moment from 'moment-timezone';
 import { getPropValue, getUpcomingTime } from '../reducers/helperFunctions';
-import { NAME, TODAY, ID, NAME_ID } from '../constants';
+import { NAME, TODAY, ID, NAME_ID, BUS_TYPES, DAY_TYPES } from '../constants';
 import { getUpdates } from '../firebase';
 
 const HomeScreen = ({ navigation }) => {
 	const storeState = useSelector(storeState => storeState);
-	const dispatch = useDispatch();
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
-		// getUpdates(dispatch);
+		getUpdates();
 		const interval = setInterval(() => {
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);
@@ -20,25 +19,22 @@ const HomeScreen = ({ navigation }) => {
 		// we need to clean up after a component is removed. Otherwise, memory leak.
 	}, []);
 
+	const busState = storeState.bus;
+	const busOptions = busState.database.busOptions;
+	const dayTypes = busOptions[DAY_TYPES];
+	const busStopsClassfication = getPropValue(
+		busOptions[BUS_TYPES],
+		busState.busType,
+		ID,
+		NAME_ID
+	);
+	const busStops = busOptions[busStopsClassfication];
 	const upcomingBusTime = getUpcomingTime({
 		...storeState.bus,
-		dayType: {
-			...storeState.bus.dayType,
-			selected: getPropValue(storeState.bus.dayType.items, TODAY, NAME_ID, ID)
-		}
+		dayType: getPropValue(dayTypes, TODAY, NAME_ID, ID)
 	});
-	let from = getPropValue(
-		storeState.bus.busStops.items,
-		storeState.bus.busStops.from,
-		ID,
-		NAME
-	);
-	let to = getPropValue(
-		storeState.bus.busStops.items,
-		storeState.bus.busStops.to,
-		ID,
-		NAME
-	);
+	let from = getPropValue(busStops, busState.from, ID, NAME);
+	let to = getPropValue(busStops, busState.to, ID, NAME);
 
 	return (
 		<View style={styles.container}>

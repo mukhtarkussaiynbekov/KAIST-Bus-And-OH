@@ -17,12 +17,14 @@ if (firebase.apps.length === 0) {
 	firebase.initializeApp(firebaseConfig);
 }
 
-export const getUpdates = dispatch => {
-	firebase
-		.database()
-		.ref()
-		.on('value', snapshot => {
-			let database = snapshot.val();
-			dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
-		});
+export const getUpdates = () => {
+	return dispatch => {
+		firebase
+			.database()
+			.ref()
+			.on('value', snapshot => {
+				let database = snapshot.val();
+				dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
+			});
+	};
 };

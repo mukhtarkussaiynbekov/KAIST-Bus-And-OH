@@ -14,7 +14,9 @@ import {
 	STOP_ONE,
 	STOP_TWO,
 	INTERVAL,
-	SAME_OPPOSITE_INTERVAL
+	SAME_OPPOSITE_INTERVAL,
+	BUS_TYPES,
+	DAY_TYPES
 } from '../constants';
 import moment from 'moment-timezone';
 
@@ -239,28 +241,23 @@ export const addMidnightTimes = (timetable, yesterdayTimetable) => {
 };
 
 export const getTimetable = (state, dayType = undefined) => {
+	const busOptions = state.database.busOptions;
+	let dayTypes = busOptions[DAY_TYPES];
 	if (dayType === undefined) {
-		dayType = getPropValue(
-			state.dayType.items,
-			state.dayType.selected,
-			ID,
-			NAME_ID
-		);
+		dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	}
-	let busType = getPropValue(
-		state.busType.items,
-		state.busType.selected,
-		ID,
-		NAME_ID
-	);
+	let busTypes = busOptions[BUS_TYPES];
+	let busType = getPropValue(busTypes, state.busType, ID, NAME_ID);
 	let listOfBusStops = state.database.timetableAll[busType];
-	let from = getPropValue(
-		state.busStops.items,
-		state.busStops.from,
+	let busStopsClassfication = getPropValue(
+		busOptions[BUS_TYPES],
+		state.busType,
 		ID,
 		NAME_ID
 	);
-	let to = getPropValue(state.busStops.items, state.busStops.to, ID, NAME_ID);
+	const busStops = busOptions[busStopsClassfication];
+	let from = getPropValue(busStops, state.from, ID, NAME_ID);
+	let to = getPropValue(busStops, state.to, ID, NAME_ID);
 	if (from === to) {
 		return [];
 	}
@@ -313,4 +310,29 @@ export const getTimeLeftOH = time => {
 		timeLeft += 24 * 60 * 60;
 	}
 	return timeLeft;
+};
+
+export const getFolderAndFileNames = text => {
+	let folderEndIndex = text.indexOf('_');
+	let folder = text.slice(0, folderEndIndex);
+	let file = text.slice(folderEndIndex + 1);
+	return [folder, file];
+};
+
+export const getOHJSON = state => {
+	dayType = getPropValue(
+		state.dayType.items,
+		state.dayType.selected,
+		ID,
+		NAME_ID
+	);
+
+	let facilityName = getPropValue(
+		state.facility.items,
+		state.facility.selected,
+		ID,
+		NAME_ID
+	);
+	let [folder, file] = getFolderAndFileNames(facilityName);
+	let path = '../json/operatingHoursData/' + folder + '/' + file + '.json';
 };

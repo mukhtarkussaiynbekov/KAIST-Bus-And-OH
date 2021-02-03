@@ -12,21 +12,33 @@ import {
 	CHANGE_TYPE,
 	CHANGE_FROM,
 	CHANGE_TO,
-	CHANGE_DAY
+	CHANGE_DAY,
+	BUS_TYPES,
+	DAY_TYPES
 } from '../constants';
-import { getPropValue, getTimeLeft } from '../reducers/helperFunctions';
+import {
+	getPropValue,
+	getTimeLeft,
+	getTimetable
+} from '../reducers/helperFunctions';
 import moment from 'moment-timezone';
 
 const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
 	const dispatch = useDispatch();
+	const [timetable, setTimetable] = useState(getTimetable(state));
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
-	const dayType = getPropValue(
-		state.dayType.items,
-		state.dayType.selected,
+	const busOptions = state.database.busOptions;
+	const dayTypes = busOptions[DAY_TYPES];
+	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
+	const busTypes = busOptions[BUS_TYPES];
+	const busStopsClassfication = getPropValue(
+		busOptions[BUS_TYPES],
+		state.busType,
 		ID,
 		NAME_ID
 	);
+	const busStops = busOptions[busStopsClassfication];
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (
@@ -48,34 +60,34 @@ const BusScreen = () => {
 				<View style={{ flex: 1 }}>
 					<Dropdown
 						title="Type"
-						items={state.busType.items}
+						items={busTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
 							dispatch({ type: CHANGE_TYPE, payload: selectedItem })
 						}
-						chosenItem={state.busType.selected}
+						chosenItem={state.busType}
 					/>
 				</View>
 				<View style={{ flex: 1 }}>
 					<Dropdown
 						title="Day"
-						items={state.dayType.items}
+						items={dayTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
 							dispatch({ type: CHANGE_DAY, payload: selectedItem })
 						}
-						chosenItem={state.dayType.selected}
+						chosenItem={state.dayType}
 					/>
 				</View>
 			</View>
 			<Dropdown
 				title="From"
-				items={state.busStops.items}
+				items={busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: CHANGE_FROM, payload: selectedItem })
 				}
-				chosenItem={state.busStops.from}
+				chosenItem={state.from}
 			/>
 			<View style={styles.iconContainer}>
 				<TouchableOpacity onPress={() => dispatch({ type: SWAP_STOPS })}>
@@ -91,24 +103,24 @@ const BusScreen = () => {
 			</View>
 			<Dropdown
 				title="To"
-				items={state.busStops.items}
+				items={busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: CHANGE_TO, payload: selectedItem })
 				}
-				chosenItem={state.busStops.to}
+				chosenItem={state.to}
 			/>
 			<TimetableCell
 				firstColumnText={'From\nLeave At'}
 				secondColumnText={'To\nArrive At'}
 			/>
 			<FlatList
-				data={state.busStops.timetable}
+				data={timetable}
 				keyExtractor={(time, index) => index.toString()}
 				renderItem={({ item, index }) => {
 					if (dayType === TODAY) {
 						let timeLeft = getTimeLeft(item.leave, index);
-						if (timeLeft < -5) {
+						if (timeLeft <= -5) {
 							return null;
 						}
 					}

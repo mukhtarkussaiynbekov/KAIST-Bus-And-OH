@@ -4,7 +4,7 @@ import { ThemeProvider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from '../components/Dropdown';
 import CountDown from 'react-native-countdown-component';
-import { getTimeLeftOH } from '../reducers/helperFunctions';
+import { getOHJSON, getTimeLeftOH } from '../reducers/helperFunctions';
 import moment from 'moment-timezone';
 
 const OperatingHoursScreen = () => {
@@ -12,6 +12,7 @@ const OperatingHoursScreen = () => {
 	const dispatch = useDispatch();
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	let jsonFile = require('../json/operatingHoursData/mejom/n12.json');
+	getOHJSON(state);
 	// console.log(jsonFile);
 	// const finish = facilityData['operatingHours'][0]['hours']['Monday']['finish'];
 	// const timeLeft = getTimeLeftOH(finish);
