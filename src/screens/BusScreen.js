@@ -28,6 +28,7 @@ const BusScreen = () => {
 	const dispatch = useDispatch();
 	const [timetable, setTimetable] = useState(getTimetable(state));
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
+	const [flatListRendered, setFlatListRendered] = useState(false);
 	const busOptions = state.database.busOptions;
 	const dayTypes = busOptions[DAY_TYPES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
@@ -40,6 +41,9 @@ const BusScreen = () => {
 	);
 	const busStops = busOptions[busStopsClassfication];
 	useEffect(() => {
+		setTimetable(getTimetable(state));
+	}, [state]);
+	useEffect(() => {
 		const interval = setInterval(() => {
 			if (
 				now.format('HH:mm:ss') === '00:00:00' ||
@@ -49,6 +53,7 @@ const BusScreen = () => {
 				// might run slowly and miss first condition
 				dispatch({ type: '' });
 			}
+			setFlatListRendered(true);
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);
 		return () => clearInterval(interval);
@@ -118,7 +123,7 @@ const BusScreen = () => {
 				data={timetable}
 				keyExtractor={(time, index) => index.toString()}
 				renderItem={({ item, index }) => {
-					if (dayType === TODAY) {
+					if (flatListRendered && dayType === TODAY) {
 						let timeLeft = getTimeLeft(item.leave, index);
 						if (timeLeft <= -5) {
 							return null;
