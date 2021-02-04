@@ -311,28 +311,3 @@ export const getTimeLeftOH = time => {
 	}
 	return timeLeft;
 };
-
-export const getFolderAndFileNames = text => {
-	let folderEndIndex = text.indexOf('_');
-	let folder = text.slice(0, folderEndIndex);
-	let file = text.slice(folderEndIndex + 1);
-	return [folder, file];
-};
-
-export const getOHJSON = state => {
-	dayType = getPropValue(
-		state.dayType.items,
-		state.dayType.selected,
-		ID,
-		NAME_ID
-	);
-
-	let facilityName = getPropValue(
-		state.facility.items,
-		state.facility.selected,
-		ID,
-		NAME_ID
-	);
-	let [folder, file] = getFolderAndFileNames(facilityName);
-	let path = '../json/operatingHoursData/' + folder + '/' + file + '.json';
-};

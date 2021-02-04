@@ -1,44 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ThemeProvider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from '../components/Dropdown';
 import CountDown from 'react-native-countdown-component';
-import { getOHJSON, getTimeLeftOH } from '../reducers/helperFunctions';
-import moment from 'moment-timezone';
+import { getTimeLeftOH } from '../reducers/helperFunctions';
+import {
+	CHANGE_OH_DAY,
+	CHANGE_FACILITY,
+	DAY_TYPES,
+	FACILITIES
+} from '../constants';
 
 const OperatingHoursScreen = () => {
 	const state = useSelector(storeState => storeState.operatingHours);
 	const dispatch = useDispatch();
-	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
-	let jsonFile = require('../json/operatingHoursData/mejom/n12.json');
-	getOHJSON(state);
-	// console.log(jsonFile);
-	// const finish = facilityData['operatingHours'][0]['hours']['Monday']['finish'];
-	// const timeLeft = getTimeLeftOH(finish);
+	const [timeLeft, setTimeLeft] = useState(1000);
+	useEffect(() => {
+		setTimeLeft(1000);
+	}, [state]);
+
+	const dayTypes = state.database.options[DAY_TYPES];
+	const facilities = state.database.options[FACILITIES];
+
 	return (
 		<View>
 			<Dropdown
 				title="Day"
-				items={state.dayType.items}
+				items={dayTypes}
 				hideSearch={true}
 				onSelectedItemChange={selectedItem =>
-					dispatch({ type: 'operatingHoursDay', payload: selectedItem })
+					dispatch({ type: CHANGE_OH_DAY, payload: selectedItem })
 				}
-				chosenItem={state.dayType.selected}
+				chosenItem={state.dayType}
 			/>
 			<Dropdown
 				title="Facility"
-				items={state.facility.items}
+				items={facilities}
 				searchPlaceholderText="Search a facility"
 				onSelectedItemChange={selectedItem =>
-					dispatch({ type: 'changeFacility', payload: selectedItem })
+					dispatch({ type: CHANGE_FACILITY, payload: selectedItem })
 				}
-				chosenItem={state.facility.selected}
+				chosenItem={state.facility}
 			/>
 			<CountDown
-				until={1000}
-				onFinish={() => setNow(moment().tz('Asia/Seoul'))}
+				until={timeLeft}
+				onFinish={() => setTimeLeft(1000)}
 				size={30}
 			/>
 		</View>

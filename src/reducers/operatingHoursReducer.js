@@ -1,4 +1,3 @@
-import { DAY_TYPES, FACILITIES } from '../constants';
 import optionsLocal from '../json/operatingHoursData/operatingHoursOptions.json';
 
 const INITIAL_STATE = {
@@ -6,14 +5,8 @@ const INITIAL_STATE = {
 		options: optionsLocal,
 		realTimeDatabase: {}
 	},
-	dayType: {
-		selected: 0, // today
-		items: optionsLocal[DAY_TYPES]
-	},
-	facility: {
-		selected: 0,
-		items: optionsLocal[FACILITIES]
-	}
+	dayType: 0, // today
+	facility: 0
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -28,3 +28,6 @@ export const INTERVAL = 'interval';
 export const SAME_OPPOSITE_INTERVAL = 'sameOppositeInterval';
 
 export const FACILITIES = 'facilities';
+
+export const CHANGE_OH_DAY = 'change_oh_day';
+export const CHANGE_FACILITY = 'change_facility';
