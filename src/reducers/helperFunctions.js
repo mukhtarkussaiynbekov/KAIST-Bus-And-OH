@@ -16,7 +16,8 @@ import {
 	INTERVAL,
 	SAME_OPPOSITE_INTERVAL,
 	BUS_TYPES,
-	DAY_TYPES
+	DAY_TYPES,
+	FACILITIES
 } from '../constants';
 import moment from 'moment-timezone';
 
@@ -246,11 +247,11 @@ export const getTimetable = (state, dayType = undefined) => {
 	if (dayType === undefined) {
 		dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	}
-	let busTypes = busOptions[BUS_TYPES];
+	const busTypes = busOptions[BUS_TYPES];
 	let busType = getPropValue(busTypes, state.busType, ID, NAME_ID);
-	let listOfBusStops = state.database.timetableAll[busType];
+	const listOfBusStops = state.database.timetableAll[busType];
 	let busStopsClassfication = getPropValue(
-		busOptions[BUS_TYPES],
+		busTypes,
 		state.busType,
 		ID,
 		NAME_ID
@@ -266,13 +267,15 @@ export const getTimetable = (state, dayType = undefined) => {
 		return [];
 	}
 	let timetable = [];
+	const travelTimes = state.database.travelTimes[TRAVEL_TIMES];
+	const specialHolidays = state.database.specialHolidays.dates;
 	populateTimetable(
 		objects,
 		dayType,
-		state.database.specialHolidays.dates,
+		specialHolidays,
 		from,
 		to,
-		state.database.travelTimes[TRAVEL_TIMES],
+		travelTimes,
 		timetable
 	);
 	timetable = getUniqueTimeValues(timetable);
@@ -295,19 +298,22 @@ export const getUpcomingTime = state => {
 
 // Operating Hours helper functions
 
-export const getTimeLeftOH = time => {
-	// returns time left in seconds
-	let leaveTime = moment.duration(time, 'HH:mm');
-	let nowFormatted = moment().format('HH:mm:ss');
-	let now = moment.duration(nowFormatted, 'HH:mm:ss');
-	let timeLeft = leaveTime.asSeconds() - now.asSeconds();
-	// below conditions with numbers 7 and 5 are hard coded.
-	// currently, the last bus leaves after 3AM and
-	// there is no bus at 4AM. You can reduce the
-	// number, but then it will not handle future cases
-	// where school decides to add additional bus times.
-	if (leaveTime.hours() < 7) {
-		timeLeft += 24 * 60 * 60;
+export const getClassFacility = facility => {
+	let loDashIdx = facility.indexOf('_');
+	let classification = facility.slice(0, loDashIdx);
+	let facilityName = facility.slice(loDashIdx + 1);
+	return [classification, facilityName];
+};
+
+export const getTimeLeftAndIsOpen = (state, dayType = undefined) => {
+	const options = state.database.options;
+	const dayTypes = options[DAY_TYPES];
+	if (dayType === undefined) {
+		dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	}
-	return timeLeft;
+	const facilities = options[FACILITIES];
+	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
+	const listOfOperatingHours = state.database.operatingHours;
+	let [classification, facilityName] = getClassFacility(facility);
+	console.log(classification, facilityName);
 };

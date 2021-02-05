@@ -46,54 +46,54 @@
 			"children": [
 				{
 					"name": "N6",
-					"id": 1,
+					"id": 6,
 					"name_id": "n6"
 				},
 				{
 					"name": "Auditorium",
-					"id": 2,
+					"id": 7,
 					"name_id": "e15"
 				},
 				{
 					"name": "W8",
-					"id": 3,
+					"id": 8,
 					"name_id": "w8"
 				},
 				{
 					"name": "E14",
-					"id": 4,
+					"id": 9,
 					"name_id": "e14"
 				},
 				{
 					"name": "Duck pond",
-					"id": 5,
+					"id": 10,
 					"name_id": "duckPond"
 				}
 			]
 		},
 		{
 			"name": "Chungnam National University (충남태학교)",
-			"id": 6,
+			"id": 1,
 			"name_id": "chungnam"
 		},
 		{
 			"name": "Wolpyeong St. Exit #1",
-			"id": 7,
+			"id": 2,
 			"name_id": "wolpyeong1"
 		},
 		{
 			"name": "Galleria Department Store",
-			"id": 8,
+			"id": 3,
 			"name_id": "galleria"
 		},
 		{
 			"name": "Government Complex",
-			"id": 9,
+			"id": 4,
 			"name_id": "governmentComplex"
 		},
 		{
 			"name": "Wolpyeong St. Exit #3",
-			"id": 10,
+			"id": 5,
 			"name_id": "wolpyeong3"
 		}
 	],

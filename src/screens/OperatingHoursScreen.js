@@ -4,7 +4,7 @@ import { ThemeProvider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from '../components/Dropdown';
 import CountDown from 'react-native-countdown-component';
-import { getTimeLeftOH } from '../reducers/helperFunctions';
+import { getTimeLeftAndIsOpen } from '../reducers/helperFunctions';
 import {
 	CHANGE_OH_DAY,
 	CHANGE_FACILITY,
@@ -20,8 +20,10 @@ const OperatingHoursScreen = () => {
 		setTimeLeft(1000);
 	}, [state]);
 
-	const dayTypes = state.database.options[DAY_TYPES];
-	const facilities = state.database.options[FACILITIES];
+	const options = state.database.options;
+	const dayTypes = options[DAY_TYPES];
+	const facilities = options[FACILITIES];
+	getTimeLeftAndIsOpen(state);
 
 	return (
 		<View>
