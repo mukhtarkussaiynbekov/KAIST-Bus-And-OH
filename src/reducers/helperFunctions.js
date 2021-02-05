@@ -17,7 +17,11 @@ import {
 	SAME_OPPOSITE_INTERVAL,
 	BUS_TYPES,
 	DAY_TYPES,
-	FACILITIES
+	FACILITIES,
+	OPERATING_HOURS,
+	LOCATIONS,
+	NAME,
+	HOURS
 } from '../constants';
 import moment from 'moment-timezone';
 
@@ -305,6 +309,23 @@ export const getClassFacility = facility => {
 	return [classification, facilityName];
 };
 
+export const getOperatingHours = (
+	classification,
+	facilityName,
+	listOfOperatingHours
+) => {
+	for (let parent of listOfOperatingHours) {
+		if (parent[NAME] !== classification) {
+			continue;
+		}
+		for (let child of parent[LOCATIONS]) {
+			if (child[NAME] === facilityName) {
+				return child[HOURS];
+			}
+		}
+	}
+};
+
 export const getTimeLeftAndIsOpen = (state, dayType = undefined) => {
 	const options = state.database.options;
 	const dayTypes = options[DAY_TYPES];
@@ -313,7 +334,11 @@ export const getTimeLeftAndIsOpen = (state, dayType = undefined) => {
 	}
 	const facilities = options[FACILITIES];
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
-	const listOfOperatingHours = state.database.operatingHours;
+	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
-	console.log(classification, facilityName);
+	let operatingHours = getOperatingHours(
+		classification,
+		facilityName,
+		listOfOperatingHours
+	);
 };

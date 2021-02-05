@@ -31,3 +31,6 @@ export const FACILITIES = 'facilities';
 
 export const CHANGE_OH_DAY = 'change_oh_day';
 export const CHANGE_FACILITY = 'change_facility';
+export const OPERATING_HOURS = 'operatingHours';
+export const LOCATIONS = 'locations';
+export const HOURS = 'hours';
