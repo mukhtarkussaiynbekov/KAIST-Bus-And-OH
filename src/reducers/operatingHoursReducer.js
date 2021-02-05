@@ -1,3 +1,4 @@
+import { CHANGE_FACILITY, CHANGE_OH_DAY } from '../constants';
 import optionsLocal from '../json/operatingHoursData/operatingHoursOptions.json';
 
 const INITIAL_STATE = {
@@ -10,5 +11,12 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-	return state;
+	switch (action.type) {
+		case CHANGE_OH_DAY:
+			return { ...state, dayType: action.payload };
+		case CHANGE_FACILITY:
+			return { ...state, facility: action.payload };
+		default:
+			return state;
+	}
 };
