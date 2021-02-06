@@ -23,7 +23,8 @@ const OperatingHoursScreen = () => {
 	const options = state.database.options;
 	const dayTypes = options[DAY_TYPES];
 	const facilities = options[FACILITIES];
-	getTimeLeftAndIsOpen(state);
+	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
+	getTimeLeftAndIsOpen(state, dayType, dayTypes, facilities, options);
 
 	return (
 		<View>

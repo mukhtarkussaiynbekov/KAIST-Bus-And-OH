@@ -21,7 +21,8 @@ import {
 	OPERATING_HOURS,
 	LOCATIONS,
 	NAME,
-	HOURS
+	HOURS,
+	dayNames
 } from '../constants';
 import moment from 'moment-timezone';
 
@@ -303,7 +304,7 @@ export const getUpcomingTime = state => {
 // Operating Hours helper functions
 
 export const getClassFacility = facility => {
-	let loDashIdx = facility.indexOf('_');
+	let loDashIdx = facility.findIndex(char => char === '_');
 	let classification = facility.slice(0, loDashIdx);
 	let facilityName = facility.slice(loDashIdx + 1);
 	return [classification, facilityName];
@@ -326,19 +327,35 @@ export const getOperatingHours = (
 	}
 };
 
-export const getTimeLeftAndIsOpen = (state, dayType = undefined) => {
-	const options = state.database.options;
-	const dayTypes = options[DAY_TYPES];
-	if (dayType === undefined) {
-		dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
+export const convertDayToIndex = dayType => {
+	let now = moment().tz('Asia/Seoul');
+	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
+	switch (dayType) {
+		case TODAY:
+			return day_of_week;
+		case TOMORROW:
+			day_of_week = (day_of_week + 1) % 7;
+			return day_of_week;
+		default:
+			return dayNames.findIndex(day => day === dayType);
 	}
-	const facilities = options[FACILITIES];
+};
+
+export const getTimeLeftAndIsOpen = (
+	state,
+	dayType,
+	dayTypes,
+	facilities,
+	options
+) => {
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
-	let operatingHours = getOperatingHours(
-		classification,
-		facilityName,
-		listOfOperatingHours
-	);
+	let dayIndex = convertDayToIndex(dayType);
+	console.log(dayIndex);
+	// let operatingHours = getOperatingHours(
+	// 	classification,
+	// 	facilityName,
+	// 	listOfOperatingHours
+	// );
 };

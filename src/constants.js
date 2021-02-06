@@ -34,3 +34,21 @@ export const CHANGE_FACILITY = 'change_facility';
 export const OPERATING_HOURS = 'operatingHours';
 export const LOCATIONS = 'locations';
 export const HOURS = 'hours';
+
+export const MONDAY = 'monday';
+export const TUESDAY = 'tuesday';
+export const WEDNESDAY = 'wednesday';
+export const THURSDAY = 'thursday';
+export const FRIDAY = 'friday';
+export const SATURDAY = 'saturday';
+export const SUNDAY = 'sunday';
+
+export const dayNames = [
+	MONDAY,
+	TUESDAY,
+	WEDNESDAY,
+	THURSDAY,
+	FRIDAY,
+	SATURDAY,
+	SUNDAY
+];
