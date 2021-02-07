@@ -197,7 +197,11 @@ export const populateTimetable = (
 };
 
 export const isSpeicalHoliday = (dateToCheck, specialHolidays) => {
-	if (dateToCheck === WEEKDAYS || dateToCheck === WEEKENDS) {
+	if (
+		dateToCheck !== YESTERDAY &&
+		dateToCheck !== TODAY &&
+		dateToCheck !== TOMORROW
+	) {
 		return false;
 	}
 
@@ -304,13 +308,13 @@ export const getUpcomingTime = state => {
 // Operating Hours helper functions
 
 export const getClassFacility = facility => {
-	let loDashIdx = facility.findIndex(char => char === '_');
+	let loDashIdx = facility.indexOf('_');
 	let classification = facility.slice(0, loDashIdx);
 	let facilityName = facility.slice(loDashIdx + 1);
 	return [classification, facilityName];
 };
 
-export const getOperatingHours = (
+export const getOperatingHoursObject = (
 	classification,
 	facilityName,
 	listOfOperatingHours
@@ -321,10 +325,38 @@ export const getOperatingHours = (
 		}
 		for (let child of parent[LOCATIONS]) {
 			if (child[NAME] === facilityName) {
-				return child[HOURS];
+				return child;
 			}
 		}
 	}
+};
+
+export const getSpecialHolidayTimes = (
+	timeObject,
+	dayType,
+	specialHolidays
+) => {
+	return;
+};
+
+export const getOperatingHours = (
+	operatingHoursObject,
+	dayType,
+	specialHolidays
+) => {
+	if (
+		isSpeicalHoliday(dayType, specialHolidays) &&
+		SPECIAL_HOLIDAY in operatingHoursObject
+	) {
+		return getSpecialHolidayTimes(
+			operatingHoursObject,
+			dayType,
+			specialHolidays
+		);
+	}
+	let dayIndex = convertDayToIndex(dayType);
+	let day = dayNames[dayIndex];
+	return operatingHoursObject[HOURS][day];
 };
 
 export const convertDayToIndex = dayType => {
@@ -351,11 +383,15 @@ export const getTimeLeftAndIsOpen = (
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
-	let dayIndex = convertDayToIndex(dayType);
-	console.log(dayIndex);
-	// let operatingHours = getOperatingHours(
-	// 	classification,
-	// 	facilityName,
-	// 	listOfOperatingHours
-	// );
+	let operatingHoursObject = getOperatingHoursObject(
+		classification,
+		facilityName,
+		listOfOperatingHours
+	);
+	const specialHolidays = state.database.specialHolidays.dates;
+	let operatingHours = getOperatingHours(
+		operatingHoursObject,
+		dayType,
+		specialHolidays
+	);
 };

@@ -1,11 +1,13 @@
 import { CHANGE_FACILITY, CHANGE_OH_DAY } from '../constants';
 import optionsLocal from '../json/operatingHoursData/operatingHoursOptions.json';
 import operatingHoursLocal from '../json/operatingHoursData/operatingHours.json';
+import specialHolidaysLocal from '../json/specialHolidays.json';
 
 const INITIAL_STATE = {
 	database: {
 		options: optionsLocal,
-		operatingHours: operatingHoursLocal
+		operatingHours: operatingHoursLocal,
+		specialHolidays: specialHolidaysLocal
 	},
 	dayType: 0, // today
 	facility: 0
