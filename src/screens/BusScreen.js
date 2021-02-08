@@ -16,17 +16,13 @@ import {
 	BUS_TYPES,
 	DAY_TYPES
 } from '../constants';
-import {
-	getPropValue,
-	getTimeLeft,
-	getTimetable
-} from '../reducers/helperFunctions';
+import { getTimeLeft, getTimetable } from '../helperFunctions/busHelper';
+import { getPropValue } from '../helperFunctions/commonFunctions';
 import moment from 'moment-timezone';
 
 const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
 	const dispatch = useDispatch();
-	const [timetable, setTimetable] = useState(getTimetable(state));
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	const [flatListRendered, setFlatListRendered] = useState(false);
 	const busOptions = state.database.busOptions;
@@ -34,14 +30,17 @@ const BusScreen = () => {
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const busTypes = busOptions[BUS_TYPES];
 	const busStopsClassfication = getPropValue(
-		busOptions[BUS_TYPES],
+		busTypes,
 		state.busType,
 		ID,
 		NAME_ID
 	);
 	const busStops = busOptions[busStopsClassfication];
+	const [timetable, setTimetable] = useState(
+		getTimetable(state, dayType, busTypes, busStops)
+	);
 	useEffect(() => {
-		setTimetable(getTimetable(state));
+		setTimetable(getTimetable(state, dayType, busTypes, busStops));
 	}, [state]);
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -59,6 +58,7 @@ const BusScreen = () => {
 		return () => clearInterval(interval);
 		// we need to clean up after a component is removed. Otherwise, memory leak.
 	}, []);
+	let nowFormatted = now.format('HH:mm');
 	return (
 		<>
 			<View style={styles.topDropdowns}>
@@ -124,7 +124,7 @@ const BusScreen = () => {
 				keyExtractor={(time, index) => index.toString()}
 				renderItem={({ item, index }) => {
 					if (flatListRendered && dayType === TODAY) {
-						let timeLeft = getTimeLeft(item.leave, index);
+						let timeLeft = getTimeLeft(item.leave, nowFormatted, index);
 						if (timeLeft <= -5) {
 							return null;
 						}

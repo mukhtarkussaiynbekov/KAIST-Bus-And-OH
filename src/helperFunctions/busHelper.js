@@ -1,5 +1,4 @@
 import {
-	CHILDREN,
 	ID,
 	NAME_ID,
 	YESTERDAY,
@@ -14,29 +13,20 @@ import {
 	STOP_ONE,
 	STOP_TWO,
 	INTERVAL,
-	SAME_OPPOSITE_INTERVAL,
-	BUS_TYPES,
-	DAY_TYPES,
-	FACILITIES,
-	OPERATING_HOURS,
-	LOCATIONS,
-	NAME,
-	HOURS,
-	dayNames
+	SAME_OPPOSITE_INTERVAL
 } from '../constants';
 import moment from 'moment-timezone';
+import {
+	isSpecialHoliday,
+	getSpecialHolidayTimes,
+	getHoursAndMinutes,
+	getPropValue
+} from './commonFunctions';
 
-export const getHoursAndMinutes = time => {
-	let hours = parseInt(time.slice(0, 2));
-	let minutes = parseInt(time.slice(3));
-	return [hours, minutes];
-};
-
-export const getTimeLeft = (time, indexOfItem = 0) => {
+export const getTimeLeft = (time, now, indexOfItem = 0) => {
 	// returns time left in minutes
 	// time is in format HH:mm
 	let [leaveTimeHours, leaveTimeMinutes] = getHoursAndMinutes(time);
-	let now = moment().format('HH:mm');
 	let [nowHours, nowMinutes] = getHoursAndMinutes(now);
 	let timeLeft =
 		leaveTimeHours * 60 + leaveTimeMinutes - (nowHours * 60 + nowMinutes);
@@ -49,26 +39,6 @@ export const getTimeLeft = (time, indexOfItem = 0) => {
 		timeLeft += 24 * 60;
 	}
 	return timeLeft;
-};
-
-export const getPropValue = (
-	objectsList,
-	propValue,
-	propIdentifier,
-	targetPropIdentifier
-) => {
-	for (let object of objectsList) {
-		if (object[propIdentifier] === propValue) {
-			return object[targetPropIdentifier];
-		}
-		if (CHILDREN in object) {
-			for (let child of object[CHILDREN]) {
-				if (child[propIdentifier] === propValue) {
-					return child[targetPropIdentifier];
-				}
-			}
-		}
-	}
 };
 
 export const getDepartureTimes = (
@@ -85,10 +55,13 @@ export const getDepartureTimes = (
 	let dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
 	if (
-		isSpeicalHoliday(dayType, specialHolidays) &&
-		SPECIAL_HOLIDAY in object[DEPARTURE_TIMES]
+		isSpecialHoliday(dayType, specialHolidays) &&
+		SPECIAL_HOLIDAY in departureTimesObject
 	) {
-		initialDepartureTimes = departureTimesObject[SPECIAL_HOLIDAY];
+		initialDepartureTimes = getSpecialHolidayTimes(
+			departureTimesObject[SPECIAL_HOLIDAY],
+			dayType
+		);
 	}
 	let departureTimes = [];
 	for (let time of initialDepartureTimes) {
@@ -196,31 +169,6 @@ export const populateTimetable = (
 	}
 };
 
-export const isSpeicalHoliday = (dateToCheck, specialHolidays) => {
-	if (
-		dateToCheck !== YESTERDAY &&
-		dateToCheck !== TODAY &&
-		dateToCheck !== TOMORROW
-	) {
-		return false;
-	}
-
-	let now = moment().tz('Asia/Seoul');
-	if (dateToCheck === TOMORROW) {
-		now.add(1, 'days');
-	} else if (dateToCheck === YESTERDAY) {
-		now.subtract(1, 'days');
-	}
-
-	let formattedDate = now.format('MM/DD');
-	for (let date of specialHolidays) {
-		if (date === formattedDate) {
-			return true;
-		}
-	}
-	return false;
-};
-
 export const getDayClassification = dayType => {
 	let now = moment().tz('Asia/Seoul');
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
@@ -250,22 +198,9 @@ export const addMidnightTimes = (timetable, yesterdayTimetable) => {
 	return [...midnightTimes, ...timetable];
 };
 
-export const getTimetable = (state, dayType = undefined) => {
-	const busOptions = state.database.busOptions;
-	let dayTypes = busOptions[DAY_TYPES];
-	if (dayType === undefined) {
-		dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
-	}
-	const busTypes = busOptions[BUS_TYPES];
+export const getTimetable = (state, dayType, busTypes, busStops) => {
 	let busType = getPropValue(busTypes, state.busType, ID, NAME_ID);
 	const listOfBusStops = state.database.timetableAll[busType];
-	let busStopsClassfication = getPropValue(
-		busTypes,
-		state.busType,
-		ID,
-		NAME_ID
-	);
-	const busStops = busOptions[busStopsClassfication];
 	let from = getPropValue(busStops, state.from, ID, NAME_ID);
 	let to = getPropValue(busStops, state.to, ID, NAME_ID);
 	if (from === to) {
@@ -289,109 +224,18 @@ export const getTimetable = (state, dayType = undefined) => {
 	);
 	timetable = getUniqueTimeValues(timetable);
 	if (dayType === TODAY) {
-		let yesterdayTimetable = getTimetable(state, YESTERDAY);
+		let yesterdayTimetable = getTimetable(state, YESTERDAY, busTypes, busStops);
 		timetable = addMidnightTimes(timetable, yesterdayTimetable);
 	}
 	return timetable;
 };
 
-export const getUpcomingTime = state => {
-	let timetable = getTimetable(state);
+export const getUpcomingTime = (state, busTypes, busStops, now) => {
+	let timetable = getTimetable(state, TODAY, busTypes, busStops);
 	for (const [index, time] of timetable.entries()) {
-		let timeLeft = getTimeLeft(time.leave, index);
+		let timeLeft = getTimeLeft(time.leave, now, index);
 		if (timeLeft >= 0) {
 			return time;
 		}
 	}
-};
-
-// Operating Hours helper functions
-
-export const getClassFacility = facility => {
-	let loDashIdx = facility.indexOf('_');
-	let classification = facility.slice(0, loDashIdx);
-	let facilityName = facility.slice(loDashIdx + 1);
-	return [classification, facilityName];
-};
-
-export const getOperatingHoursObject = (
-	classification,
-	facilityName,
-	listOfOperatingHours
-) => {
-	for (let parent of listOfOperatingHours) {
-		if (parent[NAME] !== classification) {
-			continue;
-		}
-		for (let child of parent[LOCATIONS]) {
-			if (child[NAME] === facilityName) {
-				return child;
-			}
-		}
-	}
-};
-
-export const getSpecialHolidayTimes = (
-	timeObject,
-	dayType,
-	specialHolidays
-) => {
-	return;
-};
-
-export const getOperatingHours = (
-	operatingHoursObject,
-	dayType,
-	specialHolidays
-) => {
-	if (
-		isSpeicalHoliday(dayType, specialHolidays) &&
-		SPECIAL_HOLIDAY in operatingHoursObject
-	) {
-		return getSpecialHolidayTimes(
-			operatingHoursObject,
-			dayType,
-			specialHolidays
-		);
-	}
-	let dayIndex = convertDayToIndex(dayType);
-	let day = dayNames[dayIndex];
-	return operatingHoursObject[HOURS][day];
-};
-
-export const convertDayToIndex = dayType => {
-	let now = moment().tz('Asia/Seoul');
-	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
-	switch (dayType) {
-		case TODAY:
-			return day_of_week;
-		case TOMORROW:
-			day_of_week = (day_of_week + 1) % 7;
-			return day_of_week;
-		default:
-			return dayNames.findIndex(day => day === dayType);
-	}
-};
-
-export const getTimeLeftAndIsOpen = (
-	state,
-	dayType,
-	dayTypes,
-	facilities,
-	options
-) => {
-	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
-	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
-	let [classification, facilityName] = getClassFacility(facility);
-	let operatingHoursObject = getOperatingHoursObject(
-		classification,
-		facilityName,
-		listOfOperatingHours
-	);
-	const specialHolidays = state.database.specialHolidays.dates;
-	let operatingHours = getOperatingHours(
-		operatingHoursObject,
-		dayType,
-		specialHolidays
-	);
 };
