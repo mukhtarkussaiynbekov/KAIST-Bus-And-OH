@@ -8,14 +8,15 @@ import {
 	LOCATIONS,
 	NAME,
 	HOURS,
-	dayNames
+	dayNames,
+	YESTERDAY
 } from '../constants';
-import moment from 'moment-timezone';
 import {
 	getPropValue,
 	isSpecialHoliday,
 	getSpecialHolidayTimes
 } from './commonFunctions';
+import moment from 'moment-timezone';
 
 export const getClassFacility = facility => {
 	let loDashIdx = facility.indexOf('_');
@@ -65,6 +66,9 @@ export const convertDayToIndex = dayType => {
 	let now = moment().tz('Asia/Seoul');
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
 	switch (dayType) {
+		case YESTERDAY:
+			day_of_week = day_of_week - 1 < 0 ? 6 : day_of_week - 1;
+			return day_of_week;
 		case TODAY:
 			return day_of_week;
 		case TOMORROW:
@@ -75,7 +79,7 @@ export const convertDayToIndex = dayType => {
 	}
 };
 
-export const getTimeLeftAndIsOpen = (state, dayType, facilities) => {
+export const getOperatingHoursList = (state, dayType, facilities) => {
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);

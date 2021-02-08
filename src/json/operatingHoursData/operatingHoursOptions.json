@@ -63,9 +63,9 @@
 					"name_id": "mejom_n1"
 				},
 				{
-					"name": "West (W4-1)",
+					"name": "Heemang (W4-4)",
 					"id": 3,
-					"name_id": "mejom_w4"
+					"name_id": "mejom_w4-4"
 				},
 				{
 					"name": "W2",
@@ -73,14 +73,14 @@
 					"name_id": "mejom_w2"
 				},
 				{
-					"name": "East (E5)",
+					"name": "East Cafeteria (E5)",
 					"id": 5,
 					"name_id": "mejom_e5"
 				},
 				{
-					"name": "Sejong Hall (E7)",
+					"name": "Sejong Hall (E8)",
 					"id": 6,
-					"name_id": "mejom_e7"
+					"name_id": "mejom_e8"
 				}
 			]
 		}

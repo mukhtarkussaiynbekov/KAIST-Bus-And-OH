@@ -15,13 +15,13 @@ import {
 	INTERVAL,
 	SAME_OPPOSITE_INTERVAL
 } from '../constants';
-import moment from 'moment-timezone';
 import {
 	isSpecialHoliday,
 	getSpecialHolidayTimes,
 	getHoursAndMinutes,
 	getPropValue
 } from './commonFunctions';
+import moment from 'moment-timezone';
 
 export const getTimeLeft = (time, now, indexOfItem = 0) => {
 	// returns time left in minutes
