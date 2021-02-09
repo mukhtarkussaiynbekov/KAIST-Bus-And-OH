@@ -16,8 +16,8 @@ import {
 	BUS_TYPES,
 	DAY_TYPES
 } from '../constants';
-import { getTimetable } from '../helperFunctions/busHelper';
-import { getPropValue, getTimeLeft } from '../helperFunctions/commonFunctions';
+import { getTimetable, getTimeLeftBus } from '../helperFunctions/busHelper';
+import { getPropValue } from '../helperFunctions/commonFunctions';
 import moment from 'moment-timezone';
 
 const BusScreen = () => {
@@ -124,7 +124,7 @@ const BusScreen = () => {
 				keyExtractor={(time, index) => index.toString()}
 				renderItem={({ item, index }) => {
 					if (flatListRendered && dayType === TODAY) {
-						let timeLeft = getTimeLeft(item.leave, nowFormatted, index);
+						let timeLeft = getTimeLeftBus(item.leave, nowFormatted, index);
 						if (timeLeft <= -5) {
 							return null;
 						}

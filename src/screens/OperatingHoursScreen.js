@@ -15,23 +15,18 @@ import {
 	DAY_TYPES,
 	FACILITIES,
 	ID,
-	NAME_ID,
-	TODAY,
-	YESTERDAY
+	NAME,
+	NAME_ID
 } from '../constants';
 
 const OperatingHoursScreen = () => {
 	const state = useSelector(storeState => storeState.operatingHours);
 	const dispatch = useDispatch();
-	const [timeLeft, setTimeLeft] = useState(1000);
-	const [isOpen, setIsOpen] = useState(false);
-	useEffect(() => {
-		setTimeLeft(1000);
-	}, [state]);
 
 	const options = state.database.options;
 	const dayTypes = options[DAY_TYPES];
 	const facilities = options[FACILITIES];
+	const facilityName = getPropValue(facilities, state.facility, ID, NAME);
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const operatingHours = getOperatingHoursList(state, dayType, facilities);
 	const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
@@ -40,6 +35,9 @@ const OperatingHoursScreen = () => {
 		operatingHours,
 		facilities
 	);
+
+	const [timeLeft, setTimeLeft] = useState(newTimeLeft);
+	const [isOpen, setIsOpen] = useState(newIsOpen);
 	useEffect(() => {
 		setTimeLeft(newTimeLeft);
 		setIsOpen(newIsOpen);
@@ -65,11 +63,24 @@ const OperatingHoursScreen = () => {
 				}
 				chosenItem={state.facility}
 			/>
+			<Text>
+				The {facilityName} is {isOpen ? 'open' : 'closed'} now.
+			</Text>
 			<CountDown
 				until={timeLeft}
-				onFinish={() => setTimeLeft(1000)}
+				onFinish={() => {
+					const [reevaluatedTimeLeft, reevaluatedIsOpen] = getTimeLeftIsOpen(
+						state,
+						dayType,
+						operatingHours,
+						facilities
+					);
+					setTimeLeft(reevaluatedTimeLeft);
+					setIsOpen(reevaluatedIsOpen);
+				}}
 				size={30}
 			/>
+			<Text>Till {isOpen ? 'closing' : 'opening'}</Text>
 		</View>
 	);
 };

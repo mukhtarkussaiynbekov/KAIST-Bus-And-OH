@@ -9,13 +9,14 @@ import {
 	NAME,
 	HOURS,
 	dayNames,
-	YESTERDAY
+	YESTERDAY,
+	REGULAR
 } from '../constants';
 import {
 	getPropValue,
 	isSpecialHoliday,
 	getSpecialHolidayTimes,
-	getTimeLeft
+	getHoursMinutesSeconds
 } from './commonFunctions';
 import moment from 'moment-timezone';
 
@@ -46,11 +47,16 @@ export const getOperatingHoursObject = (
 export const getOperatingHours = (
 	operatingHoursObject,
 	dayType,
-	specialHolidays
+	specialHolidays,
+	now = moment().tz('Asia/Seoul')
 ) => {
 	if (
-		isSpecialHoliday(dayType, specialHolidays) &&
-		SPECIAL_HOLIDAY in operatingHoursObject
+		isSpecialHoliday(dayType, specialHolidays, now) &&
+		SPECIAL_HOLIDAY in operatingHoursObject &&
+		!(
+			REGULAR in operatingHoursObject[SPECIAL_HOLIDAY] &&
+			operatingHoursObject[SPECIAL_HOLIDAY][REGULAR]
+		)
 	) {
 		return getSpecialHolidayTimes(
 			operatingHoursObject[SPECIAL_HOLIDAY],
@@ -80,7 +86,12 @@ export const convertDayToIndex = dayType => {
 	}
 };
 
-export const getOperatingHoursList = (state, dayType, facilities) => {
+export const getOperatingHoursList = (
+	state,
+	dayType,
+	facilities,
+	now = moment().tz('Asia/Seoul')
+) => {
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
@@ -93,9 +104,23 @@ export const getOperatingHoursList = (state, dayType, facilities) => {
 	let operatingHours = getOperatingHours(
 		operatingHoursObject[HOURS],
 		dayType,
-		specialHolidays
+		specialHolidays,
+		now
 	);
 	return operatingHours;
+};
+
+export const getTimeLeftOH = (time, now, isNextDay = false) => {
+	let [timeHours, timeMinutes] = getHoursMinutesSeconds(time);
+	let [nowHours, nowMinutes, nowSeconds] = getHoursMinutesSeconds(now);
+	if (isNextDay) {
+		timeHours += 24;
+	}
+	let timeLeft =
+		60 * 60 * (timeHours - nowHours) +
+		60 * (timeMinutes - nowMinutes) -
+		nowSeconds;
+	return timeLeft;
 };
 
 export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
@@ -115,16 +140,48 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 		return [0, false];
 	}
 	let now = moment().tz('Asia/Seoul');
-	let nowFormatted = now.format('HH:mm');
+	let nowFormatted = now.format('HH:mm:ss');
 	if (todayHours.length === 0 || todayHours[0].start > nowFormatted) {
 		const yesterdayHours = getOperatingHoursList(state, YESTERDAY, facilities);
 		if (yesterdayHours.length > 0) {
 			let lastTime = yesterdayHours[yesterdayHours.length - 1];
-			let timeLeftUntilClosing = getTimeLeft(lastTime.finish, nowFormatted);
+			let timeLeftUntilClosing = getTimeLeftOH(lastTime.finish, nowFormatted);
 			if (timeLeftUntilClosing > 0) {
 				return [timeLeftUntilClosing, true];
 			}
 		}
 	}
-	return [1000, true];
+	let foundProperTime = false;
+	let timeLeft = 0;
+	let isOpen = false;
+	let dayHours = todayHours;
+	let additionalDays = -1;
+	while (!foundProperTime) {
+		for (let hour of dayHours) {
+			if (hour.start > nowFormatted) {
+				console.log(hour.start);
+				timeLeft = getTimeLeftOH(hour.start, nowFormatted);
+				foundProperTime = true;
+				break;
+			} else if (hour.finish > nowFormatted) {
+				console.log(hour.finish);
+				isOpen = true;
+				timeLeft = getTimeLeftOH(hour.finish, nowFormatted);
+				foundProperTime = true;
+				break;
+			} else if (hour.finish < hour.start) {
+				isOpen = true;
+				timeLeft = getTimeLeftOH(hour.finish, nowFormatted, true);
+				foundProperTime = true;
+				break;
+			}
+		}
+		additionalDays += 1;
+		if (!foundProperTime) {
+			now.add(1, 'days');
+			dayHours = getOperatingHoursList(state, TODAY, facilities, now);
+		}
+	}
+	timeLeft += additionalDays * 24 * 60 * 60;
+	return [timeLeft, isOpen];
 };

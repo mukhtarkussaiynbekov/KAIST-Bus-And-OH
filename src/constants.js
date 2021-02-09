@@ -43,6 +43,9 @@ export const FRIDAY = 'friday';
 export const SATURDAY = 'saturday';
 export const SUNDAY = 'sunday';
 
+export const REGULAR = 'regular';
+export const CLOSED = 'closed';
+
 export const dayNames = [
 	MONDAY,
 	TUESDAY,
