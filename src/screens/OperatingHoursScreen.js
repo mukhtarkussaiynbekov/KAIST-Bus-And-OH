@@ -29,19 +29,25 @@ const OperatingHoursScreen = () => {
 	const facilityName = getPropValue(facilities, state.facility, ID, NAME);
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const operatingHours = getOperatingHoursList(state, dayType, facilities);
-	const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
+	const [initialTimeLeft, initialIsOpen] = getTimeLeftIsOpen(
 		state,
 		dayType,
 		operatingHours,
 		facilities
 	);
 
-	const [timeLeft, setTimeLeft] = useState(newTimeLeft);
-	const [isOpen, setIsOpen] = useState(newIsOpen);
+	const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
+	const [isOpen, setIsOpen] = useState(initialIsOpen);
 	useEffect(() => {
+		const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
+			state,
+			dayType,
+			operatingHours,
+			facilities
+		);
 		setTimeLeft(newTimeLeft);
 		setIsOpen(newIsOpen);
-	}, [state, isOpen, timeLeft]);
+	}, [state]);
 
 	return (
 		<View>

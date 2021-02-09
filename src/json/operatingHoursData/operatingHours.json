@@ -79,54 +79,59 @@
 					"hours": {
 						"monday": [
 							{
-								"start": "08:30",
-								"finish": "02:00"
+								"start": "10:00",
+								"finish": "13:10"
+							},
+							{
+								"start": "14:00",
+								"finish": "19:00"
 							}
 						],
 						"tuesday": [
 							{
-								"start": "08:30",
-								"finish": "02:00"
+								"start": "10:00",
+								"finish": "13:10"
+							},
+							{
+								"start": "14:00",
+								"finish": "19:00"
 							}
 						],
 						"wednesday": [
 							{
-								"start": "08:30",
-								"finish": "02:00"
+								"start": "10:00",
+								"finish": "13:10"
+							},
+							{
+								"start": "14:00",
+								"finish": "19:00"
 							}
 						],
 						"thursday": [
 							{
-								"start": "08:30",
+								"start": "10:00",
 								"finish": "13:10"
 							},
 							{
 								"start": "14:00",
-								"finish": "02:00"
+								"finish": "19:00"
 							}
 						],
 						"friday": [
 							{
-								"start": "08:30",
+								"start": "10:00",
 								"finish": "13:10"
 							},
 							{
 								"start": "14:00",
-								"finish": "02:00"
+								"finish": "19:00"
 							}
 						],
-						"saturday": [
-							{
-								"start": "09:00",
-								"finish": "00:00"
-							}
-						],
-						"sunday": [
-							{
-								"start": "09:00",
-								"finish": "02:00"
-							}
-						]
+						"saturday": [],
+						"sunday": [],
+						"specialHoliday": {
+							"closed": "true"
+						}
 					}
 				},
 				{
@@ -321,6 +326,145 @@
 							{
 								"start": "18:00",
 								"finish": "02:00"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "food",
+			"locations": [
+				{
+					"name": "lotteria",
+					"hours": {
+						"monday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"saturday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"sunday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						]
+					}
+				},
+				{
+					"name": "pulbitmaru",
+					"hours": {
+						"monday": [
+							{
+								"start": "09:00",
+								"finish": "18:50"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "09:00",
+								"finish": "18:50"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "09:00",
+								"finish": "18:50"
+							}
+						],
+						"thursday": [
+							{
+								"start": "09:00",
+								"finish": "18:50"
+							}
+						],
+						"friday": [
+							{
+								"start": "09:00",
+								"finish": "18:50"
+							}
+						],
+						"saturday": [],
+						"sunday": [],
+						"specialHoliday": {
+							"closed": "true"
+						}
+					}
+				},
+				{
+					"name": "subway",
+					"hours": {
+						"monday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"saturday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
+							}
+						],
+						"sunday": [
+							{
+								"start": "08:00",
+								"finish": "23:00"
 							}
 						]
 					}

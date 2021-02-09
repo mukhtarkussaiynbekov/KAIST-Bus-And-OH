@@ -159,12 +159,10 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 	while (!foundProperTime) {
 		for (let hour of dayHours) {
 			if (hour.start > nowFormatted) {
-				console.log(hour.start);
 				timeLeft = getTimeLeftOH(hour.start, nowFormatted);
 				foundProperTime = true;
 				break;
 			} else if (hour.finish > nowFormatted) {
-				console.log(hour.finish);
 				isOpen = true;
 				timeLeft = getTimeLeftOH(hour.finish, nowFormatted);
 				foundProperTime = true;

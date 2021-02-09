@@ -83,6 +83,28 @@
 					"name_id": "mejom_e8"
 				}
 			]
+		},
+		{
+			"name": "Food (Lotteria)",
+			"id": 7,
+			"name_id": "food_lotteria",
+			"children": [
+				{
+					"name": "Lotteria (N13)",
+					"id": 8,
+					"name_id": "food_lotteria"
+				},
+				{
+					"name": "Pulbitmaru (N12)",
+					"id": 9,
+					"name_id": "food_pulbitmaru"
+				},
+				{
+					"name": "Subway E(16)",
+					"id": 10,
+					"name_id": "food_subway"
+				}
+			]
 		}
 	]
 }
