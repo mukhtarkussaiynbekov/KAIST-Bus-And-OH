@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from '../components/Dropdown';
 import CountDown from 'react-native-countdown-component';
 import { getPropValue } from '../helperFunctions/commonFunctions';
-import { getOperatingHoursList } from '../helperFunctions/operatingHoursHelper';
+import {
+	getOperatingHoursList,
+	getTimeLeftIsOpen
+} from '../helperFunctions/operatingHoursHelper';
 import {
 	CHANGE_OH_DAY,
 	CHANGE_FACILITY,
@@ -30,11 +33,17 @@ const OperatingHoursScreen = () => {
 	const dayTypes = options[DAY_TYPES];
 	const facilities = options[FACILITIES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
-	const ohHours = getOperatingHoursList(state, dayType, facilities);
-	if (dayType === TODAY) {
-		const yesterdayHours = getOperatingHoursList(state, YESTERDAY, facilities);
-		console.log(yesterdayHours);
-	}
+	const operatingHours = getOperatingHoursList(state, dayType, facilities);
+	const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
+		state,
+		dayType,
+		operatingHours,
+		facilities
+	);
+	useEffect(() => {
+		setTimeLeft(newTimeLeft);
+		setIsOpen(newIsOpen);
+	}, [state, isOpen, timeLeft]);
 
 	return (
 		<View>

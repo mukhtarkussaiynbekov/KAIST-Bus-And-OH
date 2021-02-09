@@ -14,7 +14,8 @@ import {
 import {
 	getPropValue,
 	isSpecialHoliday,
-	getSpecialHolidayTimes
+	getSpecialHolidayTimes,
+	getTimeLeft
 } from './commonFunctions';
 import moment from 'moment-timezone';
 
@@ -95,4 +96,35 @@ export const getOperatingHoursList = (state, dayType, facilities) => {
 		specialHolidays
 	);
 	return operatingHours;
+};
+
+export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
+	/*
+    parameters:
+    1. state is operatingHoursReducer's state
+    2. todayHours is a list of objects where each object is of form
+        {start: 'HH:mm', finish: 'HH:mm'}
+    3. facilities is a list of objects that will be passed to
+        getOperatingHoursList function.
+
+    output: [timeLeft, isOpen] - timeLeft: int, isOpen: boolean
+    timeLeft indicates time left until closing if isOpen = true.
+    Otherwise if isOpen = false, timeLeft indicates time left until opening.
+  */
+	if (dayType !== TODAY) {
+		return [0, false];
+	}
+	let now = moment().tz('Asia/Seoul');
+	let nowFormatted = now.format('HH:mm');
+	if (todayHours.length === 0 || todayHours[0].start > nowFormatted) {
+		const yesterdayHours = getOperatingHoursList(state, YESTERDAY, facilities);
+		if (yesterdayHours.length > 0) {
+			let lastTime = yesterdayHours[yesterdayHours.length - 1];
+			let timeLeftUntilClosing = getTimeLeft(lastTime.finish, nowFormatted);
+			if (timeLeftUntilClosing > 0) {
+				return [timeLeftUntilClosing, true];
+			}
+		}
+	}
+	return [1000, true];
 };

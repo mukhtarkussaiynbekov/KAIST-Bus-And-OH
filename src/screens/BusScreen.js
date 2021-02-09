@@ -16,8 +16,8 @@ import {
 	BUS_TYPES,
 	DAY_TYPES
 } from '../constants';
-import { getTimeLeft, getTimetable } from '../helperFunctions/busHelper';
-import { getPropValue } from '../helperFunctions/commonFunctions';
+import { getTimetable } from '../helperFunctions/busHelper';
+import { getPropValue, getTimeLeft } from '../helperFunctions/commonFunctions';
 import moment from 'moment-timezone';
 
 const BusScreen = () => {

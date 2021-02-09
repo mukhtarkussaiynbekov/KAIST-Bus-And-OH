@@ -39,6 +39,24 @@ export const getHoursAndMinutes = time => {
 	return [hours, minutes];
 };
 
+export const getTimeLeft = (time, now, indexOfItem = 0) => {
+	// returns time left in minutes
+	// time is in format HH:mm
+	let [leaveTimeHours, leaveTimeMinutes] = getHoursAndMinutes(time);
+	let [nowHours, nowMinutes] = getHoursAndMinutes(now);
+	let timeLeft =
+		leaveTimeHours * 60 + leaveTimeMinutes - (nowHours * 60 + nowMinutes);
+	// below conditions with numbers 7 and 5 are hard coded.
+	// currently, the last bus leaves after 3AM and
+	// there is no bus at 4AM. You can reduce the
+	// number, but then it will not handle future cases
+	// where school decides to add additional bus times.
+	if (leaveTimeHours < 7 && indexOfItem >= 5) {
+		timeLeft += 24 * 60;
+	}
+	return timeLeft;
+};
+
 export const getPropValue = (
 	objectsList,
 	propValue,
