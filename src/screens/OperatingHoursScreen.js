@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { ThemeProvider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from '../components/Dropdown';
-import CountDown from 'react-native-countdown-component';
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import {
 	getOperatingHoursList,
@@ -16,8 +15,10 @@ import {
 	FACILITIES,
 	ID,
 	NAME,
-	NAME_ID
+	NAME_ID,
+	TODAY
 } from '../constants';
+import OperatingHourCountDown from '../components/OperatingHourCountDown';
 
 const OperatingHoursScreen = () => {
 	const state = useSelector(storeState => storeState.operatingHours);
@@ -36,8 +37,10 @@ const OperatingHoursScreen = () => {
 		facilities
 	);
 
-	const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
-	const [isOpen, setIsOpen] = useState(initialIsOpen);
+	const [facilityInfo, setFacilityInfo] = useState({
+		timeLeft: initialTimeLeft,
+		isOpen: initialIsOpen
+	});
 	useEffect(() => {
 		const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
 			state,
@@ -45,8 +48,7 @@ const OperatingHoursScreen = () => {
 			operatingHours,
 			facilities
 		);
-		setTimeLeft(newTimeLeft);
-		setIsOpen(newIsOpen);
+		setFacilityInfo({ timeLeft: newTimeLeft, isOpen: newIsOpen });
 	}, [state]);
 
 	return (
@@ -69,24 +71,25 @@ const OperatingHoursScreen = () => {
 				}
 				chosenItem={state.facility}
 			/>
-			<Text>
-				The {facilityName} is {isOpen ? 'open' : 'closed'} now.
-			</Text>
-			<CountDown
-				until={timeLeft}
-				onFinish={() => {
-					const [reevaluatedTimeLeft, reevaluatedIsOpen] = getTimeLeftIsOpen(
-						state,
-						dayType,
-						operatingHours,
-						facilities
-					);
-					setTimeLeft(reevaluatedTimeLeft);
-					setIsOpen(reevaluatedIsOpen);
-				}}
-				size={30}
-			/>
-			<Text>Till {isOpen ? 'closing' : 'opening'}</Text>
+			{dayType === TODAY ? (
+				<View style={styles.countDown}>
+					<OperatingHourCountDown
+						facilityName={facilityName}
+						isOpen={facilityInfo.isOpen}
+						timeLeft={facilityInfo.timeLeft}
+						updateTimeLeft={() => {
+							const [
+								reevaluatedTimeLeft,
+								reevaluatedIsOpen
+							] = getTimeLeftIsOpen(state, dayType, operatingHours, facilities);
+							setFacilityInfo({
+								timeLeft: reevaluatedTimeLeft,
+								isOpen: reevaluatedIsOpen
+							});
+						}}
+					/>
+				</View>
+			) : null}
 		</View>
 	);
 };
@@ -95,6 +98,10 @@ OperatingHoursScreen.navigationOptions = {
 	title: 'Operating Hours'
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	countDown: {
+		marginTop: 100
+	}
+});
 
 export default OperatingHoursScreen;

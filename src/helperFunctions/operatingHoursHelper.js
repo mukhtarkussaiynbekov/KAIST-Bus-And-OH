@@ -50,7 +50,7 @@ export const getOperatingHours = (
 	operatingHoursObject,
 	dayType,
 	specialHolidays,
-	now = moment().tz('Asia/Seoul')
+	now
 ) => {
 	if (
 		isSpecialHoliday(dayType, specialHolidays, now) &&
@@ -66,13 +66,12 @@ export const getOperatingHours = (
 			);
 		}
 	}
-	let dayIndex = convertDayToIndex(dayType);
+	let dayIndex = convertDayToIndex(dayType, now);
 	let day = dayNames[dayIndex];
 	return operatingHoursObject[day];
 };
 
-export const convertDayToIndex = dayType => {
-	let now = moment().tz('Asia/Seoul');
+export const convertDayToIndex = (dayType, now) => {
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
 	switch (dayType) {
 		case YESTERDAY:
@@ -147,34 +146,38 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 		const yesterdayHours = getOperatingHoursList(state, YESTERDAY, facilities);
 		if (yesterdayHours.length > 0) {
 			let lastTime = yesterdayHours[yesterdayHours.length - 1];
-			let timeLeftUntilClosing = getTimeLeftOH(lastTime.finish, nowFormatted);
-			if (timeLeftUntilClosing > 0) {
-				return [timeLeftUntilClosing, true];
+			if (lastTime.finish < lastTime.start) {
+				let timeLeftUntilClosing = getTimeLeftOH(lastTime.finish, nowFormatted);
+				if (timeLeftUntilClosing > 0) {
+					return [timeLeftUntilClosing, true];
+				}
 			}
 		}
 	}
-	let foundProperTime = false;
+
 	let timeLeft = 0;
-	let isOpen = false;
-	let dayHours = todayHours;
-	let additionalDays = -1;
+	for (let hour of todayHours) {
+		if (hour.start > nowFormatted) {
+			timeLeft = getTimeLeftOH(hour.start, nowFormatted);
+			return [timeLeft, false];
+		} else if (hour.finish > nowFormatted) {
+			timeLeft = getTimeLeftOH(hour.finish, nowFormatted);
+			return [timeLeft, true];
+		} else if (hour.finish < hour.start) {
+			timeLeft = getTimeLeftOH(hour.finish, nowFormatted, true);
+			return [timeLeft, true];
+		}
+	}
+
+	now.add(1, 'days');
+	let dayHours = getOperatingHoursList(state, TODAY, facilities, now);
+	let foundProperTime = false;
+	let additionalDays = 0;
 	while (!foundProperTime) {
 		for (let hour of dayHours) {
-			if (hour.start > nowFormatted) {
-				timeLeft = getTimeLeftOH(hour.start, nowFormatted);
-				foundProperTime = true;
-				break;
-			} else if (hour.finish > nowFormatted) {
-				isOpen = true;
-				timeLeft = getTimeLeftOH(hour.finish, nowFormatted);
-				foundProperTime = true;
-				break;
-			} else if (hour.finish < hour.start) {
-				isOpen = true;
-				timeLeft = getTimeLeftOH(hour.finish, nowFormatted, true);
-				foundProperTime = true;
-				break;
-			}
+			timeLeft = getTimeLeftOH(hour.start, nowFormatted);
+			foundProperTime = true;
+			break;
 		}
 		additionalDays += 1;
 		if (!foundProperTime) {
@@ -183,5 +186,5 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 		}
 	}
 	timeLeft += additionalDays * 24 * 60 * 60;
-	return [timeLeft, isOpen];
+	return [timeLeft, false];
 };
