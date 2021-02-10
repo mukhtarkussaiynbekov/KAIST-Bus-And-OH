@@ -61,10 +61,12 @@ export const getDepartureTimes = (
 		isSpecialHoliday(dayType, specialHolidays) &&
 		SPECIAL_HOLIDAY in departureTimesObject
 	) {
+		let holidayTimes = departureTimesObject[SPECIAL_HOLIDAY];
 		let formattedDate = getDayMonth(dayType);
-		if (!isRegularDay(departureTimesObject[SPECIAL_HOLIDAY], formattedDate)) {
+		if (!isRegularDay(holidayTimes, formattedDate)) {
 			initialDepartureTimes = getSpecialHolidayTimes(
 				departureTimesObject,
+				holidayTimes,
 				formattedDate
 			);
 		}

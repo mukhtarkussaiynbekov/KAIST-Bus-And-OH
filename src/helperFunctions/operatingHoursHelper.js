@@ -56,9 +56,14 @@ export const getOperatingHours = (
 		isSpecialHoliday(dayType, specialHolidays, now) &&
 		SPECIAL_HOLIDAY in operatingHoursObject
 	) {
+		let holidayTimes = operatingHoursObject[SPECIAL_HOLIDAY];
 		let formattedDate = getDayMonth(dayType);
-		if (!isRegularDay(operatingHoursObject[SPECIAL_HOLIDAY], formattedDate)) {
-			return getSpecialHolidayTimes(operatingHoursObject, formattedDate);
+		if (!isRegularDay(holidayTimes, formattedDate)) {
+			return getSpecialHolidayTimes(
+				operatingHoursObject,
+				holidayTimes,
+				formattedDate
+			);
 		}
 	}
 	let dayIndex = convertDayToIndex(dayType);

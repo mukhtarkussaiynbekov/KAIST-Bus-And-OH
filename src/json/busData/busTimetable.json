@@ -48,8 +48,7 @@
 							"01:50"
 						]
 					},
-					"02/10": { "weekends": "true" },
-					"02/11": { "weekends": "true" }
+					"weekends": "true"
 				}
 			}
 		},
@@ -72,23 +71,7 @@
 					"02:40"
 				],
 				"weekends": [],
-				"specialHoliday": {
-					"02/12": {
-						"hours": [
-							"13:50",
-							"15:20",
-							"16:50",
-							"18:20",
-							"19:50",
-							"21:20",
-							"22:50",
-							"00:20",
-							"01:50"
-						]
-					},
-					"02/10": { "weekends": "true" },
-					"02/11": { "weekends": "true" }
-				}
+				"specialHoliday": { "weekends": "true" }
 			}
 		},
 		{
@@ -124,8 +107,7 @@
 							"02:30"
 						]
 					},
-					"02/10": { "weekends": "true" },
-					"02/11": { "weekends": "true" }
+					"weekends": "true"
 				}
 			}
 		},
@@ -158,23 +140,7 @@
 					"03:00"
 				],
 				"weekends": [],
-				"specialHoliday": {
-					"02/12": {
-						"hours": [
-							"14:30",
-							"16:00",
-							"17:30",
-							"19:00",
-							"20:30",
-							"22:00",
-							"23:30",
-							"01:00",
-							"02:30"
-						]
-					},
-					"02/10": { "weekends": "true" },
-					"02/11": { "weekends": "true" }
-				}
+				"specialHoliday": { "weekends": "true" }
 			}
 		},
 		{
@@ -210,8 +176,7 @@
 							"02:30"
 						]
 					},
-					"02/10": { "weekends": "true" },
-					"02/11": { "weekends": "true" }
+					"weekends": "true"
 				}
 			}
 		}

@@ -57,37 +57,37 @@ export const isRegularDay = (timeObject, date) => {
 	}
 };
 
-export const getSpecialHolidayTimes = (timeObject, date) => {
-	let holidayTimes = timeObject[SPECIAL_HOLIDAY];
+export const getPropertyTime = (timeObject, specificDateObject) => {
+	if (CLOSED in specificDateObject) {
+		return [];
+	} else if (WEEKDAYS in specificDateObject) {
+		return timeObject[WEEKDAYS];
+	} else if (WEEKENDS in specificDateObject) {
+		return timeObject[WEEKENDS];
+	} else if (MONDAY in specificDateObject) {
+		return timeObject[MONDAY];
+	} else if (TUESDAY in specificDateObject) {
+		return timeObject[TUESDAY];
+	} else if (WEDNESDAY in specificDateObject) {
+		return timeObject[WEDNESDAY];
+	} else if (THURSDAY in specificDateObject) {
+		return timeObject[THURSDAY];
+	} else if (FRIDAY in specificDateObject) {
+		return timeObject[FRIDAY];
+	} else if (SATURDAY in specificDateObject) {
+		return timeObject[SATURDAY];
+	} else if (SUNDAY in specificDateObject) {
+		return timeObject[SUNDAY];
+	}
+	return specificDateObject[HOURS];
+};
+
+export const getSpecialHolidayTimes = (timeObject, holidayTimes, date) => {
 	if (date in holidayTimes) {
 		let specificDateObject = holidayTimes[date];
-		if (CLOSED in specificDateObject) {
-			return [];
-		} else if (WEEKDAYS in specificDateObject) {
-			return timeObject[WEEKDAYS];
-		} else if (WEEKENDS in specificDateObject) {
-			return timeObject[WEEKENDS];
-		} else if (MONDAY in specificDateObject) {
-			return timeObject[MONDAY];
-		} else if (TUESDAY in specificDateObject) {
-			return timeObject[TUESDAY];
-		} else if (WEDNESDAY in specificDateObject) {
-			return timeObject[WEDNESDAY];
-		} else if (THURSDAY in specificDateObject) {
-			return timeObject[THURSDAY];
-		} else if (FRIDAY in specificDateObject) {
-			return timeObject[FRIDAY];
-		} else if (SATURDAY in specificDateObject) {
-			return timeObject[SATURDAY];
-		} else if (SUNDAY in specificDateObject) {
-			return timeObject[SUNDAY];
-		}
-		return specificDateObject[HOURS];
+		return getPropertyTime(timeObject, specificDateObject);
 	}
-	if (CLOSED in holidayTimes) {
-		return [];
-	}
-	return holidayTimes[HOURS];
+	return getPropertyTime(timeObject, holidayTimes);
 };
 
 export const getHoursMinutesSeconds = time => {
