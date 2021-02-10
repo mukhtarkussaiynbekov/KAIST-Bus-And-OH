@@ -84,6 +84,9 @@ export const getSpecialHolidayTimes = (timeObject, date) => {
 		}
 		return specificDateObject[HOURS];
 	}
+	if (CLOSED in holidayTimes) {
+		return [];
+	}
 	return holidayTimes[HOURS];
 };
 
