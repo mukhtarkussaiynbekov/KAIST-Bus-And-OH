@@ -1,9 +1,18 @@
+// hooks
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+// components
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
+import Timetable from '../components/Timetable';
 import TimetableCell from '../components/TimetableCell';
-import { useSelector, useDispatch } from 'react-redux';
+
+// helper functions and constants
+import { getPropValue } from '../helperFunctions/commonFunctions';
+import { getTimetable, getTimeLeftBus } from '../helperFunctions/busHelper';
+import moment from 'moment-timezone';
 import {
 	NAME_ID,
 	ID,
@@ -16,16 +25,24 @@ import {
 	BUS_TYPES,
 	DAY_TYPES
 } from '../constants';
-import { getTimetable, getTimeLeftBus } from '../helperFunctions/busHelper';
-import { getPropValue } from '../helperFunctions/commonFunctions';
-import moment from 'moment-timezone';
-import Timetable from '../components/Timetable';
 
 const BusScreen = () => {
+	// get bus state and dispatch from the store
 	const state = useSelector(storeState => storeState.bus);
 	const dispatch = useDispatch();
+
+	// create now state to keep track of current time
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
+	let nowFormatted = now.format('HH:mm');
+
+	// create flastListRendered to render every data in first render.
+	// this is needed because flat list does not render any item
+	// if we start off by usig our main logic. This is probably
+	// due to large amount of data (in our case more than 10)
 	const [flatListRendered, setFlatListRendered] = useState(false);
+
+	// following declarations are needed to get timetable and
+	// to render flat list as well as drop downs.
 	const busOptions = state.database.busOptions;
 	const dayTypes = busOptions[DAY_TYPES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
@@ -37,14 +54,21 @@ const BusScreen = () => {
 		NAME_ID
 	);
 	const busStops = busOptions[busStopsClassfication];
+
 	const [timetable, setTimetable] = useState(
 		getTimetable(state, dayType, busTypes, busStops)
 	);
+
 	useEffect(() => {
+		// update timetable whenever state changes
 		setTimetable(getTimetable(state, dayType, busTypes, busStops));
 	}, [state]);
+
 	useEffect(() => {
+		// set interval to update current time every second
 		const interval = setInterval(() => {
+			// update timetable at midnight to show following
+			// day's timetable
 			if (
 				now.format('HH:mm:ss') === '00:00:00' ||
 				now.format('HH:mm:ss') === '00:00:01'
@@ -59,7 +83,7 @@ const BusScreen = () => {
 		return () => clearInterval(interval);
 		// we need to clean up after a component is removed. Otherwise, memory leak.
 	}, []);
-	let nowFormatted = now.format('HH:mm');
+
 	return (
 		<>
 			<View style={styles.topDropdowns}>

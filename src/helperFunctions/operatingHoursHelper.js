@@ -23,6 +23,9 @@ import {
 import moment from 'moment-timezone';
 
 export const getClassFacility = facility => {
+	// returns classification and facility name
+	// input format is "classification_facilityName"
+
 	let loDashIdx = facility.indexOf('_');
 	let classification = facility.slice(0, loDashIdx);
 	let facilityName = facility.slice(loDashIdx + 1);
@@ -34,6 +37,8 @@ export const getOperatingHoursObject = (
 	facilityName,
 	listOfOperatingHours
 ) => {
+	// returns object that contains operating hours of facilityName
+
 	for (let parent of listOfOperatingHours) {
 		if (parent[NAME] !== classification) {
 			continue;
@@ -52,6 +57,8 @@ export const getOperatingHours = (
 	specialHolidays,
 	now
 ) => {
+	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
+
 	if (
 		isSpecialHoliday(dayType, specialHolidays, now) &&
 		SPECIAL_HOLIDAY in operatingHoursObject
@@ -72,6 +79,8 @@ export const getOperatingHours = (
 };
 
 export const convertDayToIndex = (dayType, now) => {
+	// converts now (moment instance) to day index according to dayType
+
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
 	switch (dayType) {
 		case YESTERDAY:
@@ -93,6 +102,8 @@ export const getOperatingHoursList = (
 	facilities,
 	now = moment().tz('Asia/Seoul')
 ) => {
+	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
+
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
@@ -101,7 +112,7 @@ export const getOperatingHoursList = (
 		facilityName,
 		listOfOperatingHours
 	);
-	const specialHolidays = state.database.specialHolidays.dates;
+	const specialHolidays = state.database.specialHolidays;
 	let operatingHours = getOperatingHours(
 		operatingHoursObject[HOURS],
 		dayType,
@@ -112,6 +123,8 @@ export const getOperatingHoursList = (
 };
 
 export const getTimeLeftOH = (time, now, isNextDay = false) => {
+	// returns difference between time and now parameters
+
 	let [timeHours, timeMinutes] = getHoursMinutesSeconds(time);
 	let [nowHours, nowMinutes, nowSeconds] = getHoursMinutesSeconds(now);
 	if (isNextDay) {
@@ -126,7 +139,7 @@ export const getTimeLeftOH = (time, now, isNextDay = false) => {
 
 export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 	/*
-    parameters:
+    input parameters:
     1. state is operatingHoursReducer's state
     2. todayHours is a list of objects where each object is of form
         {start: 'HH:mm', finish: 'HH:mm'}
@@ -137,6 +150,7 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
     timeLeft indicates time left until closing if isOpen = true.
     Otherwise if isOpen = false, timeLeft indicates time left until opening.
   */
+
 	if (dayType !== TODAY) {
 		return [0, false];
 	}

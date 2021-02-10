@@ -2,8 +2,11 @@ export const NAME = 'name';
 export const NAME_ID = 'name_id';
 export const ID = 'id';
 export const CHILDREN = 'children';
-export const BUS_TYPES = 'busTypes';
+
 export const DAY_TYPES = 'dayTypes';
+export const BUS_TYPES = 'busTypes';
+export const ROUTE = 'route';
+export const DEPARTURE_TIMES = 'departureTimes';
 
 export const SWAP_STOPS = 'swap_stops';
 export const CHANGE_TYPE = 'change_type';
@@ -18,8 +21,6 @@ export const TOMORROW = 'tomorrow';
 export const WEEKDAYS = 'weekdays';
 export const WEEKENDS = 'weekends';
 export const SPECIAL_HOLIDAY = 'specialHoliday';
-export const ROUTE = 'route';
-export const DEPARTURE_TIMES = 'departureTimes';
 
 export const TRAVEL_TIMES = 'travelTimes';
 export const STOP_ONE = 'stopOne';

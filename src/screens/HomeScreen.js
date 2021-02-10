@@ -1,17 +1,25 @@
+// hooks
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+// components
 import { View, StyleSheet } from 'react-native';
 import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
-import { useSelector } from 'react-redux';
-import moment from 'moment-timezone';
-// import { getUpcomingTime, getPropValue } from '../reducers/helperFunctions';
-import { getUpcomingTime } from '../helperFunctions/busHelper';
+
+// helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
-import { NAME, TODAY, ID, NAME_ID, BUS_TYPES, DAY_TYPES } from '../constants';
+import { getUpcomingTime } from '../helperFunctions/busHelper';
+import { getOperatingHoursList } from '../helperFunctions/operatingHoursHelper';
 import { getUpdates } from '../firebase';
+import { NAME, TODAY, ID, NAME_ID, BUS_TYPES, DAY_TYPES } from '../constants';
+import moment from 'moment-timezone';
 
 const HomeScreen = ({ navigation }) => {
+	// get bus and operating hour states from the store
 	const busState = useSelector(storeState => storeState.bus);
 	const ohState = useSelector(storeState => storeState.operatingHours);
+
+	// create now state to keep track of current time
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
 		getUpdates();
@@ -22,6 +30,7 @@ const HomeScreen = ({ navigation }) => {
 		// we need to clean up after a component is removed. Otherwise, memory leak.
 	}, []);
 
+	// following declarations are needed to render data
 	const busOptions = busState.database.busOptions;
 	const dayTypes = busOptions[DAY_TYPES];
 	const busTypes = busOptions[BUS_TYPES];
@@ -44,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>
-				<Text>
+				<Text style={styles.text}>
 					{upcomingBusTime !== undefined
 						? `Next bus from ${from} to ${to} leaves at ${upcomingBusTime.leave}`
 						: `No bus going from ${from} to ${to} today`}
@@ -85,20 +94,16 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// alignItems: 'center',
 		justifyContent: 'center'
-		// borderColor: 'red',
-		// borderWidth: 10
 	},
 	icon: {
-		// borderColor: 'yellow',
-		// borderWidth: 10,
 		marginRight: 10
 	},
-	title: {
-		// borderColor: 'red',
-		// borderWidth: 10,
-		// marginLeft: 10
+	text: {
+		marginHorizontal: 10,
+		textAlign: 'center',
+		marginBottom: 10,
+		fontSize: 15
 	}
 });
 

@@ -1,8 +1,16 @@
+// hooks
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+// components
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from '../components/Dropdown';
+import OperatingHourCountDown from '../components/OperatingHourCountDown';
+import Timetable from '../components/Timetable';
+import TimetableCell from '../components/TimetableCell';
+
+// helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import {
 	getOperatingHoursList,
@@ -18,14 +26,14 @@ import {
 	NAME_ID,
 	TODAY
 } from '../constants';
-import OperatingHourCountDown from '../components/OperatingHourCountDown';
-import Timetable from '../components/Timetable';
-import TimetableCell from '../components/TimetableCell';
 
 const OperatingHoursScreen = () => {
+	// get operating hour state and dispatch from the store
 	const state = useSelector(storeState => storeState.operatingHours);
 	const dispatch = useDispatch();
 
+	// following declarations are needed to get facility info and
+	// to render flat list as well as drop downs.
 	const options = state.database.options;
 	const dayTypes = options[DAY_TYPES];
 	const facilities = options[FACILITIES];
@@ -43,7 +51,9 @@ const OperatingHoursScreen = () => {
 		timeLeft: initialTimeLeft,
 		isOpen: initialIsOpen
 	});
+
 	useEffect(() => {
+		// update facility info whenever state changes
 		const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
 			state,
 			dayType,
@@ -118,7 +128,7 @@ OperatingHoursScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
 	countDown: {
-		marginTop: 100
+		marginTop: 80
 	}
 });
 

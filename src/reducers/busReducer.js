@@ -16,7 +16,7 @@ const INITIAL_STATE = {
 		busOptions: busOptionsLocal,
 		timetableAll: busTimetableLocal,
 		travelTimes: busTravelTimesLocal,
-		specialHolidays: specialHolidaysLocal
+		specialHolidays: specialHolidaysLocal.dates
 	},
 	busType: 2, // campuses
 	dayType: 0, // today
