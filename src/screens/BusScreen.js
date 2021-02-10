@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import TimetableCell from '../components/TimetableCell';
@@ -19,6 +19,7 @@ import {
 import { getTimetable, getTimeLeftBus } from '../helperFunctions/busHelper';
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import moment from 'moment-timezone';
+import Timetable from '../components/Timetable';
 
 const BusScreen = () => {
 	const state = useSelector(storeState => storeState.bus);
@@ -115,14 +116,14 @@ const BusScreen = () => {
 				}
 				chosenItem={state.to}
 			/>
-			<TimetableCell
-				firstColumnText={'From\nLeave At'}
-				secondColumnText={'To\nArrive At'}
-			/>
-			<FlatList
-				data={timetable}
-				keyExtractor={(time, index) => index.toString()}
-				renderItem={({ item, index }) => {
+			<Timetable
+				header={
+					<TimetableCell
+						columnTexts={{ first: 'From\nLeave At', second: 'To\nArrive At' }}
+					/>
+				}
+				timetable={timetable}
+				renderFunction={({ item, index }) => {
 					if (flatListRendered && dayType === TODAY) {
 						let timeLeft = getTimeLeftBus(item.leave, nowFormatted, index);
 						if (timeLeft <= -5) {
@@ -131,8 +132,7 @@ const BusScreen = () => {
 					}
 					return (
 						<TimetableCell
-							firstColumnText={item.leave}
-							secondColumnText={item.arrive}
+							columnTexts={{ first: item.leave, second: item.arrive }}
 						/>
 					);
 				}}

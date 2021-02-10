@@ -2,11 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 
-const TimetableCell = ({ firstColumnText, secondColumnText }) => {
+const TimetableCell = ({ columnTexts }) => {
 	return (
 		<View style={styles.container}>
-			<Text style={styles.time}>{firstColumnText}</Text>
-			<Text style={styles.time}>{secondColumnText}</Text>
+			<Text style={styles.time}>{columnTexts.first}</Text>
+			<Text style={styles.time}>{columnTexts.second}</Text>
 			{/* {showFullTimetable ? null : ( // For the future when implementing notifications.
 				<TouchableOpacity>
 					<Icon name="bell" type="feather" color="#517fa4" size={20} />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ThemeProvider, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from '../components/Dropdown';
 import { getPropValue } from '../helperFunctions/commonFunctions';
@@ -19,6 +19,8 @@ import {
 	TODAY
 } from '../constants';
 import OperatingHourCountDown from '../components/OperatingHourCountDown';
+import Timetable from '../components/Timetable';
+import TimetableCell from '../components/TimetableCell';
 
 const OperatingHoursScreen = () => {
 	const state = useSelector(storeState => storeState.operatingHours);
@@ -52,7 +54,7 @@ const OperatingHoursScreen = () => {
 	}, [state]);
 
 	return (
-		<View>
+		<>
 			<Dropdown
 				title="Day"
 				items={dayTypes}
@@ -89,8 +91,24 @@ const OperatingHoursScreen = () => {
 						}}
 					/>
 				</View>
-			) : null}
-		</View>
+			) : (
+				<Timetable
+					header={
+						<TimetableCell
+							columnTexts={{ first: 'Open At', second: 'Close At' }}
+						/>
+					}
+					timetable={operatingHours}
+					renderFunction={({ item }) => {
+						return (
+							<TimetableCell
+								columnTexts={{ first: item.start, second: item.finish }}
+							/>
+						);
+					}}
+				/>
+			)}
+		</>
 	);
 };
 
