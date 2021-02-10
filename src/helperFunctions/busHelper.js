@@ -89,6 +89,8 @@ export const getFromToIndices = (from, to, route) => {
 			break;
 		}
 	}
+	let closerToIndex = route.indexOf(to, fromIndex + 1);
+	toIndex = closerToIndex;
 	return [fromIndex, toIndex];
 };
 

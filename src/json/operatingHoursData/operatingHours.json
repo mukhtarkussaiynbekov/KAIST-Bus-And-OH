@@ -341,43 +341,43 @@
 						"monday": [
 							{
 								"start": "08:00",
-								"finish": "23:00"
+								"finish": "22:00"
 							}
 						],
 						"tuesday": [
 							{
 								"start": "08:00",
-								"finish": "23:00"
+								"finish": "22:00"
 							}
 						],
 						"wednesday": [
 							{
 								"start": "08:00",
-								"finish": "23:00"
+								"finish": "22:00"
 							}
 						],
 						"thursday": [
 							{
 								"start": "08:00",
-								"finish": "23:00"
+								"finish": "22:00"
 							}
 						],
 						"friday": [
 							{
 								"start": "08:00",
-								"finish": "23:00"
+								"finish": "22:00"
 							}
 						],
 						"saturday": [
 							{
 								"start": "08:00",
-								"finish": "23:00"
+								"finish": "22:00"
 							}
 						],
 						"sunday": [
 							{
 								"start": "08:00",
-								"finish": "23:00"
+								"finish": "22:00"
 							}
 						]
 					}
