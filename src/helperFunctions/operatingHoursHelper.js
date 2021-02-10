@@ -16,7 +16,9 @@ import {
 	getPropValue,
 	isSpecialHoliday,
 	getSpecialHolidayTimes,
-	getHoursMinutesSeconds
+	getHoursMinutesSeconds,
+	getDayMonth,
+	isRegularDay
 } from './commonFunctions';
 import moment from 'moment-timezone';
 
@@ -52,17 +54,12 @@ export const getOperatingHours = (
 ) => {
 	if (
 		isSpecialHoliday(dayType, specialHolidays, now) &&
-		SPECIAL_HOLIDAY in operatingHoursObject &&
-		!(
-			REGULAR in operatingHoursObject[SPECIAL_HOLIDAY] &&
-			operatingHoursObject[SPECIAL_HOLIDAY][REGULAR]
-		)
+		SPECIAL_HOLIDAY in operatingHoursObject
 	) {
-		return getSpecialHolidayTimes(
-			operatingHoursObject[SPECIAL_HOLIDAY],
-			dayType,
-			specialHolidays
-		);
+		let formattedDate = getDayMonth(dayType);
+		if (!isRegularDay(operatingHoursObject[SPECIAL_HOLIDAY], formattedDate)) {
+			return getSpecialHolidayTimes(operatingHoursObject, formattedDate);
+		}
 	}
 	let dayIndex = convertDayToIndex(dayType);
 	let day = dayNames[dayIndex];

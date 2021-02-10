@@ -13,13 +13,16 @@ import {
 	STOP_ONE,
 	STOP_TWO,
 	INTERVAL,
-	SAME_OPPOSITE_INTERVAL
+	SAME_OPPOSITE_INTERVAL,
+	REGULAR
 } from '../constants';
 import {
 	isSpecialHoliday,
 	getSpecialHolidayTimes,
 	getPropValue,
-	getHoursMinutesSeconds
+	getHoursMinutesSeconds,
+	getDayMonth,
+	isRegularDay
 } from './commonFunctions';
 import moment from 'moment-timezone';
 
@@ -58,10 +61,13 @@ export const getDepartureTimes = (
 		isSpecialHoliday(dayType, specialHolidays) &&
 		SPECIAL_HOLIDAY in departureTimesObject
 	) {
-		initialDepartureTimes = getSpecialHolidayTimes(
-			departureTimesObject[SPECIAL_HOLIDAY],
-			dayType
-		);
+		let formattedDate = getDayMonth(dayType);
+		if (!isRegularDay(departureTimesObject[SPECIAL_HOLIDAY], formattedDate)) {
+			initialDepartureTimes = getSpecialHolidayTimes(
+				departureTimesObject,
+				formattedDate
+			);
+		}
 	}
 	let departureTimes = [];
 	for (let time of initialDepartureTimes) {

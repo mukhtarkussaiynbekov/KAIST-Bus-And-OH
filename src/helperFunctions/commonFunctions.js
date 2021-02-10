@@ -1,4 +1,22 @@
-import { CHILDREN, YESTERDAY, TODAY, TOMORROW, HOURS } from '../constants';
+import {
+	CHILDREN,
+	YESTERDAY,
+	TODAY,
+	TOMORROW,
+	HOURS,
+	CLOSED,
+	SPECIAL_HOLIDAY,
+	WEEKDAYS,
+	WEEKENDS,
+	MONDAY,
+	TUESDAY,
+	WEDNESDAY,
+	THURSDAY,
+	FRIDAY,
+	SATURDAY,
+	SUNDAY,
+	REGULAR
+} from '../constants';
 import moment from 'moment-timezone';
 
 export const getDayMonth = (dayType, now = moment().tz('Asia/Seoul')) => {
@@ -28,12 +46,45 @@ export const isSpecialHoliday = (
 	return false;
 };
 
-export const getSpecialHolidayTimes = (timeObject, dayType) => {
-	let formattedDate = getDayMonth(dayType);
-	if (formattedDate in timeObject) {
-		return timeObject[formattedDate];
+export const isRegularDay = (timeObject, date) => {
+	if (REGULAR in timeObject) {
+		return true;
 	}
-	return timeObject[HOURS];
+	if (date in timeObject) {
+		if (REGULAR in timeObject[date]) {
+			return true;
+		}
+	}
+};
+
+export const getSpecialHolidayTimes = (timeObject, date) => {
+	let holidayTimes = timeObject[SPECIAL_HOLIDAY];
+	if (date in holidayTimes) {
+		let specificDateObject = holidayTimes[date];
+		if (CLOSED in specificDateObject) {
+			return [];
+		} else if (WEEKDAYS in specificDateObject) {
+			return timeObject[WEEKDAYS];
+		} else if (WEEKENDS in specificDateObject) {
+			return timeObject[WEEKENDS];
+		} else if (MONDAY in specificDateObject) {
+			return timeObject[MONDAY];
+		} else if (TUESDAY in specificDateObject) {
+			return timeObject[TUESDAY];
+		} else if (WEDNESDAY in specificDateObject) {
+			return timeObject[WEDNESDAY];
+		} else if (THURSDAY in specificDateObject) {
+			return timeObject[THURSDAY];
+		} else if (FRIDAY in specificDateObject) {
+			return timeObject[FRIDAY];
+		} else if (SATURDAY in specificDateObject) {
+			return timeObject[SATURDAY];
+		} else if (SUNDAY in specificDateObject) {
+			return timeObject[SUNDAY];
+		}
+		return specificDateObject[HOURS];
+	}
+	return holidayTimes[HOURS];
 };
 
 export const getHoursMinutesSeconds = time => {
