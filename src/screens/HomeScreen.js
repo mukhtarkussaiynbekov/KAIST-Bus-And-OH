@@ -9,9 +9,12 @@ import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import { getUpcomingTime } from '../helperFunctions/busHelper';
-import { getOperatingHoursList } from '../helperFunctions/operatingHoursHelper';
+import {
+	getOperatingHoursList,
+	getTimeLeftIsOpen
+} from '../helperFunctions/operatingHoursHelper';
 import { getUpdates } from '../firebase';
-import { NAME, TODAY, ID, NAME_ID, BUS_TYPES, DAY_TYPES } from '../constants';
+import { NAME, TODAY, ID, NAME_ID, BUS_TYPES, FACILITIES } from '../constants';
 import moment from 'moment-timezone';
 
 const HomeScreen = ({ navigation }) => {
@@ -30,9 +33,8 @@ const HomeScreen = ({ navigation }) => {
 		// we need to clean up after a component is removed. Otherwise, memory leak.
 	}, []);
 
-	// following declarations are needed to render data
+	// following declarations are needed to render bus data
 	const busOptions = busState.database.busOptions;
-	const dayTypes = busOptions[DAY_TYPES];
 	const busTypes = busOptions[BUS_TYPES];
 	const busStopsClassfication = getPropValue(
 		busTypes,
@@ -50,13 +52,34 @@ const HomeScreen = ({ navigation }) => {
 	let from = getPropValue(busStops, busState.from, ID, NAME);
 	let to = getPropValue(busStops, busState.to, ID, NAME);
 
+	// following declarations are needed to render operating hour data
+	const ohOptions = ohState.database.options;
+	const facilities = ohOptions[FACILITIES];
+	const facilityName = getPropValue(facilities, ohState.facility, ID, NAME);
+	const operatingHours = getOperatingHoursList(ohState, TODAY, facilities);
+	const [_, isOpen] = getTimeLeftIsOpen(
+		ohState,
+		TODAY,
+		operatingHours,
+		facilities
+	);
+
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>
 				<Text style={styles.text}>
-					{upcomingBusTime !== undefined
-						? `Next bus from ${from} to ${to} leaves at ${upcomingBusTime.leave}`
-						: `No bus going from ${from} to ${to} today`}
+					{upcomingBusTime === undefined ? (
+						<Text>
+							No bus going from <Text style={styles.boldText}>{from}</Text> to{' '}
+							<Text style={styles.boldText}>{to}</Text> today
+						</Text>
+					) : (
+						<Text>
+							Next bus from <Text style={styles.boldText}>{from}</Text> to{' '}
+							<Text style={styles.boldText}>{to}</Text> leaves at{' '}
+							<Text style={styles.boldText}>{upcomingBusTime.leave}</Text>
+						</Text>
+					)}
 				</Text>
 				<Button
 					icon={
@@ -86,6 +109,10 @@ const HomeScreen = ({ navigation }) => {
 					onPress={() => navigation.navigate('OperatingHours')}
 					titleStyle={styles.title}
 				/>
+				<Text style={styles.text}>
+					<Text style={styles.boldText}>{facilityName}</Text> is{' '}
+					<Text style={styles.boldText}>{isOpen ? 'open' : 'closed'}</Text> now
+				</Text>
 			</ThemeProvider>
 		</View>
 	);
@@ -102,8 +129,11 @@ const styles = StyleSheet.create({
 	text: {
 		marginHorizontal: 10,
 		textAlign: 'center',
-		marginBottom: 10,
-		fontSize: 15
+		marginVertical: 10,
+		fontSize: 16
+	},
+	boldText: {
+		fontWeight: 'bold'
 	}
 });
 

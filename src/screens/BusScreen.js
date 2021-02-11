@@ -67,17 +67,13 @@ const BusScreen = () => {
 	useEffect(() => {
 		// set interval to update current time every second
 		const interval = setInterval(() => {
-			// update timetable at midnight to show following
-			// day's timetable
-			if (
-				now.format('HH:mm:ss') === '00:00:00' ||
-				now.format('HH:mm:ss') === '00:00:01'
-			) {
-				// added second condition just in case program
-				// might run slowly and miss first condition
-				dispatch({ type: '' });
+			// update timetable at midnight to show following day's timetable
+			if (now.format('HH:mm:ss') <= '00:00:02') {
+				setTimetable(getTimetable(state, dayType, busTypes, busStops));
 			}
-			setFlatListRendered(true);
+			if (!flatListRendered) {
+				setFlatListRendered(true);
+			}
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);
 		return () => clearInterval(interval);

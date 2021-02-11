@@ -53,7 +53,7 @@
 			"name_id": "mejom",
 			"children": [
 				{
-					"name": "North (N12) Mejom",
+					"name": "North Mejom (N12)",
 					"id": 1,
 					"name_id": "mejom_n12"
 				},
@@ -63,7 +63,7 @@
 					"name_id": "mejom_n1"
 				},
 				{
-					"name": "Heemang (W4-4) Mejom",
+					"name": "Heemang Mejom (W4-4)",
 					"id": 3,
 					"name_id": "mejom_w4-4"
 				},
@@ -73,12 +73,12 @@
 					"name_id": "mejom_w2"
 				},
 				{
-					"name": "East Cafeteria (E5) Mejom",
+					"name": "East Cafeteria Mejom (E5)",
 					"id": 5,
 					"name_id": "mejom_e5"
 				},
 				{
-					"name": "Sejong Hall (E8) Mejom",
+					"name": "Sejong Hall Mejom (E8)",
 					"id": 6,
 					"name_id": "mejom_e8"
 				}
