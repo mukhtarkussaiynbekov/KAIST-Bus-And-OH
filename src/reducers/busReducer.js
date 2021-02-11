@@ -3,6 +3,14 @@ import busTimetableLocal from '../json/busData/busTimetable.json';
 import busTravelTimesLocal from '../json/busData/busTravelTimes.json';
 import specialHolidaysLocal from '../json/specialHolidays.json';
 import {
+	NAME_ID,
+	ID,
+	DAY_TYPES,
+	TODAY,
+	BUS_TYPES,
+	CAMPUS_STOPS,
+	MAIN_CAMPUS,
+	MUNJI,
 	SWAP_STOPS,
 	CHANGE_TYPE,
 	CHANGE_FROM,
@@ -10,6 +18,7 @@ import {
 	CHANGE_DAY,
 	DATA_FETCH_SUCCESS
 } from '../constants';
+import { getPropValue } from '../helperFunctions/commonFunctions';
 
 const INITIAL_STATE = {
 	database: {
@@ -18,10 +27,10 @@ const INITIAL_STATE = {
 		travelTimes: busTravelTimesLocal,
 		specialHolidays: specialHolidaysLocal.dates
 	},
-	busType: 2, // campuses
-	dayType: 0, // today
-	from: 0, // main campus
-	to: 1 // munji
+	busType: getPropValue(busOptionsLocal[BUS_TYPES], CAMPUS_STOPS, NAME_ID, ID),
+	dayType: getPropValue(busOptionsLocal[DAY_TYPES], TODAY, NAME_ID, ID),
+	from: getPropValue(busOptionsLocal[CAMPUS_STOPS], MAIN_CAMPUS, NAME_ID, ID),
+	to: getPropValue(busOptionsLocal[CAMPUS_STOPS], MUNJI, NAME_ID, ID)
 };
 
 export default (state = INITIAL_STATE, action) => {

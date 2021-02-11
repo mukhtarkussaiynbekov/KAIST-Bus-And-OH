@@ -82,6 +82,7 @@ const OperatingHoursScreen = () => {
 					dispatch({ type: CHANGE_FACILITY, payload: selectedItem })
 				}
 				chosenItem={state.facility}
+				readOnlyHeadings
 			/>
 			{dayType === TODAY ? (
 				<View style={styles.countDown}>

@@ -7,6 +7,9 @@ export const DAY_TYPES = 'dayTypes';
 export const BUS_TYPES = 'busTypes';
 export const ROUTE = 'route';
 export const DEPARTURE_TIMES = 'departureTimes';
+export const CAMPUS_STOPS = 'campusStops';
+export const MAIN_CAMPUS = 'main';
+export const MUNJI = 'munji';
 
 export const SWAP_STOPS = 'swap_stops';
 export const CHANGE_TYPE = 'change_type';
@@ -46,6 +49,8 @@ export const SUNDAY = 'sunday';
 
 export const REGULAR = 'regular';
 export const CLOSED = 'closed';
+
+export const NORTH_MEJOM = 'mejom_n12';
 
 export const dayNames = [
 	MONDAY,

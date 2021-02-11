@@ -10,7 +10,8 @@ const Dropdown = ({
 	searchPlaceholderText,
 	hideSearch,
 	onSelectedItemChange,
-	chosenItem
+	chosenItem,
+	readOnlyHeadings
 }) => {
 	const [selectedItem, setSelectedItem] = useState([chosenItem]);
 	if (selectedItem[0] !== chosenItem) {
@@ -38,6 +39,7 @@ const Dropdown = ({
 						onSelectedItemChange(selectedItem[0]);
 					}}
 					selectedItems={selectedItem}
+					readOnlyHeadings={readOnlyHeadings}
 				/>
 			</View>
 		</View>

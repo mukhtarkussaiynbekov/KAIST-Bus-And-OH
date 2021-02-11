@@ -71,7 +71,10 @@
 								"start": "14:00",
 								"finish": "02:00"
 							}
-						]
+						],
+						"specialHoliday": {
+							"closed": "true"
+						}
 					}
 				},
 				{
@@ -178,7 +181,10 @@
 								"start": "18:00",
 								"finish": "02:00"
 							}
-						]
+						],
+						"specialHoliday": {
+							"closed": "true"
+						}
 					}
 				},
 				{
@@ -237,9 +243,7 @@
 						"saturday": [],
 						"sunday": [],
 						"specialHoliday": {
-							"02/12": { "closed": "true" },
-							"02/10": { "regular": "true" },
-							"02/11": { "closed": "true" }
+							"closed": "true"
 						}
 					}
 				},
@@ -295,7 +299,10 @@
 								"start": "09:00",
 								"finish": "02:00"
 							}
-						]
+						],
+						"specialHoliday": {
+							"closed": "true"
+						}
 					}
 				},
 				{
@@ -342,7 +349,10 @@
 								"start": "18:00",
 								"finish": "02:00"
 							}
-						]
+						],
+						"specialHoliday": {
+							"closed": "true"
+						}
 					}
 				}
 			]

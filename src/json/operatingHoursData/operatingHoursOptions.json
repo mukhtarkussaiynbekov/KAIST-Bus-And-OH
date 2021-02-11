@@ -48,9 +48,9 @@
 	],
 	"facilities": [
 		{
-			"name": "Mejom (N12)",
+			"name": "Mejom",
 			"id": 0,
-			"name_id": "mejom_n12",
+			"name_id": "mejom",
 			"children": [
 				{
 					"name": "North (N12) Mejom",
@@ -85,7 +85,7 @@
 			]
 		},
 		{
-			"name": "Food (Lotteria)",
+			"name": "Food",
 			"id": 7,
 			"name_id": "food_lotteria",
 			"children": [
