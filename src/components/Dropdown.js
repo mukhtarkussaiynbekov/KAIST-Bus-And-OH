@@ -49,7 +49,8 @@ const Dropdown = ({
 const styles = StyleSheet.create({
 	viewContainer: {
 		flexDirection: 'row',
-		paddingLeft: 10
+		marginVertical: 10,
+		marginLeft: 10
 	},
 	container: {
 		marginTop: 100,
@@ -58,11 +59,11 @@ const styles = StyleSheet.create({
 	title: {
 		alignSelf: 'center',
 		fontSize: 16,
-		width: 40,
-		paddingBottom: 11
+		width: 55,
+		textAlign: 'center'
 	},
-	selectToggleText: {
-		flex: 1
+	selectToggle: {
+		marginLeft: 10
 	}
 });
 

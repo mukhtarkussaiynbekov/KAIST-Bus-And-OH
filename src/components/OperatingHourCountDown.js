@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
 	},
 	infoText: {
 		fontSize: 18,
-		marginVertical: 10
+		marginVertical: 10,
+		textAlign: 'center'
 	},
 	closedText: {
 		color: 'red',

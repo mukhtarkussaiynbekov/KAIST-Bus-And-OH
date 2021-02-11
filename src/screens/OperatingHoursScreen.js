@@ -129,7 +129,7 @@ OperatingHoursScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
 	countDown: {
-		marginTop: 80
+		marginTop: 40
 	}
 });
 
