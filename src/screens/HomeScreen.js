@@ -1,6 +1,6 @@
 // hooks
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // components
 import { View, StyleSheet } from 'react-native';
@@ -13,11 +13,17 @@ import {
 	getOperatingHoursList,
 	getTimeLeftIsOpen
 } from '../helperFunctions/operatingHoursHelper';
-import { getUpdates } from '../firebase';
+import { getUpdates, writeData } from '../firebase';
 import { NAME, TODAY, ID, NAME_ID, BUS_TYPES, FACILITIES } from '../constants';
 import moment from 'moment-timezone';
 
 const HomeScreen = ({ navigation }) => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		// writeData();
+		getUpdates(dispatch);
+	}, []);
+
 	// get bus and operating hour states from the store
 	const busState = useSelector(storeState => storeState.bus);
 	const ohState = useSelector(storeState => storeState.operatingHours);
@@ -25,7 +31,6 @@ const HomeScreen = ({ navigation }) => {
 	// create now state to keep track of current time
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
 	useEffect(() => {
-		getUpdates();
 		const interval = setInterval(() => {
 			setNow(moment().tz('Asia/Seoul'));
 		}, 1000);

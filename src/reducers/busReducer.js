@@ -35,11 +35,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
-		// case DATA_FETCH_SUCCESS:
-		// 	return {
-		// 		...newState
-		// 		busStops: { ...newState.busStops, timetable: getTimetable(newState) }
-		// 	};
+		case DATA_FETCH_SUCCESS:
+			return state;
 		case SWAP_STOPS:
 			const temp = state.from;
 			return { ...state, from: state.to, to: temp };

@@ -56,7 +56,7 @@ export const getDayMonth = (dayType, now = moment().tz('Asia/Seoul')) => {
 	} else if (dayType === YESTERDAY) {
 		now.subtract(1, 'days');
 	}
-	return now.format('MM/DD');
+	return now.format('MM-DD');
 };
 
 export const isSpecialHoliday = (

@@ -1,5 +1,11 @@
 import * as firebase from 'firebase';
 import { DATA_FETCH_SUCCESS } from './constants';
+import busOptionsLocal from './json/busData/busOptions.json';
+import busTimetableLocal from './json/busData/busTimetable.json';
+import busTravelTimesLocal from './json/busData/busTravelTimes.json';
+import specialHolidaysLocal from './json/specialHolidays.json';
+import ohOptionsLocal from './json/operatingHoursData/operatingHoursOptions.json';
+import operatingHoursLocal from './json/operatingHoursData/operatingHours.json';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -17,14 +23,21 @@ if (firebase.apps.length === 0) {
 	firebase.initializeApp(firebaseConfig);
 }
 
-export const getUpdates = () => {
-	return dispatch => {
-		firebase
-			.database()
-			.ref()
-			.on('value', snapshot => {
-				let database = snapshot.val();
-				dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
-			});
-	};
+export const getUpdates = dispatch => {
+	firebase
+		.database()
+		.ref()
+		.on('value', snapshot => {
+			let database = snapshot.val();
+			dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
+		});
+};
+
+export const writeData = () => {
+	firebase.database().ref('busData/options/').set(busOptionsLocal);
+	firebase.database().ref('busData/timetable').set(busTimetableLocal);
+	firebase.database().ref('busData/travelTimes/').set(busTravelTimesLocal);
+	firebase.database().ref('specialHolidays/').set(specialHolidaysLocal);
+	firebase.database().ref('ohData/options/').set(ohOptionsLocal);
+	firebase.database().ref('ohData/operatingHours/').set(operatingHoursLocal);
 };
