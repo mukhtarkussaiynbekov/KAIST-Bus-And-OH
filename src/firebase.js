@@ -23,21 +23,25 @@ if (firebase.apps.length === 0) {
 	firebase.initializeApp(firebaseConfig);
 }
 
-export const getUpdates = dispatch => {
-	firebase
-		.database()
-		.ref()
-		.on('value', snapshot => {
-			let database = snapshot.val();
-			dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
-		});
+export const getUpdates = () => {
+	return dispatch => {
+		firebase
+			.database()
+			.ref()
+			.on('value', snapshot => {
+				let database = snapshot.val();
+				dispatch({ type: DATA_FETCH_SUCCESS, payload: database });
+			});
+	};
 };
 
 export const writeData = () => {
-	firebase.database().ref('busData/options/').set(busOptionsLocal);
-	firebase.database().ref('busData/timetable').set(busTimetableLocal);
-	firebase.database().ref('busData/travelTimes/').set(busTravelTimesLocal);
-	firebase.database().ref('specialHolidays/').set(specialHolidaysLocal);
-	firebase.database().ref('ohData/options/').set(ohOptionsLocal);
-	firebase.database().ref('ohData/operatingHours/').set(operatingHoursLocal);
+	return () => {
+		firebase.database().ref('busData/options/').set(busOptionsLocal);
+		firebase.database().ref('busData/timetable').set(busTimetableLocal);
+		firebase.database().ref('busData/travelTimes/').set(busTravelTimesLocal);
+		firebase.database().ref('specialHolidays/').set(specialHolidaysLocal);
+		firebase.database().ref('ohData/options/').set(ohOptionsLocal);
+		firebase.database().ref('ohData/operatingHours/').set(operatingHoursLocal);
+	};
 };
