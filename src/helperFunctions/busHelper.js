@@ -6,7 +6,7 @@ import {
 	TOMORROW,
 	WEEKDAYS,
 	WEEKENDS,
-	SPECIAL_HOLIDAY,
+	SPECIAL_HOLIDAYS,
 	ROUTE,
 	DEPARTURE_TIMES,
 	TRAVEL_TIMES,
@@ -205,9 +205,9 @@ export const getDepartureTimes = (
 	let initialDepartureTimes = departureTimesObject[dayClassification];
 	if (
 		isSpecialHoliday(dayType, specialHolidays) &&
-		SPECIAL_HOLIDAY in departureTimesObject
+		SPECIAL_HOLIDAYS in departureTimesObject
 	) {
-		let holidayTimes = departureTimesObject[SPECIAL_HOLIDAY];
+		let holidayTimes = departureTimesObject[SPECIAL_HOLIDAYS];
 		let formattedDate = getDayMonth(dayType);
 		if (!isRegularDay(holidayTimes, formattedDate)) {
 			initialDepartureTimes = getSpecialHolidayTimes(
@@ -256,8 +256,9 @@ export const populateTimetable = (
   */
 
 	for (let object of objects) {
-		let [fromIndex, toIndex] = getFromToIndices(from, to, object[ROUTE]);
-		let travelStops = object[ROUTE].slice(fromIndex, toIndex + 1);
+		let route = object[ROUTE];
+		let [fromIndex, toIndex] = getFromToIndices(from, to, route);
+		let travelStops = route.slice(fromIndex, toIndex + 1);
 		let travelTime = getTravelTime(travelStops, travelTimes);
 		let leaveTimes = getDepartureTimes(
 			object,

@@ -3,14 +3,13 @@ import {
 	NAME_ID,
 	TODAY,
 	TOMORROW,
-	SPECIAL_HOLIDAY,
+	SPECIAL_HOLIDAYS,
 	OPERATING_HOURS,
 	LOCATIONS,
 	NAME,
 	HOURS,
 	dayNames,
-	YESTERDAY,
-	REGULAR
+	YESTERDAY
 } from '../constants';
 import {
 	getPropValue,
@@ -61,9 +60,9 @@ export const getOperatingHours = (
 
 	if (
 		isSpecialHoliday(dayType, specialHolidays, now) &&
-		SPECIAL_HOLIDAY in operatingHoursObject
+		SPECIAL_HOLIDAYS in operatingHoursObject
 	) {
-		let holidayTimes = operatingHoursObject[SPECIAL_HOLIDAY];
+		let holidayTimes = operatingHoursObject[SPECIAL_HOLIDAYS];
 		let formattedDate = getDayMonth(dayType);
 		if (!isRegularDay(holidayTimes, formattedDate)) {
 			return getSpecialHolidayTimes(

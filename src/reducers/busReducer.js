@@ -11,12 +11,18 @@ import {
 	CAMPUS_STOPS,
 	MAIN_CAMPUS,
 	MUNJI,
+	DATES,
+	BUS_DATABASE,
+	TIMETABLE,
+	TRAVEL_TIMES,
+	SPECIAL_HOLIDAYS,
+	OPTIONS,
+	DATA_FETCH_SUCCESS,
 	SWAP_STOPS,
 	CHANGE_TYPE,
-	CHANGE_FROM,
-	CHANGE_TO,
 	CHANGE_DAY,
-	DATA_FETCH_SUCCESS
+	CHANGE_FROM,
+	CHANGE_TO
 } from '../constants';
 import { getPropValue } from '../helperFunctions/commonFunctions';
 
@@ -25,7 +31,7 @@ const INITIAL_STATE = {
 		busOptions: busOptionsLocal,
 		timetableAll: busTimetableLocal,
 		travelTimes: busTravelTimesLocal,
-		specialHolidays: specialHolidaysLocal.dates
+		specialHolidays: specialHolidaysLocal[DATES]
 	},
 	busType: getPropValue(busOptionsLocal[BUS_TYPES], CAMPUS_STOPS, NAME_ID, ID),
 	dayType: getPropValue(busOptionsLocal[DAY_TYPES], TODAY, NAME_ID, ID),
@@ -36,7 +42,18 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case DATA_FETCH_SUCCESS:
+			const database = action.payload[BUS_DATABASE];
+			const specialHolidays = action.payload[SPECIAL_HOLIDAYS];
 			return state;
+		// return {
+		// 	...state,
+		// 	database: {
+		// 		busOptions: database[OPTIONS],
+		// 		timetableAll: database[TIMETABLE],
+		// 		travelTimes: database[TRAVEL_TIMES],
+		// 		specialHolidays: specialHolidays[DATES]
+		// 	}
+		// };
 		case SWAP_STOPS:
 			const temp = state.from;
 			return { ...state, from: state.to, to: temp };

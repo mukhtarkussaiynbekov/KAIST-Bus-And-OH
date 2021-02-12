@@ -23,7 +23,7 @@ export const TODAY = 'today';
 export const TOMORROW = 'tomorrow';
 export const WEEKDAYS = 'weekdays';
 export const WEEKENDS = 'weekends';
-export const SPECIAL_HOLIDAY = 'specialHoliday';
+export const SPECIAL_HOLIDAYS = 'specialHolidays';
 
 export const TRAVEL_TIMES = 'travelTimes';
 export const STOP_ONE = 'stopOne';
@@ -61,3 +61,9 @@ export const dayNames = [
 	SATURDAY,
 	SUNDAY
 ];
+
+export const BUS_DATABASE = 'busData';
+export const OPERATING_HOURS_DATABASE = 'ohData';
+export const OPTIONS = 'options';
+export const TIMETABLE = 'timetable';
+export const DATES = 'dates';

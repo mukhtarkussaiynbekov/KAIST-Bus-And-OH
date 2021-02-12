@@ -34,7 +34,7 @@
 					"00:20",
 					"01:50"
 				],
-				"specialHoliday": {
+				"specialHolidays": {
 					"02-12": {
 						"hours": [
 							"13:50",
@@ -71,7 +71,7 @@
 					"02:40"
 				],
 				"weekends": [],
-				"specialHoliday": { "weekends": "true" }
+				"specialHolidays": { "weekends": "true" }
 			}
 		},
 		{
@@ -93,7 +93,7 @@
 					"01:00",
 					"02:30"
 				],
-				"specialHoliday": {
+				"specialHolidays": {
 					"02-12": {
 						"hours": [
 							"14:30",
@@ -140,7 +140,7 @@
 					"03:00"
 				],
 				"weekends": [],
-				"specialHoliday": { "weekends": "true" }
+				"specialHolidays": { "weekends": "true" }
 			}
 		},
 		{
@@ -162,7 +162,7 @@
 					"01:00",
 					"02:30"
 				],
-				"specialHoliday": {
+				"specialHolidays": {
 					"02-12": {
 						"hours": [
 							"14:30",
@@ -206,7 +206,7 @@
 					"18:05"
 				],
 				"weekends": [],
-				"specialHoliday": { "closed": "true" }
+				"specialHolidays": { "closed": "true" }
 			}
 		},
 		{
@@ -232,7 +232,7 @@
 					"18:25"
 				],
 				"weekends": [],
-				"specialHoliday": { "closed": "true" }
+				"specialHolidays": { "closed": "true" }
 			}
 		}
 	],
@@ -285,7 +285,7 @@
 					"16:55"
 				],
 				"weekends": [],
-				"specialHoliday": { "closed": "true" }
+				"specialHolidays": { "closed": "true" }
 			}
 		}
 	]

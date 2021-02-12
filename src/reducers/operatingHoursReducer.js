@@ -2,14 +2,20 @@ import optionsLocal from '../json/operatingHoursData/operatingHoursOptions.json'
 import operatingHoursLocal from '../json/operatingHoursData/operatingHours.json';
 import specialHolidaysLocal from '../json/specialHolidays.json';
 import {
-	CHANGE_FACILITY,
-	CHANGE_OH_DAY,
 	DAY_TYPES,
 	FACILITIES,
 	ID,
 	NAME_ID,
 	NORTH_MEJOM,
-	TODAY
+	TODAY,
+	OPERATING_HOURS_DATABASE,
+	SPECIAL_HOLIDAYS,
+	OPTIONS,
+	OPERATING_HOURS,
+	DATES,
+	DATA_FETCH_SUCCESS,
+	CHANGE_OH_DAY,
+	CHANGE_FACILITY
 } from '../constants';
 import { getPropValue } from '../helperFunctions/commonFunctions';
 
@@ -25,6 +31,18 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
+		case DATA_FETCH_SUCCESS:
+			const database = action.payload[OPERATING_HOURS_DATABASE];
+			const specialHolidays = action.payload[SPECIAL_HOLIDAYS];
+			return state;
+		// return {
+		// 	...state,
+		// 	database: {
+		// 		options: database[OPTIONS],
+		// 		operatingHours: database[OPERATING_HOURS],
+		// 		specialHolidays: specialHolidays[DATES]
+		// 	}
+		// };
 		case CHANGE_OH_DAY:
 			return { ...state, dayType: action.payload };
 		case CHANGE_FACILITY:

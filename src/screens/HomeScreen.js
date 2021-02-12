@@ -20,7 +20,7 @@ import moment from 'moment-timezone';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// writeData();
+		writeData();
 		getUpdates(dispatch);
 	}, []);
 
