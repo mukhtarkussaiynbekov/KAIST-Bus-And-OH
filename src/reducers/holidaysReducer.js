@@ -7,7 +7,7 @@ export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case DATA_FETCH_SUCCESS:
 			const holidays = action.payload[HOLIDAYS];
-			return holidays[DATES];
+			return holidays === undefined ? [] : holidays[DATES];
 		default:
 			return state;
 	}
