@@ -67,3 +67,5 @@ export const OPERATING_HOURS_DATABASE = 'ohData';
 export const OPTIONS = 'options';
 export const TIMETABLE = 'timetable';
 export const DATES = 'dates';
+export const NOTES = 'notes';
+export const ANY = 'any';

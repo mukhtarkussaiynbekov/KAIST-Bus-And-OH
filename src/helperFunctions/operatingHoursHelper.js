@@ -9,7 +9,9 @@ import {
 	NAME,
 	HOURS,
 	dayNames,
-	YESTERDAY
+	YESTERDAY,
+	NOTES,
+	ANY
 } from '../constants';
 import {
 	getPropValue,
@@ -143,6 +145,7 @@ export const getTimeLeftIsOpen = (
         {start: 'HH:mm', finish: 'HH:mm'}
     3. facilities is a list of objects that will be passed to
         getOperatingHoursList function.
+    4. holidays is a list of dates like ["02-12", "03-25"]
 
     output: [timeLeft, isOpen] - timeLeft: int, isOpen: boolean
     timeLeft indicates time left until closing if isOpen = true.
@@ -204,4 +207,44 @@ export const getTimeLeftIsOpen = (
 	}
 	timeLeft += additionalDays * 24 * 60 * 60;
 	return [timeLeft, false];
+};
+
+export const getFacilityNote = (
+	state,
+	dayType,
+	facilities,
+	holidays,
+	now = moment().tz('Asia/Seoul')
+) => {
+	/*
+    returns note - string that provides additional information about a facility
+  */
+
+	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
+	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
+	let [classification, facilityName] = getClassFacility(facility);
+	let operatingHoursObject = getOperatingHoursObject(
+		classification,
+		facilityName,
+		listOfOperatingHours
+	);
+	if (NOTES in operatingHoursObject) {
+		let notes = operatingHoursObject[NOTES];
+		let formattedDate = getDayMonth(dayType);
+		if (formattedDate in notes) {
+			return notes[formattedDate];
+		}
+		if (isHoliday(dayType, holidays) && HOLIDAYS in notes) {
+			return notes[HOLIDAYS];
+		}
+		let dayIndex = convertDayToIndex(dayType, now);
+		let day = dayNames[dayIndex];
+		if (day in notes) {
+			return notes[day];
+		}
+		if (ANY in notes) {
+			return notes[ANY];
+		}
+	}
+	return '';
 };

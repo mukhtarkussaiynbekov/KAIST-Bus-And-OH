@@ -11,7 +11,11 @@ import TimetableCell from '../components/TimetableCell';
 
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
-import { getTimetable, getTimeLeftBus } from '../helperFunctions/busHelper';
+import {
+	getTimetable,
+	getTimeLeftBus,
+	getBusNote
+} from '../helperFunctions/busHelper';
 import moment from 'moment-timezone';
 import {
 	NAME_ID,
@@ -57,6 +61,7 @@ const BusScreen = () => {
 		NAME_ID
 	);
 	const busStops = busOptions[busStopsClassfication];
+	const busNote = getBusNote(state, dayType, busTypes, busStops, holidays);
 
 	const [timetable, setTimetable] = useState(
 		getTimetable(state, dayType, busTypes, busStops, holidays)
@@ -141,6 +146,12 @@ const BusScreen = () => {
 				}
 				chosenItem={state.to}
 			/>
+			{busNote !== '' && (
+				<Text style={styles.text}>
+					<Text style={styles.boldText}>Note: </Text>
+					{busNote}
+				</Text>
+			)}
 			<Timetable
 				header={
 					<TimetableCell
@@ -181,6 +192,14 @@ const styles = StyleSheet.create({
 	iconGuide: {
 		paddingLeft: 20,
 		alignSelf: 'center'
+	},
+	text: {
+		marginHorizontal: 10,
+		marginVertical: 10,
+		fontSize: 16
+	},
+	boldText: {
+		fontWeight: 'bold'
 	}
 });
 

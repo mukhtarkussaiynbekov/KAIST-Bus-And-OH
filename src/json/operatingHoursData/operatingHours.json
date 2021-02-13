@@ -362,6 +362,9 @@
 			"locations": [
 				{
 					"name": "lotteria",
+					"notes": {
+						"any": "마감 30분 전부터는 주문과 리필이 제한됩니다. Orders and refills are possible until 30 minutes before the closing time."
+					},
 					"hours": {
 						"monday": [
 							{

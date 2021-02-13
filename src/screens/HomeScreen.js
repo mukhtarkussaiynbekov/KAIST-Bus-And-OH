@@ -8,8 +8,9 @@ import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
 
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
-import { getUpcomingTime } from '../helperFunctions/busHelper';
+import { getBusNote, getUpcomingTime } from '../helperFunctions/busHelper';
 import {
+	getFacilityNote,
 	getOperatingHoursList,
 	getTimeLeftIsOpen
 } from '../helperFunctions/operatingHoursHelper';
@@ -20,7 +21,7 @@ import moment from 'moment-timezone';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// dispatch(writeData());
+		dispatch(writeData());
 		dispatch(getUpdates());
 	}, []);
 
@@ -62,8 +63,15 @@ const HomeScreen = ({ navigation }) => {
 		now.format('HH:mm'),
 		holidaysState
 	);
-	let from = getPropValue(busStops, busState.from, ID, NAME);
-	let to = getPropValue(busStops, busState.to, ID, NAME);
+	const from = getPropValue(busStops, busState.from, ID, NAME);
+	const to = getPropValue(busStops, busState.to, ID, NAME);
+	const busNote = getBusNote(
+		busState,
+		TODAY,
+		busTypes,
+		busStops,
+		holidaysState
+	);
 
 	// following declarations are needed to render operating hour data
 	const ohOptions = operatingHoursState.database.options;
@@ -73,6 +81,13 @@ const HomeScreen = ({ navigation }) => {
 		operatingHoursState.facility,
 		ID,
 		NAME
+	);
+	const facilityNote = getFacilityNote(
+		operatingHoursState,
+		TODAY,
+		facilities,
+		holidaysState,
+		now
 	);
 	const operatingHours = getOperatingHoursList(
 		operatingHoursState,
@@ -91,6 +106,12 @@ const HomeScreen = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<ThemeProvider>
+				{busNote !== '' && (
+					<Text style={styles.text}>
+						<Text style={styles.boldText}>Note: </Text>
+						{busNote}
+					</Text>
+				)}
 				<Text style={styles.text}>
 					{upcomingBusTime === undefined ? (
 						<Text>
@@ -137,6 +158,12 @@ const HomeScreen = ({ navigation }) => {
 					<Text style={styles.boldText}>{facilityName}</Text> is{' '}
 					<Text style={styles.boldText}>{isOpen ? 'open' : 'closed'}</Text> now
 				</Text>
+				{facilityNote !== '' && (
+					<Text style={styles.text}>
+						<Text style={styles.boldText}>Note: </Text>
+						{facilityNote}
+					</Text>
+				)}
 			</ThemeProvider>
 		</View>
 	);

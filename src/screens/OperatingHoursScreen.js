@@ -13,6 +13,7 @@ import TimetableCell from '../components/TimetableCell';
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import {
+	getFacilityNote,
 	getOperatingHoursList,
 	getTimeLeftIsOpen
 } from '../helperFunctions/operatingHoursHelper';
@@ -39,9 +40,11 @@ const OperatingHoursScreen = () => {
 	// to render flat list as well as drop downs.
 	const options = state.database.options;
 	const dayTypes = options[DAY_TYPES];
+	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const facilities = options[FACILITIES];
 	const facilityName = getPropValue(facilities, state.facility, ID, NAME);
-	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
+	const facilityNote = getFacilityNote(state, dayType, facilities, holidays);
+
 	const operatingHours = getOperatingHoursList(
 		state,
 		dayType,
@@ -94,6 +97,12 @@ const OperatingHoursScreen = () => {
 				chosenItem={state.facility}
 				readOnlyHeadings
 			/>
+			{facilityNote !== '' && (
+				<Text style={styles.text}>
+					<Text style={styles.boldText}>Note: </Text>
+					{facilityNote}
+				</Text>
+			)}
 			{dayType === TODAY ? (
 				<View style={styles.countDown}>
 					<OperatingHourCountDown
@@ -146,6 +155,14 @@ OperatingHoursScreen.navigationOptions = {
 const styles = StyleSheet.create({
 	countDown: {
 		marginTop: 40
+	},
+	text: {
+		marginHorizontal: 10,
+		marginVertical: 10,
+		fontSize: 16
+	},
+	boldText: {
+		fontWeight: 'bold'
 	}
 });
 

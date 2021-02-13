@@ -131,6 +131,10 @@
 			}
 		},
 		{
+			"notes": {
+				"weekends": "본원->화암기숙사 운행은 탑승 시 기사님께 요청하여 주시기 바랍니다 (단, 본교출발기준 11:30에는 기사 점심시간확보를 위해 요청 불가). Main Campus->Hwa-am Dorm route runs by request to driver only (Request for 11:30 shuttle bus(departure from Main campus) is not allowed due to the lunch break).",
+				"holidays": "본원->화암기숙사 운행은 탑승 시 기사님께 요청하여 주시기 바랍니다 (단, 본교출발기준 11:30에는 기사 점심시간확보를 위해 요청 불가). Main Campus->Hwa-am Dorm route runs by request to driver only (Request for 11:30 shuttle bus(departure from Main campus) is not allowed due to the lunch break)."
+			},
 			"route": ["main", "hwaam"],
 			"departureTimes": {
 				"weekdays": [],

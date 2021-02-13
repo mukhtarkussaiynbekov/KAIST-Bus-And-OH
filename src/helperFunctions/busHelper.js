@@ -13,7 +13,9 @@ import {
 	STOP_ONE,
 	STOP_TWO,
 	INTERVAL,
-	SAME_OPPOSITE_INTERVAL
+	SAME_OPPOSITE_INTERVAL,
+	NOTES,
+	ANY
 } from '../constants';
 import {
 	isHoliday,
@@ -183,7 +185,7 @@ export const getDepartureTimes = (
     input parameters:
     1. object is of form {"route": [], "departureTimes": {"weekdays": [], "weekends": [], "holidays": {"hours": []}}}
     2. dayType is a string constant like TODAY, TOMORROW, YESTERDAY, etc.
-    3. holidays is a list of dates like ["02/12", "03/25"]
+    3. holidays is a list of dates like ["02-12", "03-25"]
     4. travelTimes is a list of objects like [
       {
         "stopOne": "munji",
@@ -239,7 +241,7 @@ export const populateTimetable = (
     input parameters:
     1. objects is a list of objects of form {"route": [], "departureTimes": {"weekdays": [], "weekends": [], "holidays": {"hours": []}}}
     2. dayType is a string constant like TODAY, TOMORROW, YESTERDAY, etc.
-    3. holidays is a list of dates like ["02/12", "03/25"]
+    3. holidays is a list of dates like ["02-12", "03-25"]
     4. from is a string that denotes source bus stop
     5. to is a string that denotes destination bus stop
     6. travelTimes is a list of objects like [
@@ -287,6 +289,7 @@ export const getTimetable = (state, dayType, busTypes, busStops, holidays) => {
       {"name": "Main Campus", "name_id": "main", "id": 0}
       ]
       that corresponds to bus type
+    5. holidays is a list of dates like ["02-12", "03-25"]
 
     output: departureTimes - list of moment instances that indicate departure times
   */
@@ -325,4 +328,51 @@ export const getTimetable = (state, dayType, busTypes, busStops, holidays) => {
 		timetable = addMidnightTimes(timetable, yesterdayTimetable);
 	}
 	return timetable;
+};
+
+export const getBusNote = (state, dayType, busTypes, busStops, holidays) => {
+	/*
+    input parameters:
+    1. state is bus reducer's state.
+    2. dayType is a string constant like TODAY, TOMORROW, YESTERDAY, etc.
+    3. busTypes is a list of strings like ["campusStops", "olevStops"]
+    4. busStops is a list of strings like [
+      {"name": "Main Campus", "name_id": "main", "id": 0}
+      ]
+      that corresponds to bus type
+
+    output: note - string that provides additional information about a route
+  */
+
+	let busType = getPropValue(busTypes, state.busType, ID, NAME_ID);
+	const listOfBusStops = state.database.timetableAll[busType];
+	let from = getPropValue(busStops, state.from, ID, NAME_ID);
+	let to = getPropValue(busStops, state.to, ID, NAME_ID);
+	if (from === to) {
+		return '';
+	}
+	let objects = getTimeObjects(listOfBusStops, from, to);
+	if (objects.length === 0) {
+		return '';
+	}
+	for (let object of objects) {
+		if (NOTES in object) {
+			let notes = object[NOTES];
+			let formattedDate = getDayMonth(dayType);
+			if (formattedDate in notes) {
+				return notes[formattedDate];
+			}
+			if (isHoliday(dayType, holidays) && HOLIDAYS in notes) {
+				return notes[HOLIDAYS];
+			}
+			let dayClassification = getDayClassification(dayType);
+			if (dayClassification in notes) {
+				return notes[dayClassification];
+			}
+			if (ANY in notes) {
+				return notes[ANY];
+			}
+		}
+	}
+	return '';
 };

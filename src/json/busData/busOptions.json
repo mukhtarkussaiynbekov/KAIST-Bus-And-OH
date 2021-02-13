@@ -99,7 +99,7 @@
 	],
 	"campusStops": [
 		{
-			"name": "Main Campus (본교)",
+			"name": "Main Campus (본교) N6-E15-W8-Duck Pond",
 			"id": 0,
 			"name_id": "main"
 		},
@@ -109,7 +109,7 @@
 			"name_id": "munji"
 		},
 		{
-			"name": "Hwaam Campus (화암)",
+			"name": "Hwa-am Campus (화암)",
 			"id": 2,
 			"name_id": "hwaam"
 		},
