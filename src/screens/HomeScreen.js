@@ -20,13 +20,20 @@ import moment from 'moment-timezone';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(writeData());
-		// dispatch(getUpdates());
+		// dispatch(writeData());
+		dispatch(getUpdates());
 	}, []);
 
 	// get bus and operating hour states from the store
-	const busState = useSelector(storeState => storeState.bus);
-	const ohState = useSelector(storeState => storeState.operatingHours);
+	const [
+		busState,
+		operatingHoursState,
+		holidaysState
+	] = useSelector(storeState => [
+		storeState.bus,
+		storeState.operatingHours,
+		storeState.holidays
+	]);
 
 	// create now state to keep track of current time
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
@@ -52,21 +59,33 @@ const HomeScreen = ({ navigation }) => {
 		busState,
 		busTypes,
 		busStops,
-		now.format('HH:mm')
+		now.format('HH:mm'),
+		holidaysState
 	);
 	let from = getPropValue(busStops, busState.from, ID, NAME);
 	let to = getPropValue(busStops, busState.to, ID, NAME);
 
 	// following declarations are needed to render operating hour data
-	const ohOptions = ohState.database.options;
+	const ohOptions = operatingHoursState.database.options;
 	const facilities = ohOptions[FACILITIES];
-	const facilityName = getPropValue(facilities, ohState.facility, ID, NAME);
-	const operatingHours = getOperatingHoursList(ohState, TODAY, facilities);
+	const facilityName = getPropValue(
+		facilities,
+		operatingHoursState.facility,
+		ID,
+		NAME
+	);
+	const operatingHours = getOperatingHoursList(
+		operatingHoursState,
+		TODAY,
+		facilities,
+		holidaysState
+	);
 	const [_, isOpen] = getTimeLeftIsOpen(
-		ohState,
+		operatingHoursState,
 		TODAY,
 		operatingHours,
-		facilities
+		facilities,
+		holidaysState
 	);
 
 	return (

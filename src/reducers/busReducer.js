@@ -1,7 +1,6 @@
 import busOptionsLocal from '../json/busData/busOptions.json';
 import busTimetableLocal from '../json/busData/busTimetable.json';
 import busTravelTimesLocal from '../json/busData/busTravelTimes.json';
-import specialHolidaysLocal from '../json/specialHolidays.json';
 import {
 	NAME_ID,
 	ID,
@@ -11,11 +10,9 @@ import {
 	CAMPUS_STOPS,
 	MAIN_CAMPUS,
 	MUNJI,
-	DATES,
 	BUS_DATABASE,
 	TIMETABLE,
 	TRAVEL_TIMES,
-	SPECIAL_HOLIDAYS,
 	OPTIONS,
 	DATA_FETCH_SUCCESS,
 	SWAP_STOPS,
@@ -30,8 +27,7 @@ const INITIAL_STATE = {
 	database: {
 		busOptions: busOptionsLocal,
 		timetableAll: busTimetableLocal,
-		travelTimes: busTravelTimesLocal,
-		specialHolidays: specialHolidaysLocal[DATES]
+		travelTimes: busTravelTimesLocal
 	},
 	busType: getPropValue(busOptionsLocal[BUS_TYPES], CAMPUS_STOPS, NAME_ID, ID),
 	dayType: getPropValue(busOptionsLocal[DAY_TYPES], TODAY, NAME_ID, ID),
@@ -43,14 +39,12 @@ export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case DATA_FETCH_SUCCESS:
 			const database = action.payload[BUS_DATABASE];
-			const specialHolidays = action.payload[SPECIAL_HOLIDAYS];
 			return {
 				...state,
 				database: {
 					busOptions: database[OPTIONS],
 					timetableAll: database[TIMETABLE],
-					travelTimes: database[TRAVEL_TIMES],
-					specialHolidays: specialHolidays[DATES]
+					travelTimes: database[TRAVEL_TIMES]
 				}
 			};
 		case SWAP_STOPS:

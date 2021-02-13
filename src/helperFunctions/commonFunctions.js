@@ -59,19 +59,19 @@ export const getDayMonth = (dayType, now = moment().tz('Asia/Seoul')) => {
 	return now.format('MM-DD');
 };
 
-export const isSpecialHoliday = (
+export const isHoliday = (
 	dayType,
-	specialHolidays,
+	holidays,
 	now = moment().tz('Asia/Seoul')
 ) => {
-	// returns whether day provided by now parameter is a special holiday according to dayType.
+	// returns whether day provided by now parameter is a holiday according to dayType.
 
 	if (dayType !== YESTERDAY && dayType !== TODAY && dayType !== TOMORROW) {
 		return false;
 	}
 
 	let formattedDate = getDayMonth(dayType, now);
-	for (let date of specialHolidays) {
+	for (let date of holidays) {
 		if (date === formattedDate) {
 			return true;
 		}
@@ -120,8 +120,8 @@ export const getPropertyTime = (timeObject, specificDateObject) => {
 	return specificDateObject[HOURS];
 };
 
-export const getSpecialHolidayTimes = (timeObject, holidayTimes, date) => {
-	// returns special holiday times according to date
+export const getHolidayTimes = (timeObject, holidayTimes, date) => {
+	// returns holiday times according to date
 
 	if (date in holidayTimes) {
 		let specificDateObject = holidayTimes[date];

@@ -3,7 +3,7 @@ import {
 	NAME_ID,
 	TODAY,
 	TOMORROW,
-	SPECIAL_HOLIDAYS,
+	HOLIDAYS,
 	OPERATING_HOURS,
 	LOCATIONS,
 	NAME,
@@ -13,8 +13,8 @@ import {
 } from '../constants';
 import {
 	getPropValue,
-	isSpecialHoliday,
-	getSpecialHolidayTimes,
+	isHoliday,
+	getHolidayTimes,
 	getHoursMinutesSeconds,
 	getDayMonth,
 	isRegularDay
@@ -50,33 +50,6 @@ export const getOperatingHoursObject = (
 	}
 };
 
-export const getOperatingHours = (
-	operatingHoursObject,
-	dayType,
-	specialHolidays,
-	now
-) => {
-	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
-
-	if (
-		isSpecialHoliday(dayType, specialHolidays, now) &&
-		SPECIAL_HOLIDAYS in operatingHoursObject
-	) {
-		let holidayTimes = operatingHoursObject[SPECIAL_HOLIDAYS];
-		let formattedDate = getDayMonth(dayType);
-		if (!isRegularDay(holidayTimes, formattedDate)) {
-			return getSpecialHolidayTimes(
-				operatingHoursObject,
-				holidayTimes,
-				formattedDate
-			);
-		}
-	}
-	let dayIndex = convertDayToIndex(dayType, now);
-	let day = dayNames[dayIndex];
-	return operatingHoursObject[day];
-};
-
 export const convertDayToIndex = (dayType, now) => {
 	// converts now (moment instance) to day index according to dayType
 
@@ -95,10 +68,31 @@ export const convertDayToIndex = (dayType, now) => {
 	}
 };
 
+export const getOperatingHours = (
+	operatingHoursObject,
+	dayType,
+	holidays,
+	now
+) => {
+	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
+
+	if (isHoliday(dayType, holidays, now) && HOLIDAYS in operatingHoursObject) {
+		let holidayTimes = operatingHoursObject[HOLIDAYS];
+		let formattedDate = getDayMonth(dayType);
+		if (!isRegularDay(holidayTimes, formattedDate)) {
+			return getHolidayTimes(operatingHoursObject, holidayTimes, formattedDate);
+		}
+	}
+	let dayIndex = convertDayToIndex(dayType, now);
+	let day = dayNames[dayIndex];
+	return operatingHoursObject[day];
+};
+
 export const getOperatingHoursList = (
 	state,
 	dayType,
 	facilities,
+	holidays,
 	now = moment().tz('Asia/Seoul')
 ) => {
 	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
@@ -111,11 +105,10 @@ export const getOperatingHoursList = (
 		facilityName,
 		listOfOperatingHours
 	);
-	const specialHolidays = state.database.specialHolidays;
 	let operatingHours = getOperatingHours(
 		operatingHoursObject[HOURS],
 		dayType,
-		specialHolidays,
+		holidays,
 		now
 	);
 	return operatingHours === undefined ? [] : operatingHours;
@@ -136,7 +129,13 @@ export const getTimeLeftOH = (time, now, isNextDay = false) => {
 	return timeLeft;
 };
 
-export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
+export const getTimeLeftIsOpen = (
+	state,
+	dayType,
+	todayHours,
+	facilities,
+	holidays
+) => {
 	/*
     input parameters:
     1. state is operatingHoursReducer's state
@@ -156,7 +155,12 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 	let now = moment().tz('Asia/Seoul');
 	let nowFormatted = now.format('HH:mm:ss');
 	if (todayHours.length === 0 || todayHours[0].start > nowFormatted) {
-		const yesterdayHours = getOperatingHoursList(state, YESTERDAY, facilities);
+		const yesterdayHours = getOperatingHoursList(
+			state,
+			YESTERDAY,
+			facilities,
+			holidays
+		);
 		if (yesterdayHours.length > 0) {
 			let lastTime = yesterdayHours[yesterdayHours.length - 1];
 			if (lastTime.finish < lastTime.start) {
@@ -183,7 +187,7 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 	}
 
 	now.add(1, 'days');
-	let dayHours = getOperatingHoursList(state, TODAY, facilities, now);
+	let dayHours = getOperatingHoursList(state, TODAY, facilities, holidays, now);
 	let foundProperTime = false;
 	let additionalDays = 0;
 	while (!foundProperTime) {
@@ -195,7 +199,7 @@ export const getTimeLeftIsOpen = (state, dayType, todayHours, facilities) => {
 		additionalDays += 1;
 		if (!foundProperTime) {
 			now.add(1, 'days');
-			dayHours = getOperatingHoursList(state, TODAY, facilities, now);
+			dayHours = getOperatingHoursList(state, TODAY, facilities, holidays, now);
 		}
 	}
 	timeLeft += additionalDays * 24 * 60 * 60;

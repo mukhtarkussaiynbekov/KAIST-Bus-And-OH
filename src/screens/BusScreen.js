@@ -28,7 +28,10 @@ import {
 
 const BusScreen = () => {
 	// get bus state and dispatch from the store
-	const state = useSelector(storeState => storeState.bus);
+	const [state, holidays] = useSelector(storeState => [
+		storeState.bus,
+		storeState.holidays
+	]);
 	const dispatch = useDispatch();
 
 	// create now state to keep track of current time
@@ -56,12 +59,12 @@ const BusScreen = () => {
 	const busStops = busOptions[busStopsClassfication];
 
 	const [timetable, setTimetable] = useState(
-		getTimetable(state, dayType, busTypes, busStops)
+		getTimetable(state, dayType, busTypes, busStops, holidays)
 	);
 
 	useEffect(() => {
 		// update timetable whenever state changes
-		setTimetable(getTimetable(state, dayType, busTypes, busStops));
+		setTimetable(getTimetable(state, dayType, busTypes, busStops, holidays));
 	}, [state]);
 
 	useEffect(() => {
@@ -69,7 +72,9 @@ const BusScreen = () => {
 		const interval = setInterval(() => {
 			// update timetable at midnight to show following day's timetable
 			if (now.format('HH:mm:ss') <= '00:00:02') {
-				setTimetable(getTimetable(state, dayType, busTypes, busStops));
+				setTimetable(
+					getTimetable(state, dayType, busTypes, busStops, holidays)
+				);
 			}
 			if (!flatListRendered) {
 				setFlatListRendered(true);

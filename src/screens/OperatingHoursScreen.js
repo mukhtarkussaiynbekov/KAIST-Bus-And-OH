@@ -29,7 +29,10 @@ import {
 
 const OperatingHoursScreen = () => {
 	// get operating hour state and dispatch from the store
-	const state = useSelector(storeState => storeState.operatingHours);
+	const [state, holidays] = useSelector(storeState => [
+		storeState.operatingHours,
+		storeState.holidays
+	]);
 	const dispatch = useDispatch();
 
 	// following declarations are needed to get facility info and
@@ -39,12 +42,18 @@ const OperatingHoursScreen = () => {
 	const facilities = options[FACILITIES];
 	const facilityName = getPropValue(facilities, state.facility, ID, NAME);
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
-	const operatingHours = getOperatingHoursList(state, dayType, facilities);
+	const operatingHours = getOperatingHoursList(
+		state,
+		dayType,
+		facilities,
+		holidays
+	);
 	const [initialTimeLeft, initialIsOpen] = getTimeLeftIsOpen(
 		state,
 		dayType,
 		operatingHours,
-		facilities
+		facilities,
+		holidays
 	);
 
 	const [facilityInfo, setFacilityInfo] = useState({
@@ -58,7 +67,8 @@ const OperatingHoursScreen = () => {
 			state,
 			dayType,
 			operatingHours,
-			facilities
+			facilities,
+			holidays
 		);
 		setFacilityInfo({ timeLeft: newTimeLeft, isOpen: newIsOpen });
 	}, [state]);
@@ -94,7 +104,13 @@ const OperatingHoursScreen = () => {
 							const [
 								reevaluatedTimeLeft,
 								reevaluatedIsOpen
-							] = getTimeLeftIsOpen(state, dayType, operatingHours, facilities);
+							] = getTimeLeftIsOpen(
+								state,
+								dayType,
+								operatingHours,
+								facilities,
+								holidays
+							);
 							setFacilityInfo({
 								timeLeft: reevaluatedTimeLeft,
 								isOpen: reevaluatedIsOpen

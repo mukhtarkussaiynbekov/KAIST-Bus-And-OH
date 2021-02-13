@@ -6,7 +6,7 @@ import {
 	TOMORROW,
 	WEEKDAYS,
 	WEEKENDS,
-	SPECIAL_HOLIDAYS,
+	HOLIDAYS,
 	ROUTE,
 	DEPARTURE_TIMES,
 	TRAVEL_TIMES,
@@ -16,8 +16,8 @@ import {
 	SAME_OPPOSITE_INTERVAL
 } from '../constants';
 import {
-	isSpecialHoliday,
-	getSpecialHolidayTimes,
+	isHoliday,
+	getHolidayTimes,
 	getPropValue,
 	getHoursMinutesSeconds,
 	getDayMonth,
@@ -25,10 +25,10 @@ import {
 } from './commonFunctions';
 import moment from 'moment-timezone';
 
-export const getUpcomingTime = (state, busTypes, busStops, now) => {
+export const getUpcomingTime = (state, busTypes, busStops, now, holidays) => {
 	// returns departure time of upcoming bus
 
-	let timetable = getTimetable(state, TODAY, busTypes, busStops);
+	let timetable = getTimetable(state, TODAY, busTypes, busStops, holidays);
 	for (const [index, time] of timetable.entries()) {
 		let timeLeft = getTimeLeftBus(time.leave, now, index);
 		if (timeLeft >= 0) {
@@ -175,15 +175,15 @@ export const addMidnightTimes = (timetable, yesterdayTimetable) => {
 export const getDepartureTimes = (
 	object,
 	dayType,
-	specialHolidays,
+	holidays,
 	travelTimes,
 	fromIndex
 ) => {
 	/*
     input parameters:
-    1. object is of form {"route": [], "departureTimes": {"weekdays": [], "weekends": [], "specialHolidays": {"hours": []}}}
+    1. object is of form {"route": [], "departureTimes": {"weekdays": [], "weekends": [], "holidays": {"hours": []}}}
     2. dayType is a string constant like TODAY, TOMORROW, YESTERDAY, etc.
-    3. specialHolidays is a list of dates like ["02/12", "03/25"]
+    3. holidays is a list of dates like ["02/12", "03/25"]
     4. travelTimes is a list of objects like [
       {
         "stopOne": "munji",
@@ -203,14 +203,11 @@ export const getDepartureTimes = (
 	let departureTimesObject = object[DEPARTURE_TIMES];
 	let dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
-	if (
-		isSpecialHoliday(dayType, specialHolidays) &&
-		SPECIAL_HOLIDAYS in departureTimesObject
-	) {
-		let holidayTimes = departureTimesObject[SPECIAL_HOLIDAYS];
+	if (isHoliday(dayType, holidays) && HOLIDAYS in departureTimesObject) {
+		let holidayTimes = departureTimesObject[HOLIDAYS];
 		let formattedDate = getDayMonth(dayType);
 		if (!isRegularDay(holidayTimes, formattedDate)) {
-			initialDepartureTimes = getSpecialHolidayTimes(
+			initialDepartureTimes = getHolidayTimes(
 				departureTimesObject,
 				holidayTimes,
 				formattedDate
@@ -232,7 +229,7 @@ export const getDepartureTimes = (
 export const populateTimetable = (
 	objects,
 	dayType,
-	specialHolidays,
+	holidays,
 	from,
 	to,
 	travelTimes,
@@ -240,9 +237,9 @@ export const populateTimetable = (
 ) => {
 	/*
     input parameters:
-    1. objects is a list of objects of form {"route": [], "departureTimes": {"weekdays": [], "weekends": [], "specialHolidays": {"hours": []}}}
+    1. objects is a list of objects of form {"route": [], "departureTimes": {"weekdays": [], "weekends": [], "holidays": {"hours": []}}}
     2. dayType is a string constant like TODAY, TOMORROW, YESTERDAY, etc.
-    3. specialHolidays is a list of dates like ["02/12", "03/25"]
+    3. holidays is a list of dates like ["02/12", "03/25"]
     4. from is a string that denotes source bus stop
     5. to is a string that denotes destination bus stop
     6. travelTimes is a list of objects like [
@@ -266,7 +263,7 @@ export const populateTimetable = (
 		let leaveTimes = getDepartureTimes(
 			object,
 			dayType,
-			specialHolidays,
+			holidays,
 			travelTimes,
 			fromIndex
 		);
@@ -280,7 +277,7 @@ export const populateTimetable = (
 	}
 };
 
-export const getTimetable = (state, dayType, busTypes, busStops) => {
+export const getTimetable = (state, dayType, busTypes, busStops, holidays) => {
 	/*
     input parameters:
     1. state is bus reducer's state.
@@ -307,11 +304,10 @@ export const getTimetable = (state, dayType, busTypes, busStops) => {
 	}
 	let timetable = [];
 	const travelTimes = state.database.travelTimes[TRAVEL_TIMES];
-	const specialHolidays = state.database.specialHolidays;
 	populateTimetable(
 		objects,
 		dayType,
-		specialHolidays,
+		holidays,
 		from,
 		to,
 		travelTimes,
@@ -319,7 +315,13 @@ export const getTimetable = (state, dayType, busTypes, busStops) => {
 	);
 	timetable = getUniqueTimeValues(timetable);
 	if (dayType === TODAY) {
-		let yesterdayTimetable = getTimetable(state, YESTERDAY, busTypes, busStops);
+		let yesterdayTimetable = getTimetable(
+			state,
+			YESTERDAY,
+			busTypes,
+			busStops,
+			holidays
+		);
 		timetable = addMidnightTimes(timetable, yesterdayTimetable);
 	}
 	return timetable;

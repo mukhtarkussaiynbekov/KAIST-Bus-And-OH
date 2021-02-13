@@ -34,7 +34,7 @@
 					"00:20",
 					"01:50"
 				],
-				"specialHolidays": {
+				"holidays": {
 					"weekends": "true"
 				}
 			}
@@ -58,7 +58,7 @@
 					"02:40"
 				],
 				"weekends": [],
-				"specialHolidays": { "weekends": "true" }
+				"holidays": { "weekends": "true" }
 			}
 		},
 		{
@@ -80,7 +80,7 @@
 					"01:00",
 					"02:30"
 				],
-				"specialHolidays": {
+				"holidays": {
 					"02-12": {
 						"hours": [
 							"14:30",
@@ -127,7 +127,7 @@
 					"03:00"
 				],
 				"weekends": [],
-				"specialHolidays": { "weekends": "true" }
+				"holidays": { "weekends": "true" }
 			}
 		},
 		{
@@ -149,7 +149,7 @@
 					"01:00",
 					"02:30"
 				],
-				"specialHolidays": {
+				"holidays": {
 					"weekends": "true"
 				}
 			}
@@ -180,7 +180,7 @@
 					"18:05"
 				],
 				"weekends": [],
-				"specialHolidays": { "closed": "true" }
+				"holidays": { "closed": "true" }
 			}
 		},
 		{
@@ -206,7 +206,7 @@
 					"18:25"
 				],
 				"weekends": [],
-				"specialHolidays": { "closed": "true" }
+				"holidays": { "closed": "true" }
 			}
 		}
 	],
@@ -259,7 +259,7 @@
 					"16:55"
 				],
 				"weekends": [],
-				"specialHolidays": { "closed": "true" }
+				"holidays": { "closed": "true" }
 			}
 		}
 	]

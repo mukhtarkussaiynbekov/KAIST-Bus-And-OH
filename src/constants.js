@@ -23,7 +23,7 @@ export const TODAY = 'today';
 export const TOMORROW = 'tomorrow';
 export const WEEKDAYS = 'weekdays';
 export const WEEKENDS = 'weekends';
-export const SPECIAL_HOLIDAYS = 'specialHolidays';
+export const HOLIDAYS = 'holidays';
 
 export const TRAVEL_TIMES = 'travelTimes';
 export const STOP_ONE = 'stopOne';
