@@ -20,8 +20,8 @@ import moment from 'moment-timezone';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// dispatch(writeData());
-		dispatch(getUpdates());
+		dispatch(writeData());
+		// dispatch(getUpdates());
 	}, []);
 
 	// get bus and operating hour states from the store

@@ -118,7 +118,7 @@ export const getOperatingHoursList = (
 		specialHolidays,
 		now
 	);
-	return operatingHours;
+	return operatingHours === undefined ? [] : operatingHours;
 };
 
 export const getTimeLeftOH = (time, now, isNextDay = false) => {

@@ -44,16 +44,15 @@ export default (state = INITIAL_STATE, action) => {
 		case DATA_FETCH_SUCCESS:
 			const database = action.payload[BUS_DATABASE];
 			const specialHolidays = action.payload[SPECIAL_HOLIDAYS];
-			return state;
-		// return {
-		// 	...state,
-		// 	database: {
-		// 		busOptions: database[OPTIONS],
-		// 		timetableAll: database[TIMETABLE],
-		// 		travelTimes: database[TRAVEL_TIMES],
-		// 		specialHolidays: specialHolidays[DATES]
-		// 	}
-		// };
+			return {
+				...state,
+				database: {
+					busOptions: database[OPTIONS],
+					timetableAll: database[TIMETABLE],
+					travelTimes: database[TRAVEL_TIMES],
+					specialHolidays: specialHolidays[DATES]
+				}
+			};
 		case SWAP_STOPS:
 			const temp = state.from;
 			return { ...state, from: state.to, to: temp };

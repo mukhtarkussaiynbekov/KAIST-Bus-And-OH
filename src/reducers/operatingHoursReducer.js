@@ -34,15 +34,14 @@ export default (state = INITIAL_STATE, action) => {
 		case DATA_FETCH_SUCCESS:
 			const database = action.payload[OPERATING_HOURS_DATABASE];
 			const specialHolidays = action.payload[SPECIAL_HOLIDAYS];
-			return state;
-		// return {
-		// 	...state,
-		// 	database: {
-		// 		options: database[OPTIONS],
-		// 		operatingHours: database[OPERATING_HOURS],
-		// 		specialHolidays: specialHolidays[DATES]
-		// 	}
-		// };
+			return {
+				...state,
+				database: {
+					options: database[OPTIONS],
+					operatingHours: database[OPERATING_HOURS],
+					specialHolidays: specialHolidays[DATES]
+				}
+			};
 		case CHANGE_OH_DAY:
 			return { ...state, dayType: action.payload };
 		case CHANGE_FACILITY:

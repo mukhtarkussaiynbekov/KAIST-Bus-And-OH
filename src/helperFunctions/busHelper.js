@@ -217,6 +217,9 @@ export const getDepartureTimes = (
 			);
 		}
 	}
+	if (initialDepartureTimes === undefined) {
+		return [];
+	}
 	let departureTimes = [];
 	for (let time of initialDepartureTimes) {
 		let leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
