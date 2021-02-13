@@ -21,7 +21,7 @@ import moment from 'moment-timezone';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(writeData());
+		// dispatch(writeData());
 		dispatch(getUpdates());
 	}, []);
 
@@ -107,7 +107,7 @@ const HomeScreen = ({ navigation }) => {
 		<View style={styles.container}>
 			<ThemeProvider>
 				{busNote !== '' && (
-					<Text style={styles.text}>
+					<Text style={styles.note}>
 						<Text style={styles.boldText}>Note: </Text>
 						{busNote}
 					</Text>
@@ -159,7 +159,7 @@ const HomeScreen = ({ navigation }) => {
 					<Text style={styles.boldText}>{isOpen ? 'open' : 'closed'}</Text> now
 				</Text>
 				{facilityNote !== '' && (
-					<Text style={styles.text}>
+					<Text style={styles.note}>
 						<Text style={styles.boldText}>Note: </Text>
 						{facilityNote}
 					</Text>
@@ -185,6 +185,11 @@ const styles = StyleSheet.create({
 	},
 	boldText: {
 		fontWeight: 'bold'
+	},
+	note: {
+		marginHorizontal: 10,
+		marginVertical: 10,
+		fontSize: 16
 	}
 });
 

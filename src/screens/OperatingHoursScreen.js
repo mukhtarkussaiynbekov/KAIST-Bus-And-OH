@@ -98,7 +98,7 @@ const OperatingHoursScreen = () => {
 				readOnlyHeadings
 			/>
 			{facilityNote !== '' && (
-				<Text style={styles.text}>
+				<Text style={styles.note}>
 					<Text style={styles.boldText}>Note: </Text>
 					{facilityNote}
 				</Text>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
 	countDown: {
 		marginTop: 40
 	},
-	text: {
+	note: {
 		marginHorizontal: 10,
 		marginVertical: 10,
 		fontSize: 16

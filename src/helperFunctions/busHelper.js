@@ -203,6 +203,9 @@ export const getDepartureTimes = (
 	let travelStops = route.slice(0, fromIndex + 1);
 	let travelTime = getTravelTime(travelStops, travelTimes);
 	let departureTimesObject = object[DEPARTURE_TIMES];
+	if (departureTimesObject === undefined) {
+		return [];
+	}
 	let dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
 	if (isHoliday(dayType, holidays) && HOLIDAYS in departureTimesObject) {

@@ -147,7 +147,7 @@ const BusScreen = () => {
 				chosenItem={state.to}
 			/>
 			{busNote !== '' && (
-				<Text style={styles.text}>
+				<Text style={styles.note}>
 					<Text style={styles.boldText}>Note: </Text>
 					{busNote}
 				</Text>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 20,
 		alignSelf: 'center'
 	},
-	text: {
+	note: {
 		marginHorizontal: 10,
 		marginVertical: 10,
 		fontSize: 16
