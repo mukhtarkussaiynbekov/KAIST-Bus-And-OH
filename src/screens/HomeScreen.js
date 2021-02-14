@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // components
 import { View, StyleSheet } from 'react-native';
-import { Button, ThemeProvider, Icon, Text } from 'react-native-elements';
+import { Button, Icon, Text } from 'react-native-elements';
 
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
@@ -25,11 +25,12 @@ import {
 	YESTERDAY
 } from '../constants';
 import moment from 'moment-timezone';
+import * as Linking from 'expo-linking';
 
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// dispatch(writeData());
+		dispatch(writeData());
 		dispatch(getUpdates());
 	}, []);
 
@@ -110,7 +111,7 @@ const HomeScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<ThemeProvider>
+			<View style={styles.featureContainer}>
 				{busNote !== '' && (
 					<Text style={styles.note}>
 						<Text style={styles.boldText}>Note: </Text>
@@ -145,6 +146,8 @@ const HomeScreen = ({ navigation }) => {
 					titleStyle={styles.title}
 					onPress={() => navigation.navigate('Bus')}
 				/>
+			</View>
+			<View style={styles.featureContainer}>
 				<Button
 					icon={
 						<Icon
@@ -169,7 +172,17 @@ const HomeScreen = ({ navigation }) => {
 						{facilityNote}
 					</Text>
 				)}
-			</ThemeProvider>
+				<Text style={styles.note}>
+					If you have any inquiries, please fill out{' '}
+					<Text
+						style={{ color: 'blue' }}
+						onPress={() => Linking.openURL('http://google.com')}
+					>
+						this form
+					</Text>
+					.
+				</Text>
+			</View>
 		</View>
 	);
 };
@@ -178,6 +191,9 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center'
+	},
+	featureContainer: {
+		marginVertical: 10
 	},
 	icon: {
 		marginRight: 10

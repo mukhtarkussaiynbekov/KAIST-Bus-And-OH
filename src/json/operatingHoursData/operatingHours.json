@@ -252,54 +252,56 @@
 					"hours": {
 						"monday": [
 							{
-								"start": "08:30",
-								"finish": "02:00"
+								"start": "10:00",
+								"finish": "13:10"
+							},
+							{
+								"start": "14:00",
+								"finish": "19:00"
 							}
 						],
 						"tuesday": [
 							{
-								"start": "08:30",
-								"finish": "02:00"
+								"start": "10:00",
+								"finish": "13:10"
+							},
+							{
+								"start": "14:00",
+								"finish": "19:00"
 							}
 						],
 						"wednesday": [
 							{
-								"start": "08:30",
-								"finish": "02:00"
+								"start": "10:00",
+								"finish": "13:10"
+							},
+							{
+								"start": "14:00",
+								"finish": "19:00"
 							}
 						],
 						"thursday": [
 							{
-								"start": "08:30",
+								"start": "10:00",
 								"finish": "13:10"
 							},
 							{
 								"start": "14:00",
-								"finish": "02:00"
+								"finish": "19:00"
 							}
 						],
 						"friday": [
 							{
-								"start": "08:30",
+								"start": "10:00",
 								"finish": "13:10"
 							},
 							{
 								"start": "14:00",
-								"finish": "02:00"
+								"finish": "19:00"
 							}
 						],
-						"saturday": [
-							{
-								"start": "09:00",
-								"finish": "00:00"
-							}
-						],
-						"sunday": [
-							{
-								"start": "09:00",
-								"finish": "02:00"
-							}
-						],
+						"saturday": [],
+						"sunday": [],
 						"holidays": {
 							"closed": "true"
 						}

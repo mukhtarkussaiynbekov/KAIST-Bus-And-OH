@@ -161,6 +161,9 @@
 	],
 	"cityStops": [
 		{
+			"notes": {
+				"weekdays": "The last bus has a long delay from original schedule due to the surging traffics."
+			},
 			"route": [
 				"n6",
 				"e15",
@@ -188,6 +191,9 @@
 			}
 		},
 		{
+			"notes": {
+				"weekdays": "The last bus has a long delay from original schedule due to the surging traffics."
+			},
 			"route": [
 				"galleria",
 				"governmentComplex",
