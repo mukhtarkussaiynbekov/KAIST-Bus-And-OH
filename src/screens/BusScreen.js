@@ -27,7 +27,8 @@ import {
 	CHANGE_TO,
 	CHANGE_DAY,
 	BUS_TYPES,
-	DAY_TYPES
+	DAY_TYPES,
+	YESTERDAY
 } from '../constants';
 
 const BusScreen = () => {
@@ -61,7 +62,10 @@ const BusScreen = () => {
 		NAME_ID
 	);
 	const busStops = busOptions[busStopsClassfication];
-	const busNote = getBusNote(state, dayType, busTypes, busStops, holidays);
+	let busNote = getBusNote(state, dayType, busTypes, busStops, holidays);
+	if (dayType === TODAY && now.hours() < 3) {
+		busNote = getBusNote(state, YESTERDAY, busTypes, busStops, holidays);
+	}
 
 	const [timetable, setTimetable] = useState(
 		getTimetable(state, dayType, busTypes, busStops, holidays)

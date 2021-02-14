@@ -15,7 +15,15 @@ import {
 	getTimeLeftIsOpen
 } from '../helperFunctions/operatingHoursHelper';
 import { getUpdates, writeData } from '../firebase';
-import { NAME, TODAY, ID, NAME_ID, BUS_TYPES, FACILITIES } from '../constants';
+import {
+	NAME,
+	TODAY,
+	ID,
+	NAME_ID,
+	BUS_TYPES,
+	FACILITIES,
+	YESTERDAY
+} from '../constants';
 import moment from 'moment-timezone';
 
 const HomeScreen = ({ navigation }) => {
@@ -65,13 +73,10 @@ const HomeScreen = ({ navigation }) => {
 	);
 	const from = getPropValue(busStops, busState.from, ID, NAME);
 	const to = getPropValue(busStops, busState.to, ID, NAME);
-	const busNote = getBusNote(
-		busState,
-		TODAY,
-		busTypes,
-		busStops,
-		holidaysState
-	);
+	const busNote =
+		now.hours() < 3
+			? getBusNote(busState, YESTERDAY, busTypes, busStops, holidaysState)
+			: getBusNote(busState, TODAY, busTypes, busStops, holidaysState);
 
 	// following declarations are needed to render operating hour data
 	const ohOptions = operatingHoursState.database.options;
