@@ -33,10 +33,9 @@ import {
 
 const BusScreen = () => {
 	// get bus state and dispatch from the store
-	const [state, holidays] = useSelector(storeState => [
-		storeState.bus,
-		storeState.holidays
-	]);
+	const { bus: state, holidays, language: languageState } = useSelector(
+		storeState => storeState
+	);
 	const dispatch = useDispatch();
 
 	// create now state to keep track of current time
@@ -51,7 +50,13 @@ const BusScreen = () => {
 
 	// following declarations are needed to get timetable and
 	// to render flat list as well as drop downs.
-	const busOptions = state.database.busOptions;
+	const language = getPropValue(
+		languageState.items,
+		languageState.selected,
+		ID,
+		NAME_ID
+	);
+	const busOptions = state.database.options[language];
 	const dayTypes = busOptions[DAY_TYPES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const busTypes = busOptions[BUS_TYPES];

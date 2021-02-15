@@ -31,15 +31,22 @@ import {
 
 const OperatingHoursScreen = () => {
 	// get operating hour state and dispatch from the store
-	const [state, holidays] = useSelector(storeState => [
-		storeState.operatingHours,
-		storeState.holidays
-	]);
+	const {
+		operatingHours: state,
+		holidays,
+		language: languageState
+	} = useSelector(storeState => storeState);
 	const dispatch = useDispatch();
 
 	// following declarations are needed to get facility info and
 	// to render flat list as well as drop downs.
-	const options = state.database.options;
+	const language = getPropValue(
+		languageState.items,
+		languageState.selected,
+		ID,
+		NAME_ID
+	);
+	const options = state.database.options[language];
 	const dayTypes = options[DAY_TYPES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const facilities = options[FACILITIES];

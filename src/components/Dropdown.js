@@ -11,7 +11,8 @@ const Dropdown = ({
 	hideSearch,
 	onSelectedItemChange,
 	chosenItem,
-	readOnlyHeadings
+	readOnlyHeadings,
+	titleWidth
 }) => {
 	const [selectedItem, setSelectedItem] = useState([chosenItem]);
 	if (selectedItem[0] !== chosenItem) {
@@ -21,7 +22,7 @@ const Dropdown = ({
 	}
 	return (
 		<View style={styles.viewContainer}>
-			<Text style={styles.title}>{title}</Text>
+			<Text style={{ ...styles.title, width: titleWidth }}>{title}</Text>
 			<View style={{ flex: 1 }}>
 				<SectionedMultiSelect
 					searchPlaceholderText={searchPlaceholderText}
@@ -32,7 +33,7 @@ const Dropdown = ({
 					subKey="children"
 					hideConfirm
 					single
-					hideSearch={hideSearch} // default value is false
+					hideSearch={hideSearch}
 					modalWithTouchable
 					onSelectedItemsChange={selectedItem => {
 						setSelectedItem(selectedItem);
@@ -44,6 +45,11 @@ const Dropdown = ({
 			</View>
 		</View>
 	);
+};
+
+Dropdown.defaultProps = {
+	titleWidth: 55,
+	hideSearch: false
 };
 
 const styles = StyleSheet.create({

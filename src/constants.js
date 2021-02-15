@@ -69,3 +69,8 @@ export const TIMETABLE = 'timetable';
 export const DATES = 'dates';
 export const NOTES = 'notes';
 export const ANY = 'any';
+
+export const LANGUAGES = 'languages';
+export const ENGLISH = 'english';
+export const KOREAN = 'korean';
+export const CHANGE_LANGUAGE = 'change_language';

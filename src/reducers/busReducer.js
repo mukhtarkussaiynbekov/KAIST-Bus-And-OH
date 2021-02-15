@@ -1,4 +1,5 @@
-import busOptionsLocal from '../json/busData/busOptions.json';
+import optionsEnglishLocal from '../json/busData/options/english.json';
+import optionsKoreanLocal from '../json/busData/options/korean.json';
 import busTimetableLocal from '../json/busData/busTimetable.json';
 import busTravelTimesLocal from '../json/busData/busTravelTimes.json';
 import {
@@ -25,14 +26,27 @@ import { getPropValue } from '../helperFunctions/commonFunctions';
 
 const INITIAL_STATE = {
 	database: {
-		busOptions: busOptionsLocal,
+		options: {
+			english: optionsEnglishLocal,
+			korean: optionsKoreanLocal
+		},
 		timetableAll: busTimetableLocal,
 		travelTimes: busTravelTimesLocal
 	},
-	busType: getPropValue(busOptionsLocal[BUS_TYPES], CAMPUS_STOPS, NAME_ID, ID),
-	dayType: getPropValue(busOptionsLocal[DAY_TYPES], TODAY, NAME_ID, ID),
-	from: getPropValue(busOptionsLocal[CAMPUS_STOPS], MAIN_CAMPUS, NAME_ID, ID),
-	to: getPropValue(busOptionsLocal[CAMPUS_STOPS], MUNJI, NAME_ID, ID)
+	busType: getPropValue(
+		optionsKoreanLocal[BUS_TYPES],
+		CAMPUS_STOPS,
+		NAME_ID,
+		ID
+	),
+	dayType: getPropValue(optionsKoreanLocal[DAY_TYPES], TODAY, NAME_ID, ID),
+	from: getPropValue(
+		optionsKoreanLocal[CAMPUS_STOPS],
+		MAIN_CAMPUS,
+		NAME_ID,
+		ID
+	),
+	to: getPropValue(optionsKoreanLocal[CAMPUS_STOPS], MUNJI, NAME_ID, ID)
 };
 
 export default (state = INITIAL_STATE, action) => {

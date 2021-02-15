@@ -1,0 +1,14 @@
+{
+	"languages": [
+		{
+			"name": "English",
+			"id": 0,
+			"name_id": "english"
+		},
+		{
+			"name": "한국어",
+			"id": 1,
+			"name_id": "korean"
+		}
+	]
+}

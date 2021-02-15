@@ -1,0 +1,179 @@
+{
+	"busTypes": [
+		{
+			"name": "OLEV",
+			"id": 0,
+			"name_id": "olevStops"
+		},
+		{
+			"name": "월평",
+			"id": 1,
+			"name_id": "cityStops"
+		},
+		{
+			"name": "캠퍼스",
+			"id": 2,
+			"name_id": "campusStops"
+		}
+	],
+	"dayTypes": [
+		{
+			"name": "오늘",
+			"id": 0,
+			"name_id": "today"
+		},
+		{
+			"name": "내일",
+			"id": 1,
+			"name_id": "tomorrow"
+		},
+		{
+			"name": "평일",
+			"id": 2,
+			"name_id": "weekdays"
+		},
+		{
+			"name": "주말",
+			"id": 3,
+			"name_id": "weekends"
+		}
+	],
+	"cityStops": [
+		{
+			"name": "본교 (N6)",
+			"id": 0,
+			"name_id": "n6",
+			"children": [
+				{
+					"name": "N6",
+					"id": 6,
+					"name_id": "n6"
+				},
+				{
+					"name": "Auditorium (E15)",
+					"id": 7,
+					"name_id": "e15"
+				},
+				{
+					"name": "W8",
+					"id": 8,
+					"name_id": "w8"
+				},
+				{
+					"name": "E14",
+					"id": 9,
+					"name_id": "e14"
+				},
+				{
+					"name": "Duck pond",
+					"id": 10,
+					"name_id": "duckPond"
+				}
+			]
+		},
+		{
+			"name": "충남태학교",
+			"id": 1,
+			"name_id": "chungnam"
+		},
+		{
+			"name": "Wolpyeong St. Exit #1",
+			"id": 2,
+			"name_id": "wolpyeong1"
+		},
+		{
+			"name": "Galleria Department Store",
+			"id": 3,
+			"name_id": "galleria"
+		},
+		{
+			"name": "Government Complex",
+			"id": 4,
+			"name_id": "governmentComplex"
+		},
+		{
+			"name": "Wolpyeong St. Exit #3",
+			"id": 5,
+			"name_id": "wolpyeong3"
+		}
+	],
+	"campusStops": [
+		{
+			"name": "본교 N6-E15-W8-Duck Pond",
+			"id": 0,
+			"name_id": "main"
+		},
+		{
+			"name": "문지",
+			"id": 1,
+			"name_id": "munji"
+		},
+		{
+			"name": "화암",
+			"id": 2,
+			"name_id": "hwaam"
+		},
+		{
+			"name": "로덴 하우스",
+			"id": 3,
+			"name_id": "rothenHouse"
+		},
+		{
+			"name": "교수 아파트",
+			"id": 4,
+			"name_id": "facultyApartment"
+		}
+	],
+	"olevStops": [
+		{
+			"name": "Kai-Maru Cafeteria",
+			"id": 0,
+			"name_id": "kaimaru"
+		},
+		{
+			"name": "Sports Complex",
+			"id": 1,
+			"name_id": "sportsComplex"
+		},
+		{
+			"name": "Creative Learning B/D (E11)",
+			"id": 2,
+			"name_id": "e11"
+		},
+		{
+			"name": "Biomedical Center",
+			"id": 3,
+			"name_id": "biomedicalCenter"
+		},
+		{
+			"name": "Pappalardo",
+			"id": 4,
+			"name_id": "pappalardo"
+		},
+		{
+			"name": "Nanofab",
+			"id": 5,
+			"name_id": "nanofab"
+		},
+		{
+			"name": "Main gate",
+			"id": 6,
+			"name_id": "mainGate"
+		},
+		{
+			"name": "Materials S&E B/D",
+			"id": 7,
+			"name_id": "materialsBuilding"
+		},
+		{
+			"name": "Heemang/Dasom Hall",
+			"id": 8,
+			"name_id": "heemang"
+		},
+		{
+			"name": "Nanum Hall",
+			"id": 9,
+			"name_id": "nanum"
+		}
+	]
+}

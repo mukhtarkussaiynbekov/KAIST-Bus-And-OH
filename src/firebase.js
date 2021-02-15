@@ -1,10 +1,12 @@
 import * as firebase from 'firebase';
 import { DATA_FETCH_SUCCESS } from './constants';
-import busOptionsLocal from './json/busData/busOptions.json';
+import busOptionsEnglishLocal from './json/busData/options/english.json';
+import busOptionsKoreanLocal from './json/busData/options/korean.json';
 import busTimetableLocal from './json/busData/busTimetable.json';
 import busTravelTimesLocal from './json/busData/busTravelTimes.json';
 import holidaysLocal from './json/holidays.json';
-import ohOptionsLocal from './json/operatingHoursData/operatingHoursOptions.json';
+import ohOptionsEnglishLocal from './json/operatingHoursData/options/english.json';
+import ohOptionsKoreanLocal from './json/operatingHoursData/options/korean.json';
 import operatingHoursLocal from './json/operatingHoursData/operatingHours.json';
 
 // Initialize Firebase
@@ -37,11 +39,22 @@ export const getUpdates = () => {
 
 export const writeData = () => {
 	return () => {
-		firebase.database().ref('busData/options/').set(busOptionsLocal);
+		firebase
+			.database()
+			.ref('busData/options/english')
+			.set(busOptionsEnglishLocal);
+		firebase
+			.database()
+			.ref('busData/options/korean')
+			.set(busOptionsKoreanLocal);
 		firebase.database().ref('busData/timetable').set(busTimetableLocal);
 		firebase.database().ref('busData/travelTimes/').set(busTravelTimesLocal);
 		firebase.database().ref('holidays/').set(holidaysLocal);
-		firebase.database().ref('ohData/options/').set(ohOptionsLocal);
+		firebase
+			.database()
+			.ref('ohData/options/english')
+			.set(ohOptionsEnglishLocal);
+		firebase.database().ref('ohData/options/korean').set(ohOptionsKoreanLocal);
 		firebase.database().ref('ohData/operatingHours/').set(operatingHoursLocal);
 	};
 };

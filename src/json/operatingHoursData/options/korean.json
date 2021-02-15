@@ -1,0 +1,132 @@
+{
+	"dayTypes": [
+		{
+			"name": "오늘",
+			"id": 0,
+			"name_id": "today"
+		},
+		{
+			"name": "내일",
+			"id": 1,
+			"name_id": "tomorrow"
+		},
+		{
+			"name": "Monday",
+			"id": 2,
+			"name_id": "monday"
+		},
+		{
+			"name": "Tuesday",
+			"id": 3,
+			"name_id": "tuesday"
+		},
+		{
+			"name": "Wednesday",
+			"id": 4,
+			"name_id": "wednesday"
+		},
+		{
+			"name": "Thursday",
+			"id": 5,
+			"name_id": "thursday"
+		},
+		{
+			"name": "Friday",
+			"id": 6,
+			"name_id": "friday"
+		},
+		{
+			"name": "Saturday",
+			"id": 7,
+			"name_id": "saturday"
+		},
+		{
+			"name": "Sunday",
+			"id": 8,
+			"name_id": "sunday"
+		}
+	],
+	"facilities": [
+		{
+			"name": "Mejom",
+			"id": 0,
+			"name_id": "mejom",
+			"children": [
+				{
+					"name": "North Mejom (N12)",
+					"id": 1,
+					"name_id": "mejom_n12"
+				},
+				{
+					"name": "N1 Mejom",
+					"id": 2,
+					"name_id": "mejom_n1"
+				},
+				{
+					"name": "Heemang Mejom (W4-4)",
+					"id": 3,
+					"name_id": "mejom_w4-4"
+				},
+				{
+					"name": "W2 Mejom",
+					"id": 4,
+					"name_id": "mejom_w2"
+				},
+				{
+					"name": "East Cafeteria Mejom (E5)",
+					"id": 5,
+					"name_id": "mejom_e5"
+				},
+				{
+					"name": "Sejong Hall Mejom (E8)",
+					"id": 6,
+					"name_id": "mejom_e8"
+				}
+			]
+		},
+		{
+			"name": "Food",
+			"id": 7,
+			"name_id": "food_lotteria",
+			"children": [
+				{
+					"name": "Lotteria (N13)",
+					"id": 8,
+					"name_id": "food_lotteria"
+				},
+				{
+					"name": "Pulbitmaru (N12)",
+					"id": 9,
+					"name_id": "food_pulbitmaru"
+				},
+				{
+					"name": "Subway E(16)",
+					"id": 10,
+					"name_id": "food_subway"
+				}
+			]
+		},
+		{
+			"name": "Library",
+			"id": 11,
+			"name_id": "library_main",
+			"children": [
+				{
+					"name": "Main Library (E9)",
+					"id": 12,
+					"name_id": "library_main"
+				},
+				{
+					"name": "Academic Cultural Complex (E9)",
+					"id": 13,
+					"name_id": "library_acc"
+				},
+				{
+					"name": "Undergraduate Branch Library (N10)",
+					"id": 14,
+					"name_id": "library_n10"
+				}
+			]
+		}
+	]
+}

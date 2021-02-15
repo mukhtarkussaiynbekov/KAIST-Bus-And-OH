@@ -1,4 +1,5 @@
-import optionsLocal from '../json/operatingHoursData/operatingHoursOptions.json';
+import optionsEnglishLocal from '../json/operatingHoursData/options/english.json';
+import optionsKoreanLocal from '../json/operatingHoursData/options/korean.json';
 import operatingHoursLocal from '../json/operatingHoursData/operatingHours.json';
 import {
 	DAY_TYPES,
@@ -18,11 +19,19 @@ import { getPropValue } from '../helperFunctions/commonFunctions';
 
 const INITIAL_STATE = {
 	database: {
-		options: optionsLocal,
+		options: {
+			english: optionsEnglishLocal,
+			korean: optionsKoreanLocal
+		},
 		operatingHours: operatingHoursLocal
 	},
-	dayType: getPropValue(optionsLocal[DAY_TYPES], TODAY, NAME_ID, ID),
-	facility: getPropValue(optionsLocal[FACILITIES], NORTH_MEJOM, NAME_ID, ID)
+	dayType: getPropValue(optionsKoreanLocal[DAY_TYPES], TODAY, NAME_ID, ID),
+	facility: getPropValue(
+		optionsKoreanLocal[FACILITIES],
+		NORTH_MEJOM,
+		NAME_ID,
+		ID
+	)
 };
 
 export default (state = INITIAL_STATE, action) => {

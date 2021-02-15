@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // components
 import { View, StyleSheet } from 'react-native';
 import { Button, Icon, Text } from 'react-native-elements';
+import Dropdown from '../components/Dropdown';
 
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
@@ -22,7 +23,9 @@ import {
 	NAME_ID,
 	BUS_TYPES,
 	FACILITIES,
-	YESTERDAY
+	YESTERDAY,
+	CHANGE_LANGUAGE,
+	ENGLISH
 } from '../constants';
 import moment from 'moment-timezone';
 import * as Linking from 'expo-linking';
@@ -30,20 +33,17 @@ import * as Linking from 'expo-linking';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(writeData());
-		dispatch(getUpdates());
+		// dispatch(writeData());
+		// dispatch(getUpdates());
 	}, []);
 
 	// get bus and operating hour states from the store
-	const [
-		busState,
-		operatingHoursState,
-		holidaysState
-	] = useSelector(storeState => [
-		storeState.bus,
-		storeState.operatingHours,
-		storeState.holidays
-	]);
+	const {
+		bus: busState,
+		operatingHours: operatingHoursState,
+		holidays: holidaysState,
+		language: languageState
+	} = useSelector(storeState => storeState);
 
 	// create now state to keep track of current time
 	const [now, setNow] = useState(moment().tz('Asia/Seoul'));
@@ -56,7 +56,13 @@ const HomeScreen = ({ navigation }) => {
 	}, []);
 
 	// following declarations are needed to render bus data
-	const busOptions = busState.database.busOptions;
+	const language = getPropValue(
+		languageState.items,
+		languageState.selected,
+		ID,
+		NAME_ID
+	);
+	const busOptions = busState.database.options[language];
 	const busTypes = busOptions[BUS_TYPES];
 	const busStopsClassfication = getPropValue(
 		busTypes,
@@ -80,7 +86,7 @@ const HomeScreen = ({ navigation }) => {
 			: getBusNote(busState, TODAY, busTypes, busStops, holidaysState);
 
 	// following declarations are needed to render operating hour data
-	const ohOptions = operatingHoursState.database.options;
+	const ohOptions = operatingHoursState.database.options[language];
 	const facilities = ohOptions[FACILITIES];
 	const facilityName = getPropValue(
 		facilities,
@@ -111,6 +117,16 @@ const HomeScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
+			<Dropdown
+				title="Language"
+				titleWidth={80}
+				items={languageState.items}
+				hideSearch={true}
+				onSelectedItemChange={selectedItem =>
+					dispatch({ type: CHANGE_LANGUAGE, payload: selectedItem })
+				}
+				chosenItem={languageState.selected}
+			/>
 			<View style={styles.featureContainer}>
 				{busNote !== '' && (
 					<Text style={styles.note}>
@@ -189,8 +205,7 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		justifyContent: 'center'
+		flex: 1
 	},
 	featureContainer: {
 		marginVertical: 10
