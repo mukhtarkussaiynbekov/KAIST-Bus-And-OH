@@ -168,9 +168,6 @@ export const getTimeLeftIsOpen = (
 		return [INFINITY, false];
 	}
 
-	if (dayType !== TODAY) {
-		return [0, false];
-	}
 	let now = moment().tz('Asia/Seoul');
 	let nowFormatted = now.format('HH:mm:ss');
 	if (todayHours.length === 0 || todayHours[0].start > nowFormatted) {

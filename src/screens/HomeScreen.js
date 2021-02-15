@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
 		marginRight: 10
 	},
 	text: {
-		marginHorizontal: 10,
+		paddingHorizontal: 10,
 		textAlign: 'center',
 		marginVertical: 10,
 		fontSize: 16
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	note: {
-		marginHorizontal: 10,
+		paddingHorizontal: 10,
 		marginVertical: 10,
 		fontSize: 16
 	}

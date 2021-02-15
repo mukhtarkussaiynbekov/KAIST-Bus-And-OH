@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
 	infoText: {
 		fontSize: 18,
 		marginVertical: 10,
-		textAlign: 'center'
+		textAlign: 'center',
+		paddingHorizontal: 10
 	},
 	closedText: {
 		color: 'red',

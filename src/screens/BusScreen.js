@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center'
 	},
 	note: {
-		marginHorizontal: 10,
+		paddingHorizontal: 10,
 		marginVertical: 10,
 		fontSize: 16
 	},
