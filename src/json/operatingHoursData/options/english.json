@@ -127,6 +127,53 @@
 					"name_id": "library_n10"
 				}
 			]
+		},
+		{
+			"name": "Gym",
+			"id": 15,
+			"name_id": "gym",
+			"children": [
+				{
+					"name": "Silloe Gym (N20)",
+					"id": 16,
+					"name_id": "gym_silloe"
+				},
+				{
+					"name": "Areum Gym (N19)",
+					"id": 17,
+					"name_id": "gym_areum"
+				},
+				{
+					"name": "Sejong Gym (E8)",
+					"id": 18,
+					"name_id": "gym_sejong"
+				},
+				{
+					"name": "Galilei Gym (W3)",
+					"id": 19,
+					"name_id": "gym_galilei"
+				},
+				{
+					"name": "Mir/Narae Gym (W6)",
+					"id": 20,
+					"name_id": "gym_mir"
+				},
+				{
+					"name": "Heemang/Dasom Gym (W4-4/W4-3)",
+					"id": 21,
+					"name_id": "gym_heemang"
+				},
+				{
+					"name": "Nadeul/Yeoul Gym (W4-2/W4-1)",
+					"id": 22,
+					"name_id": "gym_nadeul"
+				},
+				{
+					"name": "Hwaam Gym",
+					"id": 23,
+					"name_id": "gym_hwaam"
+				}
+			]
 		}
 	]
 }

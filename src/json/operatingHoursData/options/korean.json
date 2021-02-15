@@ -11,37 +11,37 @@
 			"name_id": "tomorrow"
 		},
 		{
-			"name": "Monday",
+			"name": "월요일",
 			"id": 2,
 			"name_id": "monday"
 		},
 		{
-			"name": "Tuesday",
+			"name": "화요일",
 			"id": 3,
 			"name_id": "tuesday"
 		},
 		{
-			"name": "Wednesday",
+			"name": "수요일",
 			"id": 4,
 			"name_id": "wednesday"
 		},
 		{
-			"name": "Thursday",
+			"name": "목요일",
 			"id": 5,
 			"name_id": "thursday"
 		},
 		{
-			"name": "Friday",
+			"name": "금요일",
 			"id": 6,
 			"name_id": "friday"
 		},
 		{
-			"name": "Saturday",
+			"name": "토요일",
 			"id": 7,
 			"name_id": "saturday"
 		},
 		{
-			"name": "Sunday",
+			"name": "일요일",
 			"id": 8,
 			"name_id": "sunday"
 		}
@@ -58,27 +58,27 @@
 					"name_id": "mejom_n12"
 				},
 				{
-					"name": "N1 Mejom",
+					"name": "N1 매점",
 					"id": 2,
 					"name_id": "mejom_n1"
 				},
 				{
-					"name": "Heemang Mejom (W4-4)",
+					"name": "희망관/다솜관 매점 (W4-4/W4-3)",
 					"id": 3,
 					"name_id": "mejom_w4-4"
 				},
 				{
-					"name": "W2 Mejom",
+					"name": "W2 매점",
 					"id": 4,
 					"name_id": "mejom_w2"
 				},
 				{
-					"name": "East Cafeteria Mejom (E5)",
+					"name": "East Cafeteria 매점 (E5)",
 					"id": 5,
 					"name_id": "mejom_e5"
 				},
 				{
-					"name": "Sejong Hall Mejom (E8)",
+					"name": "세종관 매점 (E8)",
 					"id": 6,
 					"name_id": "mejom_e8"
 				}
@@ -125,6 +125,53 @@
 					"name": "Undergraduate Branch Library (N10)",
 					"id": 14,
 					"name_id": "library_n10"
+				}
+			]
+		},
+		{
+			"name": "Gym",
+			"id": 15,
+			"name_id": "gym",
+			"children": [
+				{
+					"name": "신뢰관 Gym (N20)",
+					"id": 16,
+					"name_id": "gym_silloe"
+				},
+				{
+					"name": "아름관 Gym (N19)",
+					"id": 17,
+					"name_id": "gym_areum"
+				},
+				{
+					"name": "세종관 Gym (E8)",
+					"id": 18,
+					"name_id": "gym_sejong"
+				},
+				{
+					"name": "갈릴레이관 Gym (W3)",
+					"id": 19,
+					"name_id": "gym_galilei"
+				},
+				{
+					"name": "미르관/나래관 Gym (W6)",
+					"id": 20,
+					"name_id": "gym_mir"
+				},
+				{
+					"name": "희망관/다솜관 Gym (W4-4/W4-3)",
+					"id": 21,
+					"name_id": "gym_heemang"
+				},
+				{
+					"name": "나들관/여울관 Gym (W4-2/W4-1)",
+					"id": 22,
+					"name_id": "gym_nadeul"
+				},
+				{
+					"name": "화암관 Gym",
+					"id": 23,
+					"name_id": "gym_hwaam"
 				}
 			]
 		}

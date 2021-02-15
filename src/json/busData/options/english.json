@@ -40,7 +40,7 @@
 	],
 	"cityStops": [
 		{
-			"name": "Main Campus N6 (본교)",
+			"name": "Main Campus (N6)",
 			"id": 0,
 			"name_id": "n6",
 			"children": [
@@ -50,7 +50,7 @@
 					"name_id": "n6"
 				},
 				{
-					"name": "Auditorium",
+					"name": "Auditorium (E15)",
 					"id": 7,
 					"name_id": "e15"
 				},
@@ -72,7 +72,7 @@
 			]
 		},
 		{
-			"name": "Chungnam National University (충남태학교)",
+			"name": "Chungnam National University",
 			"id": 1,
 			"name_id": "chungnam"
 		},
@@ -99,27 +99,27 @@
 	],
 	"campusStops": [
 		{
-			"name": "Main Campus (본교) N6-E15-W8-Duck Pond",
+			"name": "Main Campus N6-E15-W8-Duck Pond",
 			"id": 0,
 			"name_id": "main"
 		},
 		{
-			"name": "Munji Campus (문지)",
+			"name": "Munji Campus",
 			"id": 1,
 			"name_id": "munji"
 		},
 		{
-			"name": "Hwa-am Campus (화암)",
+			"name": "Hwa-am Campus",
 			"id": 2,
 			"name_id": "hwaam"
 		},
 		{
-			"name": "Rothen House (로덴 하우스)",
+			"name": "Rothen House",
 			"id": 3,
 			"name_id": "rothenHouse"
 		},
 		{
-			"name": "Faculty Apartment (교수 아파트)",
+			"name": "Faculty Apartment",
 			"id": 4,
 			"name_id": "facultyApartment"
 		}
