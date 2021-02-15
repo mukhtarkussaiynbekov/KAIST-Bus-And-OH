@@ -33,8 +33,8 @@ import * as Linking from 'expo-linking';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// dispatch(writeData());
-		// dispatch(getUpdates());
+		dispatch(writeData());
+		dispatch(getUpdates());
 	}, []);
 
 	// get bus and operating hour states from the store
@@ -80,10 +80,14 @@ const HomeScreen = ({ navigation }) => {
 	);
 	const from = getPropValue(busStops, busState.from, ID, NAME);
 	const to = getPropValue(busStops, busState.to, ID, NAME);
-	const busNote =
-		now.hours() < 3
-			? getBusNote(busState, YESTERDAY, busTypes, busStops, holidaysState)
-			: getBusNote(busState, TODAY, busTypes, busStops, holidaysState);
+	const busNoteObject = getBusNote(
+		busState,
+		TODAY,
+		busTypes,
+		busStops,
+		holidaysState
+	);
+	const busNote = busNoteObject !== undefined ? busNoteObject[language] : '';
 
 	// following declarations are needed to render operating hour data
 	const ohOptions = operatingHoursState.database.options[language];
@@ -94,26 +98,22 @@ const HomeScreen = ({ navigation }) => {
 		ID,
 		NAME
 	);
-	const facilityNote = getFacilityNote(
+	const [_, isOpen] = getTimeLeftIsOpen(
+		operatingHoursState,
+		TODAY,
+		facilities,
+		holidaysState
+	);
+
+	const facilityNoteObject = getFacilityNote(
 		operatingHoursState,
 		TODAY,
 		facilities,
 		holidaysState,
 		now
 	);
-	const operatingHours = getOperatingHoursList(
-		operatingHoursState,
-		TODAY,
-		facilities,
-		holidaysState
-	);
-	const [_, isOpen] = getTimeLeftIsOpen(
-		operatingHoursState,
-		TODAY,
-		operatingHours,
-		facilities,
-		holidaysState
-	);
+	const facilityNote =
+		facilityNoteObject !== undefined ? facilityNoteObject[language] : '';
 
 	return (
 		<View style={styles.container}>

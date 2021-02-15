@@ -67,10 +67,14 @@ const BusScreen = () => {
 		NAME_ID
 	);
 	const busStops = busOptions[busStopsClassfication];
-	let busNote = getBusNote(state, dayType, busTypes, busStops, holidays);
-	if (dayType === TODAY && now.hours() < 3) {
-		busNote = getBusNote(state, YESTERDAY, busTypes, busStops, holidays);
-	}
+	const busNoteObject = getBusNote(
+		state,
+		dayType,
+		busTypes,
+		busStops,
+		holidays
+	);
+	const busNote = busNoteObject !== undefined ? busNoteObject[language] : '';
 
 	const [timetable, setTimetable] = useState(
 		getTimetable(state, dayType, busTypes, busStops, holidays)

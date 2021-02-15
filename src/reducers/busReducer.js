@@ -56,7 +56,7 @@ export default (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				database: {
-					busOptions: database[OPTIONS],
+					options: database[OPTIONS],
 					timetableAll: database[TIMETABLE],
 					travelTimes: database[TRAVEL_TIMES]
 				}

@@ -365,7 +365,10 @@
 				{
 					"name": "lotteria",
 					"notes": {
-						"any": "마감 30분 전부터는 주문과 리필이 제한됩니다. Orders and refills are possible until 30 minutes before the closing time."
+						"any": {
+							"english": "Orders and refills are possible until 30 minutes before the closing time.",
+							"korean": "마감 30분 전부터는 주문과 리필이 제한됩니다."
+						}
 					},
 					"hours": {
 						"monday": [
@@ -581,7 +584,10 @@
 				{
 					"name": "n10",
 					"notes": {
-						"any": "The facility is closed until further notice."
+						"any": {
+							"english": "The facility is closed until further notice.",
+							"korean": "The facility is closed until further notice."
+						}
 					}
 				}
 			]

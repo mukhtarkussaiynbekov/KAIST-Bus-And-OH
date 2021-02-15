@@ -49,12 +49,12 @@ export const getTimeLeftBus = (time, now, indexOfItem = 0) => {
 	let timeLeft =
 		leaveTimeHours * 60 + leaveTimeMinutes - (nowHours * 60 + nowMinutes);
 
-	// below conditions with numbers 7 and 5 are hard coded.
+	// below conditions with number 5 are hard coded.
 	// currently, the last bus leaves after 3AM and
 	// there is no bus at 4AM. You can reduce the
 	// number, but then it will not handle future cases
 	// where school decides to add additional bus times.
-	if (leaveTimeHours < 7 && indexOfItem >= 5) {
+	if (leaveTimeHours < 5 && indexOfItem >= 5) {
 		timeLeft += 24 * 60;
 	}
 	return timeLeft;
@@ -167,7 +167,7 @@ export const addMidnightTimes = (timetable, yesterdayTimetable) => {
 	let midnightTimes = [];
 	for (let time of yesterdayTimetable) {
 		// same assumption as in getTimeLeftBus function
-		if (time.leave < '07') {
+		if (time.leave < '05') {
 			midnightTimes.push(time);
 		}
 	}
@@ -347,16 +347,36 @@ export const getBusNote = (state, dayType, busTypes, busStops, holidays) => {
     output: note - string that provides additional information about a route
   */
 
+	if (dayType === TODAY) {
+		let now = moment().tz('Asia/Seoul').format('HH:mm');
+		const yesterdayTimetable = getTimetable(
+			state,
+			YESTERDAY,
+			busTypes,
+			busStops,
+			holidays
+		);
+		let yesterdayTimetableLength = yesterdayTimetable.length;
+
+		if (yesterdayTimetableLength > 0) {
+			let lastTime = yesterdayTimetable[yesterdayTimetableLength - 1].leave;
+			// same assumption as in getTimeLeftBus function
+			if (lastTime < '05' && getTimeLeftBus(lastTime, now) > 0) {
+				return getBusNote(state, YESTERDAY, busTypes, busStops, holidays);
+			}
+		}
+	}
+
 	let busType = getPropValue(busTypes, state.busType, ID, NAME_ID);
 	const listOfBusStops = state.database.timetableAll[busType];
 	let from = getPropValue(busStops, state.from, ID, NAME_ID);
 	let to = getPropValue(busStops, state.to, ID, NAME_ID);
 	if (from === to) {
-		return '';
+		return;
 	}
 	let objects = getTimeObjects(listOfBusStops, from, to);
 	if (objects.length === 0) {
-		return '';
+		return;
 	}
 	for (let object of objects) {
 		if (NOTES in object) {
@@ -377,5 +397,4 @@ export const getBusNote = (state, dayType, busTypes, busStops, holidays) => {
 			}
 		}
 	}
-	return '';
 };

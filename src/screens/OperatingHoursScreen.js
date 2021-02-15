@@ -51,7 +51,14 @@ const OperatingHoursScreen = () => {
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const facilities = options[FACILITIES];
 	const facilityName = getPropValue(facilities, state.facility, ID, NAME);
-	const facilityNote = getFacilityNote(state, dayType, facilities, holidays);
+	const facilityNoteObject = getFacilityNote(
+		state,
+		dayType,
+		facilities,
+		holidays
+	);
+	const facilityNote =
+		facilityNoteObject !== undefined ? facilityNoteObject[language] : '';
 
 	const operatingHours = getOperatingHoursList(
 		state,
@@ -62,7 +69,6 @@ const OperatingHoursScreen = () => {
 	const [initialTimeLeft, initialIsOpen] = getTimeLeftIsOpen(
 		state,
 		dayType,
-		operatingHours,
 		facilities,
 		holidays
 	);
@@ -77,7 +83,6 @@ const OperatingHoursScreen = () => {
 		const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
 			state,
 			dayType,
-			operatingHours,
 			facilities,
 			holidays
 		);
@@ -121,13 +126,7 @@ const OperatingHoursScreen = () => {
 							const [
 								reevaluatedTimeLeft,
 								reevaluatedIsOpen
-							] = getTimeLeftIsOpen(
-								state,
-								dayType,
-								operatingHours,
-								facilities,
-								holidays
-							);
+							] = getTimeLeftIsOpen(state, dayType, facilities, holidays);
 							setFacilityInfo({
 								timeLeft: reevaluatedTimeLeft,
 								isOpen: reevaluatedIsOpen

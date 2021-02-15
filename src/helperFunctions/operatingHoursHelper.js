@@ -135,13 +135,7 @@ export const getTimeLeftOH = (time, now, isNextDay = false) => {
 	return timeLeft;
 };
 
-export const getTimeLeftIsOpen = (
-	state,
-	dayType,
-	todayHours,
-	facilities,
-	holidays
-) => {
+export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 	/*
     input parameters:
     1. state is operatingHoursReducer's state
@@ -151,10 +145,16 @@ export const getTimeLeftIsOpen = (
         getOperatingHoursList function.
     4. holidays is a list of dates like ["02-12", "03-25"]
 
-    output: [timeLeft, isOpen] - timeLeft: int, isOpen: boolean
+    output: [timeLeft, isOpen, isYesterday] - timeLeft: int, isOpen: boolean, isYesterday: boolean
     timeLeft indicates time left until closing if isOpen = true.
     Otherwise if isOpen = false, timeLeft indicates time left until opening.
+    isYesterday denotes whether yesterday opened facility still has not closed
   */
+
+	if (dayType !== TODAY) {
+		return [0, false];
+	}
+
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
@@ -162,6 +162,13 @@ export const getTimeLeftIsOpen = (
 		classification,
 		facilityName,
 		listOfOperatingHours
+	);
+
+	const todayHours = getOperatingHoursList(
+		state,
+		dayType,
+		facilities,
+		holidays
 	);
 
 	if (!(HOURS in operatingHoursObject)) {
@@ -182,7 +189,7 @@ export const getTimeLeftIsOpen = (
 			if (lastTime.finish < lastTime.start) {
 				let timeLeftUntilClosing = getTimeLeftOH(lastTime.finish, nowFormatted);
 				if (timeLeftUntilClosing > 0) {
-					return [timeLeftUntilClosing, true];
+					return [timeLeftUntilClosing, true, true];
 				}
 			}
 		}
@@ -236,6 +243,18 @@ export const getFacilityNote = (
     returns note - string that provides additional information about a facility
   */
 
+	if (dayType === TODAY) {
+		let [, , isYesterday = false] = getTimeLeftIsOpen(
+			state,
+			dayType,
+			facilities,
+			holidays
+		);
+		if (isYesterday) {
+			return getFacilityNote(state, YESTERDAY, facilities, holidays, now);
+		}
+	}
+
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
@@ -262,5 +281,4 @@ export const getFacilityNote = (
 			return notes[ANY];
 		}
 	}
-	return '';
 };
