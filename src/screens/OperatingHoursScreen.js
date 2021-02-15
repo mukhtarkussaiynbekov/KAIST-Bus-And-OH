@@ -25,7 +25,8 @@ import {
 	ID,
 	NAME,
 	NAME_ID,
-	TODAY
+	TODAY,
+	INFINITY
 } from '../constants';
 
 const OperatingHoursScreen = () => {
@@ -128,21 +129,23 @@ const OperatingHoursScreen = () => {
 					/>
 				</View>
 			) : (
-				<Timetable
-					header={
-						<TimetableCell
-							columnTexts={{ first: 'Open At', second: 'Close At' }}
-						/>
-					}
-					timetable={operatingHours}
-					renderFunction={({ item }) => {
-						return (
+				facilityInfo.timeLeft !== INFINITY && (
+					<Timetable
+						header={
 							<TimetableCell
-								columnTexts={{ first: item.start, second: item.finish }}
+								columnTexts={{ first: 'Open At', second: 'Close At' }}
 							/>
-						);
-					}}
-				/>
+						}
+						timetable={operatingHours}
+						renderFunction={({ item }) => {
+							return (
+								<TimetableCell
+									columnTexts={{ first: item.start, second: item.finish }}
+								/>
+							);
+						}}
+					/>
+				)
 			)}
 		</>
 	);

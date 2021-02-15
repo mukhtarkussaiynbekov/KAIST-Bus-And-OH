@@ -105,6 +105,28 @@
 					"name_id": "food_subway"
 				}
 			]
+		},
+		{
+			"name": "Library",
+			"id": 11,
+			"name_id": "library_main",
+			"children": [
+				{
+					"name": "Main Library (E9)",
+					"id": 12,
+					"name_id": "library_main"
+				},
+				{
+					"name": "Academic Cultural Complex (E9)",
+					"id": 13,
+					"name_id": "library_acc"
+				},
+				{
+					"name": "Undergraduate Branch Library (N10)",
+					"id": 14,
+					"name_id": "library_n10"
+				}
+			]
 		}
 	]
 }

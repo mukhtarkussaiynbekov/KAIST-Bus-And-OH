@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import CountDown from 'react-native-countdown-component';
+import { INFINITY } from '../constants';
 
 const OperatingHourCountDown = ({
 	facilityName,
@@ -20,11 +21,17 @@ const OperatingHourCountDown = ({
 				)}{' '}
 				now.
 			</Text>
-			<CountDown until={timeLeft} onFinish={updateTimeLeft} size={30} />
-			<Text style={styles.infoText}>
-				Till{' '}
-				<Text style={styles.boldText}>{isOpen ? 'closing' : 'opening'}</Text>
-			</Text>
+			{timeLeft !== INFINITY && (
+				<View>
+					<CountDown until={timeLeft} onFinish={updateTimeLeft} size={30} />
+					<Text style={styles.infoText}>
+						Till{' '}
+						<Text style={styles.boldText}>
+							{isOpen ? 'closing' : 'opening'}
+						</Text>
+					</Text>
+				</View>
+			)}
 		</View>
 	);
 };

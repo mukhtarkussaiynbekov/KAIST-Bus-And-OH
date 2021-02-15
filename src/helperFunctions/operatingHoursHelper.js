@@ -11,7 +11,8 @@ import {
 	dayNames,
 	YESTERDAY,
 	NOTES,
-	ANY
+	ANY,
+	INFINITY
 } from '../constants';
 import {
 	getPropValue,
@@ -78,6 +79,9 @@ export const getOperatingHours = (
 ) => {
 	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
 
+	if (operatingHoursObject === undefined) {
+		return [];
+	}
 	if (isHoliday(dayType, holidays, now) && HOLIDAYS in operatingHoursObject) {
 		let holidayTimes = operatingHoursObject[HOLIDAYS];
 		let formattedDate = getDayMonth(dayType);
@@ -151,6 +155,18 @@ export const getTimeLeftIsOpen = (
     timeLeft indicates time left until closing if isOpen = true.
     Otherwise if isOpen = false, timeLeft indicates time left until opening.
   */
+	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
+	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
+	let [classification, facilityName] = getClassFacility(facility);
+	let operatingHoursObject = getOperatingHoursObject(
+		classification,
+		facilityName,
+		listOfOperatingHours
+	);
+
+	if (!(HOURS in operatingHoursObject)) {
+		return [INFINITY, false];
+	}
 
 	if (dayType !== TODAY) {
 		return [0, false];
@@ -177,6 +193,9 @@ export const getTimeLeftIsOpen = (
 
 	let timeLeft = 0;
 	for (let hour of todayHours) {
+		if (hour.start === hour.finish) {
+			return [INFINITY, true];
+		}
 		if (hour.start > nowFormatted) {
 			timeLeft = getTimeLeftOH(hour.start, nowFormatted);
 			return [timeLeft, false];

@@ -500,6 +500,104 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "library",
+			"locations": [
+				{
+					"name": "main",
+					"hours": {
+						"monday": [
+							{
+								"start": "09:00",
+								"finish": "18:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "09:00",
+								"finish": "18:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "09:00",
+								"finish": "18:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "09:00",
+								"finish": "18:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "09:00",
+								"finish": "18:00"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				},
+				{
+					"name": "acc",
+					"notes": {
+						"any": "The facility operates 24/7."
+					},
+					"hours": {
+						"monday": [
+							{
+								"start": "09:00",
+								"finish": "09:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "09:00",
+								"finish": "09:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "09:00",
+								"finish": "09:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "09:00",
+								"finish": "09:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "09:00",
+								"finish": "09:00"
+							}
+						],
+						"saturday": [
+							{
+								"start": "09:00",
+								"finish": "09:00"
+							}
+						],
+						"sunday": [
+							{
+								"start": "09:00",
+								"finish": "09:00"
+							}
+						]
+					}
+				},
+				{
+					"name": "n10",
+					"notes": {
+						"any": "The facility is closed until further notice."
+					}
+				}
+			]
 		}
 	]
 }

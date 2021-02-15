@@ -31,13 +31,13 @@ export const STOP_TWO = 'stopTwo';
 export const INTERVAL = 'interval';
 export const SAME_OPPOSITE_INTERVAL = 'sameOppositeInterval';
 
-export const FACILITIES = 'facilities';
-
 export const CHANGE_OH_DAY = 'change_oh_day';
 export const CHANGE_FACILITY = 'change_facility';
 export const OPERATING_HOURS = 'operatingHours';
 export const LOCATIONS = 'locations';
 export const HOURS = 'hours';
+export const INFINITY = 'infinity';
+export const FACILITIES = 'facilities';
 
 export const MONDAY = 'monday';
 export const TUESDAY = 'tuesday';
