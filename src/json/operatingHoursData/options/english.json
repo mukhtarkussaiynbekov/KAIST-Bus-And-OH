@@ -131,7 +131,7 @@
 		{
 			"name": "Gym",
 			"id": 15,
-			"name_id": "gym",
+			"name_id": "gym_silloe",
 			"children": [
 				{
 					"name": "Silloe Gym (N20)",
@@ -172,6 +172,52 @@
 					"name": "Hwaam Gym",
 					"id": 23,
 					"name_id": "gym_hwaam"
+				}
+			]
+		},
+		{
+			"name": "Coffee",
+			"id": 24,
+			"name_id": "coffee_cafeEat",
+			"children": [
+				{
+					"name": "Cafe Eat (W2-1)",
+					"id": 25,
+					"name_id": "coffee_cafeEat"
+				},
+				{
+					"name": "Pascucci (E3-2)",
+					"id": 26,
+					"name_id": "coffee_pascucci"
+				}
+			]
+		},
+		{
+			"name": "Office",
+			"id": 27,
+			"name_id": "office_isss",
+			"children": [
+				{
+					"name": "International Scholar and Student Services (ISSS Rm. 104 W2-1)",
+					"id": 28,
+					"name_id": "office_isss"
+				},
+				{
+					"name": "International Relations Team (IRT Rm. 102 W2-1)",
+					"id": 29,
+					"name_id": "office_irt"
+				}
+			]
+		},
+		{
+			"name": "Other",
+			"id": 30,
+			"name_id": "other_hairShopWest",
+			"children": [
+				{
+					"name": "KAIST Hair Shop (W2)",
+					"id": 31,
+					"name_id": "other_hairShopWest"
 				}
 			]
 		}

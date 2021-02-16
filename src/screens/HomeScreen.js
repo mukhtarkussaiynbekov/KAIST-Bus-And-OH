@@ -12,7 +12,6 @@ import { getPropValue } from '../helperFunctions/commonFunctions';
 import { getBusNote, getUpcomingTime } from '../helperFunctions/busHelper';
 import {
 	getFacilityNote,
-	getOperatingHoursList,
 	getTimeLeftIsOpen
 } from '../helperFunctions/operatingHoursHelper';
 import { getUpdates, writeData } from '../firebase';
@@ -23,7 +22,6 @@ import {
 	NAME_ID,
 	BUS_TYPES,
 	FACILITIES,
-	YESTERDAY,
 	CHANGE_LANGUAGE,
 	ENGLISH
 } from '../constants';

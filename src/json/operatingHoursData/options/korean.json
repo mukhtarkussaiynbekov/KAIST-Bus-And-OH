@@ -48,12 +48,12 @@
 	],
 	"facilities": [
 		{
-			"name": "Mejom",
+			"name": "매점",
 			"id": 0,
 			"name_id": "mejom",
 			"children": [
 				{
-					"name": "North Mejom (N12)",
+					"name": "North 매점 (N12)",
 					"id": 1,
 					"name_id": "mejom_n12"
 				},
@@ -90,24 +90,24 @@
 			"name_id": "food_lotteria",
 			"children": [
 				{
-					"name": "Lotteria (N13)",
+					"name": "롯데리아 (N13)",
 					"id": 8,
 					"name_id": "food_lotteria"
 				},
 				{
-					"name": "Pulbitmaru (N12)",
+					"name": "불핏마루 (N12)",
 					"id": 9,
 					"name_id": "food_pulbitmaru"
 				},
 				{
-					"name": "Subway E(16)",
+					"name": "서브웨이 E(16)",
 					"id": 10,
 					"name_id": "food_subway"
 				}
 			]
 		},
 		{
-			"name": "Library",
+			"name": "도서관",
 			"id": 11,
 			"name_id": "library_main",
 			"children": [
@@ -129,49 +129,95 @@
 			]
 		},
 		{
-			"name": "Gym",
+			"name": "체육관",
 			"id": 15,
 			"name_id": "gym",
 			"children": [
 				{
-					"name": "신뢰관 Gym (N20)",
+					"name": "신뢰관 체육관 (N20)",
 					"id": 16,
 					"name_id": "gym_silloe"
 				},
 				{
-					"name": "아름관 Gym (N19)",
+					"name": "아름관 체육관 (N19)",
 					"id": 17,
 					"name_id": "gym_areum"
 				},
 				{
-					"name": "세종관 Gym (E8)",
+					"name": "세종관 체육관 (E8)",
 					"id": 18,
 					"name_id": "gym_sejong"
 				},
 				{
-					"name": "갈릴레이관 Gym (W3)",
+					"name": "갈릴레이관 체육관 (W3)",
 					"id": 19,
 					"name_id": "gym_galilei"
 				},
 				{
-					"name": "미르관/나래관 Gym (W6)",
+					"name": "미르관/나래관 체육관 (W6)",
 					"id": 20,
 					"name_id": "gym_mir"
 				},
 				{
-					"name": "희망관/다솜관 Gym (W4-4/W4-3)",
+					"name": "희망관/다솜관 체육관 (W4-4/W4-3)",
 					"id": 21,
 					"name_id": "gym_heemang"
 				},
 				{
-					"name": "나들관/여울관 Gym (W4-2/W4-1)",
+					"name": "나들관/여울관 체육관 (W4-2/W4-1)",
 					"id": 22,
 					"name_id": "gym_nadeul"
 				},
 				{
-					"name": "화암관 Gym",
+					"name": "화암관 체육관",
 					"id": 23,
 					"name_id": "gym_hwaam"
+				}
+			]
+		},
+		{
+			"name": "커피",
+			"id": 24,
+			"name_id": "coffee_cafeEat",
+			"children": [
+				{
+					"name": "카페잇 (W2-1)",
+					"id": 25,
+					"name_id": "coffee_cafeEat"
+				},
+				{
+					"name": "파스쿠찌 (E3-2)",
+					"id": 26,
+					"name_id": "coffee_pascucci"
+				}
+			]
+		},
+		{
+			"name": "사무실",
+			"id": 27,
+			"name_id": "office_isss",
+			"children": [
+				{
+					"name": "국제교원및학생지원팀 (ISSS 104호 W2-1)",
+					"id": 28,
+					"name_id": "office_isss"
+				},
+				{
+					"name": "국제협력팀 (IRT 102호 W2-1)",
+					"id": 29,
+					"name_id": "office_irt"
+				}
+			]
+		},
+		{
+			"name": "다른",
+			"id": 30,
+			"name_id": "other_hairShopWest",
+			"children": [
+				{
+					"name": "카이스트 미용실 (W2)",
+					"id": 31,
+					"name_id": "other_hairShopWest"
 				}
 			]
 		}
