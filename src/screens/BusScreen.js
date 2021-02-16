@@ -28,7 +28,7 @@ import {
 	CHANGE_DAY,
 	BUS_TYPES,
 	DAY_TYPES,
-	YESTERDAY
+	ENGLISH
 } from '../constants';
 
 const BusScreen = () => {
@@ -108,7 +108,7 @@ const BusScreen = () => {
 			<View style={styles.topDropdowns}>
 				<View style={{ flex: 1 }}>
 					<Dropdown
-						title="Type"
+						title={language === ENGLISH ? 'Type' : '종류'}
 						items={busTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
@@ -119,7 +119,7 @@ const BusScreen = () => {
 				</View>
 				<View style={{ flex: 1 }}>
 					<Dropdown
-						title="Day"
+						title={language === ENGLISH ? 'Day' : '요일'}
 						items={dayTypes}
 						hideSearch={true}
 						onSelectedItemChange={selectedItem =>
@@ -130,7 +130,7 @@ const BusScreen = () => {
 				</View>
 			</View>
 			<Dropdown
-				title="From"
+				title={language === ENGLISH ? 'From' : '출발지'}
 				items={busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
@@ -151,7 +151,7 @@ const BusScreen = () => {
 				<Text style={styles.iconGuide}>Press to swap locations</Text>
 			</View>
 			<Dropdown
-				title="To"
+				title={language === ENGLISH ? 'To' : '도착지'}
 				items={busStops}
 				searchPlaceholderText="Search a bus stop"
 				onSelectedItemChange={selectedItem =>
@@ -161,14 +161,20 @@ const BusScreen = () => {
 			/>
 			{busNote !== '' && (
 				<Text style={styles.note}>
-					<Text style={styles.boldText}>Note: </Text>
+					<Text style={styles.boldText}>
+						{language === ENGLISH ? 'Note' : '참고'}:{' '}
+					</Text>
 					{busNote}
 				</Text>
 			)}
 			<Timetable
 				header={
 					<TimetableCell
-						columnTexts={{ first: 'From\nLeave At', second: 'To\nArrive At' }}
+						columnTexts={
+							language === ENGLISH
+								? { first: 'From\nLeave At', second: 'To\nArrive At' }
+								: { first: '출발지\n출발 시각', second: '도착지\n도착 시각' }
+						}
 					/>
 				}
 				timetable={timetable}

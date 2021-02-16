@@ -53,7 +53,7 @@
 			"name_id": "mejom",
 			"children": [
 				{
-					"name": "North 매점 (N12)",
+					"name": "북측 매점 (N12)",
 					"id": 1,
 					"name_id": "mejom_n12"
 				},
@@ -73,7 +73,7 @@
 					"name_id": "mejom_w2"
 				},
 				{
-					"name": "East Cafeteria 매점 (E5)",
+					"name": "동측 식당 매점 (동맛골 E5)",
 					"id": 5,
 					"name_id": "mejom_e5"
 				},
@@ -85,7 +85,7 @@
 			]
 		},
 		{
-			"name": "Food",
+			"name": "음식",
 			"id": 7,
 			"name_id": "food_lotteria",
 			"children": [
@@ -112,17 +112,17 @@
 			"name_id": "library_main",
 			"children": [
 				{
-					"name": "Main Library (E9)",
+					"name": "도서관 (E9)",
 					"id": 12,
 					"name_id": "library_main"
 				},
 				{
-					"name": "Academic Cultural Complex (E9)",
+					"name": "학술문화관 (E9)",
 					"id": 13,
 					"name_id": "library_acc"
 				},
 				{
-					"name": "Undergraduate Branch Library (N10)",
+					"name": "교양분관 (N10)",
 					"id": 14,
 					"name_id": "library_n10"
 				}

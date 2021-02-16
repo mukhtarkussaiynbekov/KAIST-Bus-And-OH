@@ -1,5 +1,6 @@
 node_modules/*
 !node_modules/react-native-countdown-component/
+!node_modules/@redux-offline/
 .expo/*
 npm-debug.*
 *.jks

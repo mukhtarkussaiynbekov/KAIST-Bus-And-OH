@@ -26,7 +26,8 @@ import {
 	NAME,
 	NAME_ID,
 	TODAY,
-	INFINITY
+	INFINITY,
+	ENGLISH
 } from '../constants';
 
 const OperatingHoursScreen = () => {
@@ -92,7 +93,7 @@ const OperatingHoursScreen = () => {
 	return (
 		<>
 			<Dropdown
-				title="Day"
+				title={language === ENGLISH ? 'Day' : '요일'}
 				items={dayTypes}
 				hideSearch={true}
 				onSelectedItemChange={selectedItem =>
@@ -101,7 +102,7 @@ const OperatingHoursScreen = () => {
 				chosenItem={state.dayType}
 			/>
 			<Dropdown
-				title="Facility"
+				title={language === ENGLISH ? 'Facility' : '시설'}
 				items={facilities}
 				searchPlaceholderText="Search a facility"
 				onSelectedItemChange={selectedItem =>
@@ -112,7 +113,9 @@ const OperatingHoursScreen = () => {
 			/>
 			{facilityNote !== '' && (
 				<Text style={styles.note}>
-					<Text style={styles.boldText}>Note: </Text>
+					<Text style={styles.boldText}>
+						{language === ENGLISH ? 'Note' : '참고'}:{' '}
+					</Text>
 					{facilityNote}
 				</Text>
 			)}
@@ -122,6 +125,7 @@ const OperatingHoursScreen = () => {
 						facilityName={facilityName}
 						isOpen={facilityInfo.isOpen}
 						timeLeft={facilityInfo.timeLeft}
+						language={language}
 						updateTimeLeft={() => {
 							const [
 								reevaluatedTimeLeft,
@@ -139,7 +143,11 @@ const OperatingHoursScreen = () => {
 					<Timetable
 						header={
 							<TimetableCell
-								columnTexts={{ first: 'Open At', second: 'Close At' }}
+								columnTexts={
+									language === ENGLISH
+										? { first: 'Open At', second: 'Close At' }
+										: { first: 'Open At Korean', second: 'Close At Korean' }
+								}
 							/>
 						}
 						timetable={operatingHours}

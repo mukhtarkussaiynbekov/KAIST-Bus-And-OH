@@ -128,21 +128,38 @@ const HomeScreen = ({ navigation }) => {
 			<View style={styles.featureContainer}>
 				{busNote !== '' && (
 					<Text style={styles.note}>
-						<Text style={styles.boldText}>Note: </Text>
+						<Text style={styles.boldText}>
+							{language === ENGLISH ? 'Note' : '참고'}:{' '}
+						</Text>
 						{busNote}
 					</Text>
 				)}
 				<Text style={styles.text}>
 					{upcomingBusTime === undefined ? (
-						<Text>
-							No bus going from <Text style={styles.boldText}>{from}</Text> to{' '}
-							<Text style={styles.boldText}>{to}</Text> today
-						</Text>
-					) : (
+						language === ENGLISH ? (
+							<Text>
+								No bus going from <Text style={styles.boldText}>{from}</Text> to{' '}
+								<Text style={styles.boldText}>{to}</Text> today
+							</Text>
+						) : (
+							<Text>
+								오늘은 <Text style={styles.boldText}>{from}</Text>에서{' '}
+								<Text style={styles.boldText}>{to}</Text>로 가는 버스가 운행하지
+								않습니다.
+							</Text>
+						)
+					) : language === ENGLISH ? (
 						<Text>
 							Next bus from <Text style={styles.boldText}>{from}</Text> to{' '}
 							<Text style={styles.boldText}>{to}</Text> leaves at{' '}
 							<Text style={styles.boldText}>{upcomingBusTime.leave}</Text>
+						</Text>
+					) : (
+						<Text>
+							<Text style={styles.boldText}>{from}</Text>에서{' '}
+							<Text style={styles.boldText}>{to}</Text>로 가는 다음 버스는{' '}
+							<Text style={styles.boldText}>{upcomingBusTime.leave}</Text>에
+							출발합니다.
 						</Text>
 					)}
 				</Text>
@@ -156,7 +173,7 @@ const HomeScreen = ({ navigation }) => {
 							iconStyle={styles.icon}
 						/>
 					}
-					title="Bus Timetable"
+					title={language === ENGLISH ? 'Bus Timetable' : '버스 시간표'}
 					titleStyle={styles.title}
 					onPress={() => navigation.navigate('Bus')}
 				/>
@@ -172,30 +189,56 @@ const HomeScreen = ({ navigation }) => {
 							iconStyle={styles.icon}
 						/>
 					}
-					title="Operating Hours"
+					title={language === ENGLISH ? 'Operating Hours' : '운영 시간'}
 					onPress={() => navigation.navigate('OperatingHours')}
 					titleStyle={styles.title}
 				/>
-				<Text style={styles.text}>
-					<Text style={styles.boldText}>{facilityName}</Text> is{' '}
-					<Text style={styles.boldText}>{isOpen ? 'open' : 'closed'}</Text> now
-				</Text>
+				{language === ENGLISH ? (
+					<Text style={styles.text}>
+						The <Text style={styles.boldText}>{facilityName}</Text> is{' '}
+						<Text style={styles.boldText}>{isOpen ? 'open' : 'closed'}</Text>{' '}
+						now.
+					</Text>
+				) : (
+					<Text style={styles.text}>
+						<Text style={styles.boldText}>{facilityName}</Text>는 지금 운영{' '}
+						<Text style={styles.boldText}>
+							{isOpen ? '중입니다' : '중이지 않습니다'}
+						</Text>
+						.
+					</Text>
+				)}
 				{facilityNote !== '' && (
 					<Text style={styles.note}>
-						<Text style={styles.boldText}>Note: </Text>
+						<Text style={styles.boldText}>
+							{language === ENGLISH ? 'Note' : '참고'}:{' '}
+						</Text>
 						{facilityNote}
 					</Text>
 				)}
-				<Text style={styles.note}>
-					If you have any inquiries, please fill out{' '}
-					<Text
-						style={{ color: 'blue' }}
-						onPress={() => Linking.openURL('http://google.com')}
-					>
-						this form
+				{language === ENGLISH ? (
+					<Text style={styles.note}>
+						If you have any inquiries, please fill out{' '}
+						<Text
+							style={{ color: 'blue' }}
+							onPress={() => Linking.openURL('http://google.com')}
+						>
+							this form
+						</Text>
+						.
 					</Text>
-					.
-				</Text>
+				) : (
+					<Text style={styles.note}>
+						개선할 점이나 잘못된 정보가 있다면 이{' '}
+						<Text
+							style={{ color: 'blue' }}
+							onPress={() => Linking.openURL('http://google.com')}
+						>
+							구글 폼을
+						</Text>{' '}
+						통해 알려주세요!
+					</Text>
+				)}
 			</View>
 		</View>
 	);

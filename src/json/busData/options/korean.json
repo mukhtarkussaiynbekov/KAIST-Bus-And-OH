@@ -50,7 +50,7 @@
 					"name_id": "n6"
 				},
 				{
-					"name": "Auditorium (E15)",
+					"name": "대강당 (E15)",
 					"id": 7,
 					"name_id": "e15"
 				},
@@ -65,7 +65,7 @@
 					"name_id": "e14"
 				},
 				{
-					"name": "Duck pond",
+					"name": "오리연못",
 					"id": 10,
 					"name_id": "duckPond"
 				}
@@ -82,12 +82,12 @@
 			"name_id": "wolpyeong1"
 		},
 		{
-			"name": "Galleria Department Store",
+			"name": "갤러리아백화점",
 			"id": 3,
 			"name_id": "galleria"
 		},
 		{
-			"name": "정부대전청사",
+			"name": "대전정부청사",
 			"id": 4,
 			"name_id": "governmentComplex"
 		},
@@ -99,7 +99,7 @@
 	],
 	"campusStops": [
 		{
-			"name": "본교 N6-E15-W8-Duck Pond",
+			"name": "본교 N6-E15-W8-오리연못",
 			"id": 0,
 			"name_id": "main"
 		},
@@ -126,22 +126,22 @@
 	],
 	"olevStops": [
 		{
-			"name": "Kai-Maru Cafeteria",
+			"name": "카이마루 (학사식당)",
 			"id": 0,
 			"name_id": "kaimaru"
 		},
 		{
-			"name": "Sports Complex",
+			"name": "스포츠 컴플렉스",
 			"id": 1,
 			"name_id": "sportsComplex"
 		},
 		{
-			"name": "Creative Learning B/D (E11)",
+			"name": "창의학습관 (E11)",
 			"id": 2,
 			"name_id": "e11"
 		},
 		{
-			"name": "Biomedical Center",
+			"name": "의과학대학원",
 			"id": 3,
 			"name_id": "biomedicalCenter"
 		},
@@ -156,12 +156,12 @@
 			"name_id": "nanofab"
 		},
 		{
-			"name": "Main gate",
+			"name": "정문",
 			"id": 6,
 			"name_id": "mainGate"
 		},
 		{
-			"name": "Materials S&E B/D",
+			"name": "재료공학동",
 			"id": 7,
 			"name_id": "materialsBuilding"
 		},

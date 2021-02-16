@@ -170,7 +170,7 @@
 			"notes": {
 				"weekdays": {
 					"english": "The last bus has a long delay from original schedule due to the surging traffics.",
-					"korean": "The last bus has a long delay from original schedule due to the surging traffics."
+					"korean": "마지막 버스는 교통량이 많아 원래의 스케쥴에서 긴 지연 시간이 발생합니다."
 				}
 			},
 			"route": [
@@ -203,7 +203,7 @@
 			"notes": {
 				"weekdays": {
 					"english": "The last bus has a long delay from original schedule due to the surging traffics.",
-					"korean": "The last bus has a long delay from original schedule due to the surging traffics."
+					"korean": "마지막 버스는 교통량이 많아 원래의 스케쥴에서 긴 지연 시간이 발생합니다."
 				}
 			},
 			"route": [

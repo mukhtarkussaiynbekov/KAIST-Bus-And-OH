@@ -208,9 +208,10 @@ export const getDepartureTimes = (
 	}
 	let dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
+	let formattedDate = getDayMonth(dayType);
+
 	if (isHoliday(dayType, holidays) && HOLIDAYS in departureTimesObject) {
 		let holidayTimes = departureTimesObject[HOLIDAYS];
-		let formattedDate = getDayMonth(dayType);
 		if (!isRegularDay(holidayTimes, formattedDate)) {
 			initialDepartureTimes = getHolidayTimes(
 				departureTimesObject,
@@ -219,9 +220,16 @@ export const getDepartureTimes = (
 			);
 		}
 	}
+
+	// if there is a key with particular date, that will take precedence over other keys
+	if (formattedDate in departureTimesObject) {
+		initialDepartureTimes = departureTimesObject[formattedDate];
+	}
+
 	if (initialDepartureTimes === undefined) {
 		return [];
 	}
+
 	let departureTimes = [];
 	for (let time of initialDepartureTimes) {
 		let leaveTime = moment(time, 'HH:mm').tz('Asia/Seoul');
@@ -382,6 +390,7 @@ export const getBusNote = (state, dayType, busTypes, busStops, holidays) => {
 		if (NOTES in object) {
 			let notes = object[NOTES];
 			let formattedDate = getDayMonth(dayType);
+			// if there is a key with particular date, that will take precedence over other keys
 			if (formattedDate in notes) {
 				return notes[formattedDate];
 			}

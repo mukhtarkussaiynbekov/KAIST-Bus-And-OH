@@ -586,7 +586,7 @@
 					"notes": {
 						"any": {
 							"english": "The facility is closed until further notice.",
-							"korean": "The facility is closed until further notice."
+							"korean": "이 시설은 별도의 공지가 있기 전까지 운영하지 않습니다."
 						}
 					}
 				}
@@ -1186,7 +1186,19 @@
 			"locations": [
 				{
 					"name": "hairShopWest",
+					"notes": {
+						"02-25": {
+							"english": "We are temporarily closed for personal reasons. Sorry for the inconvenience.",
+							"korean": "개인 사정으로 임시 휴무 찹니다. 불편을 드려 죄송합니다."
+						},
+						"02-26": {
+							"english": "We are temporarily closed for personal reasons. Sorry for the inconvenience.",
+							"korean": "개인 사정으로 임시 휴무 찹니다. 불편을 드려 죄송합니다."
+						}
+					},
 					"hours": {
+						"02-25": [],
+						"02-26": [],
 						"monday": [
 							{
 								"start": "10:00",

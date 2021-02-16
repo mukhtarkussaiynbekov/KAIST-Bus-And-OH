@@ -82,9 +82,15 @@ export const getOperatingHours = (
 	if (operatingHoursObject === undefined) {
 		return [];
 	}
+
+	let formattedDate = getDayMonth(dayType);
+	// if there is a key with particular date, that will take precedence over other keys
+	if (formattedDate in operatingHoursObject) {
+		return operatingHoursObject[formattedDate];
+	}
+
 	if (isHoliday(dayType, holidays, now) && HOLIDAYS in operatingHoursObject) {
 		let holidayTimes = operatingHoursObject[HOLIDAYS];
-		let formattedDate = getDayMonth(dayType);
 		if (!isRegularDay(holidayTimes, formattedDate)) {
 			return getHolidayTimes(operatingHoursObject, holidayTimes, formattedDate);
 		}
@@ -266,6 +272,7 @@ export const getFacilityNote = (
 	if (NOTES in operatingHoursObject) {
 		let notes = operatingHoursObject[NOTES];
 		let formattedDate = getDayMonth(dayType);
+		// if there is a key with particular date, that will take precedence over other keys
 		if (formattedDate in notes) {
 			return notes[formattedDate];
 		}
