@@ -132,7 +132,9 @@ const BusScreen = () => {
 			<Dropdown
 				title={language === ENGLISH ? 'From' : '출발지'}
 				items={busStops}
-				searchPlaceholderText="Search a bus stop"
+				searchPlaceholderText={
+					language === ENGLISH ? 'Search a bus stop' : '버스 정류장 검색'
+				}
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: CHANGE_FROM, payload: selectedItem })
 				}
@@ -148,12 +150,16 @@ const BusScreen = () => {
 						size={20}
 					/>
 				</TouchableOpacity>
-				<Text style={styles.iconGuide}>Press to swap locations</Text>
+				<Text style={styles.iconGuide}>
+					{language === ENGLISH ? 'Press to swap locations' : '위치 변경'}
+				</Text>
 			</View>
 			<Dropdown
 				title={language === ENGLISH ? 'To' : '도착지'}
 				items={busStops}
-				searchPlaceholderText="Search a bus stop"
+				searchPlaceholderText={
+					language === ENGLISH ? 'Search a bus stop' : '버스 정류장 검색'
+				}
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: CHANGE_TO, payload: selectedItem })
 				}

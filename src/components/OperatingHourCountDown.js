@@ -44,10 +44,10 @@ const OperatingHourCountDown = ({
 							language === ENGLISH
 								? { d: 'Days', h: 'Hours', m: 'Minutes', s: 'Seconds' }
 								: {
-										d: 'DaysKorean',
-										h: 'HoursKorean',
-										m: 'MinutesKorean',
-										s: 'SecondsKorean'
+										d: '일',
+										h: '시간',
+										m: '분',
+										s: '초'
 								  }
 						}
 					/>

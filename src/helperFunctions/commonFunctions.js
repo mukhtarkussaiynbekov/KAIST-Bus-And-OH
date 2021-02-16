@@ -51,6 +51,10 @@ export const getPropValue = (
 export const getDayMonth = (dayType, now = moment().tz('Asia/Seoul')) => {
 	// returns string in format 'MM/DD'
 
+	if (dayType !== YESTERDAY && dayType !== TODAY && dayType !== TOMORROW) {
+		return '00-00';
+	}
+
 	if (dayType === TOMORROW) {
 		now.add(1, 'days');
 	} else if (dayType === YESTERDAY) {

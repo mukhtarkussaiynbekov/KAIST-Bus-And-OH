@@ -74,3 +74,8 @@ export const LANGUAGES = 'languages';
 export const ENGLISH = 'english';
 export const KOREAN = 'korean';
 export const CHANGE_LANGUAGE = 'change_language';
+
+export const TIMETABLE_LINK =
+	'https://docs.google.com/forms/d/e/1FAIpQLSeVLfIGWPZMaLHGmdGAL7k40GuSTAnknJbJE5KLheQJRvmbHg/viewform?usp=sf_link';
+export const FEEDBACK_LINK =
+	'https://docs.google.com/forms/d/e/1FAIpQLSeDXDio7OpYjmIAIfIiL048RCU80qu-N0exTV-YJHpR3gVPwg/viewform?usp=sf_link';

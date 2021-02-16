@@ -104,7 +104,9 @@ const OperatingHoursScreen = () => {
 			<Dropdown
 				title={language === ENGLISH ? 'Facility' : '시설'}
 				items={facilities}
-				searchPlaceholderText="Search a facility"
+				searchPlaceholderText={
+					language === ENGLISH ? 'Search a facility' : '시설 검색'
+				}
 				onSelectedItemChange={selectedItem =>
 					dispatch({ type: CHANGE_FACILITY, payload: selectedItem })
 				}
@@ -146,7 +148,7 @@ const OperatingHoursScreen = () => {
 								columnTexts={
 									language === ENGLISH
 										? { first: 'Open At', second: 'Close At' }
-										: { first: 'Open At Korean', second: 'Close At Korean' }
+										: { first: '여는 시각', second: '닫는 시각' }
 								}
 							/>
 						}

@@ -23,7 +23,9 @@ import {
 	BUS_TYPES,
 	FACILITIES,
 	CHANGE_LANGUAGE,
-	ENGLISH
+	ENGLISH,
+	TIMETABLE_LINK,
+	FEEDBACK_LINK
 } from '../constants';
 import moment from 'moment-timezone';
 import * as Linking from 'expo-linking';
@@ -31,7 +33,7 @@ import * as Linking from 'expo-linking';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(writeData());
+		// dispatch(writeData());
 		dispatch(getUpdates());
 	}, []);
 
@@ -216,29 +218,27 @@ const HomeScreen = ({ navigation }) => {
 						{facilityNote}
 					</Text>
 				)}
-				{language === ENGLISH ? (
-					<Text style={styles.note}>
-						If you have any inquiries, please fill out{' '}
-						<Text
-							style={{ color: 'blue' }}
-							onPress={() => Linking.openURL('http://google.com')}
-						>
-							this form
-						</Text>
-						.
+				<Text style={styles.note}>
+					{language === ENGLISH
+						? 'Any suggestions? '
+						: '건의사항이 있으신가요? '}
+					<Text
+						style={{ color: 'blue' }}
+						onPress={() => Linking.openURL(TIMETABLE_LINK)}
+					>
+						{language === ENGLISH
+							? 'Report schedule changes'
+							: '스케쥴 변경을 제보'}
+					</Text>{' '}
+					{language === ENGLISH ? 'or' : '하시거나'}{' '}
+					<Text
+						style={{ color: 'blue' }}
+						onPress={() => Linking.openURL(FEEDBACK_LINK)}
+					>
+						{language === ENGLISH ? 'leave a feedback' : '피드백을 남겨'}
 					</Text>
-				) : (
-					<Text style={styles.note}>
-						개선할 점이나 잘못된 정보가 있다면 이{' '}
-						<Text
-							style={{ color: 'blue' }}
-							onPress={() => Linking.openURL('http://google.com')}
-						>
-							구글 폼을
-						</Text>{' '}
-						통해 알려주세요!
-					</Text>
-				)}
+					{language === ENGLISH ? '.' : ' 주세요!'}
+				</Text>
 			</View>
 		</View>
 	);
