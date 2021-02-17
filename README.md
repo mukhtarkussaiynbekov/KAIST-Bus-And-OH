@@ -1,5 +1,19 @@
 # KAIST Bus And Operating Hours
 
+Implemented cross-platform mobile application that shows bus timetable and operating hours of some facilities at the Korea Advanced Institute of Science and Technology (KAIST). Got motivated by JaeRyoung Ka's <a target="_blank" href="https://github.com/JaeRyoungKa/KAIST-BUS-2.0.git">KAIST BUS 2.0</a> and Anuar Talipov's <a target="_blank" href="https://github.com/AnuarTB/doesitwork.git">Does it work?</a>
+
+## Demo
+**Bus Timetable** <br>
+![Bus](/demo/bus_demo.gif)
+
+**Operating Hours** <br>
+![Operating_Hours](/demo/operating_hours_demo.gif)
+
+## Tools
+
+* Programming Language: **JavaScript**
+* Tech stack: **React Native, Redux, Firebase, AsyncStorage, React Native Elements**
+
 ## Installation
 **Note**: This installation guide was referenced from [The Complete React Native + Hooks Course [2020 edition]](https://www.udemy.com/course/the-complete-react-native-and-redux-course) taught by Stephen Grider.
 
