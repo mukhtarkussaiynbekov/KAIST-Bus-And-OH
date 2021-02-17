@@ -75,10 +75,8 @@ export const isHoliday = (
 	}
 
 	let formattedDate = getDayMonth(dayType, now);
-	for (let date of holidays) {
-		if (date === formattedDate) {
-			return true;
-		}
+	if (holidays.includes(formattedDate)) {
+		return true;
 	}
 	return false;
 };

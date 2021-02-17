@@ -15,7 +15,8 @@ import {
 	INTERVAL,
 	SAME_OPPOSITE_INTERVAL,
 	NOTES,
-	ANY
+	ANY,
+	CLOSED
 } from '../constants';
 import {
 	isHoliday,
@@ -209,6 +210,14 @@ export const getDepartureTimes = (
 	let dayClassification = getDayClassification(dayType);
 	let initialDepartureTimes = departureTimesObject[dayClassification];
 	let formattedDate = getDayMonth(dayType);
+
+	// handle case when school decides to stop operation of buses for some reason other than holidays
+	if (
+		CLOSED in departureTimesObject &&
+		departureTimesObject[CLOSED].includes(formattedDate)
+	) {
+		return [];
+	}
 
 	if (isHoliday(dayType, holidays) && HOLIDAYS in departureTimesObject) {
 		let holidayTimes = departureTimesObject[HOLIDAYS];

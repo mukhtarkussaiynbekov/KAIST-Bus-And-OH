@@ -12,7 +12,8 @@ import {
 	YESTERDAY,
 	NOTES,
 	ANY,
-	INFINITY
+	INFINITY,
+	CLOSED
 } from '../constants';
 import {
 	getPropValue,
@@ -78,12 +79,12 @@ export const getOperatingHours = (
 	now
 ) => {
 	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
-
 	if (operatingHoursObject === undefined) {
 		return [];
 	}
 
 	let formattedDate = getDayMonth(dayType);
+
 	// if there is a key with particular date, that will take precedence over other keys
 	if (formattedDate in operatingHoursObject) {
 		return operatingHoursObject[formattedDate];
@@ -170,19 +171,23 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 		listOfOperatingHours
 	);
 
-	const todayHours = getOperatingHoursList(
-		state,
-		dayType,
-		facilities,
-		holidays
-	);
-
 	if (!(HOURS in operatingHoursObject)) {
 		return [INFINITY, false];
 	}
 
+	let todayHours = getOperatingHoursList(state, dayType, facilities, holidays);
+
 	let now = moment().tz('Asia/Seoul');
 	let nowFormatted = now.format('HH:mm:ss');
+	let formattedDate = now.format('MM-DD');
+	// handle case when an office decides to close for some reasons other than holidays
+	if (
+		CLOSED in operatingHoursObject[HOURS] &&
+		operatingHoursObject[HOURS][CLOSED].includes(formattedDate)
+	) {
+		todayHours = [];
+	}
+
 	if (todayHours.length === 0 || todayHours[0].start > nowFormatted) {
 		const yesterdayHours = getOperatingHoursList(
 			state,
@@ -223,6 +228,14 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 	let foundProperTime = false;
 	let additionalDays = 0;
 	while (!foundProperTime) {
+		formattedDate = now.format('MM-DD');
+		// handle case when an office decides to close for some reasons other than holidays
+		if (
+			CLOSED in operatingHoursObject[HOURS] &&
+			operatingHoursObject[HOURS][CLOSED].includes(formattedDate)
+		) {
+			dayHours = [];
+		}
 		for (let hour of dayHours) {
 			timeLeft = getTimeLeftOH(hour.start, nowFormatted);
 			foundProperTime = true;

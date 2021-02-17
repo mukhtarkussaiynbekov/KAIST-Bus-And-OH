@@ -33,7 +33,7 @@ import * as Linking from 'expo-linking';
 const HomeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// dispatch(writeData());
+		dispatch(writeData());
 		dispatch(getUpdates());
 	}, []);
 
