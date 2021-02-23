@@ -188,6 +188,56 @@
 					}
 				},
 				{
+					"name": "w4-2",
+					"hours": {
+						"monday": [
+							{
+								"start": "18:00",
+								"finish": "02:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "18:00",
+								"finish": "02:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "18:00",
+								"finish": "02:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "18:00",
+								"finish": "02:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "18:00",
+								"finish": "02:00"
+							}
+						],
+						"saturday": [
+							{
+								"start": "18:00",
+								"finish": "02:00"
+							}
+						],
+						"sunday": [
+							{
+								"start": "18:00",
+								"finish": "02:00"
+							}
+						],
+						"holidays": {
+							"closed": "true"
+						}
+					}
+				},
+				{
 					"name": "w2",
 					"hours": {
 						"monday": [
@@ -1247,6 +1297,43 @@
 							{
 								"start": "12:30",
 								"finish": "18:30"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				},
+				{
+					"name": "wooriBank",
+					"hours": {
+						"monday": [
+							{
+								"start": "09:00",
+								"finish": "16:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "09:00",
+								"finish": "16:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "09:00",
+								"finish": "16:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "09:00",
+								"finish": "16:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "09:00",
+								"finish": "16:00"
 							}
 						],
 						"saturday": [],
