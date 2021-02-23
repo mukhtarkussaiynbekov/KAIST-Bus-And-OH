@@ -50,7 +50,7 @@
 		{
 			"name": "Mejom",
 			"id": 0,
-			"name_id": "mejom_n12",
+			"name_id": "mejom",
 			"children": [
 				{
 					"name": "North Mejom (N12)",
@@ -92,7 +92,7 @@
 		{
 			"name": "Food",
 			"id": 8,
-			"name_id": "food_lotteria",
+			"name_id": "food",
 			"children": [
 				{
 					"name": "Lotteria (N13)",
@@ -114,7 +114,7 @@
 		{
 			"name": "Library",
 			"id": 12,
-			"name_id": "library_main",
+			"name_id": "library",
 			"children": [
 				{
 					"name": "Main Library (E9)",
@@ -136,7 +136,7 @@
 		{
 			"name": "Gym",
 			"id": 16,
-			"name_id": "gym_silloe",
+			"name_id": "gym",
 			"children": [
 				{
 					"name": "Silloe Gym (N20)",
@@ -183,7 +183,7 @@
 		{
 			"name": "Coffee",
 			"id": 25,
-			"name_id": "coffee_cafeEat",
+			"name_id": "coffee",
 			"children": [
 				{
 					"name": "Cafe Eat (W2-1)",
@@ -200,7 +200,7 @@
 		{
 			"name": "Office",
 			"id": 28,
-			"name_id": "office_isss",
+			"name_id": "office",
 			"children": [
 				{
 					"name": "International Scholar and Student Services (ISSS Rm. 104 W2-1)",
@@ -217,7 +217,7 @@
 		{
 			"name": "Other",
 			"id": 31,
-			"name_id": "other_hairShopWest",
+			"name_id": "other",
 			"children": [
 				{
 					"name": "KAIST Hair Shop (W2)",

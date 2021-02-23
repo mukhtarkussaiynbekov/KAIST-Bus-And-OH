@@ -50,7 +50,7 @@
 		{
 			"name": "매점",
 			"id": 0,
-			"name_id": "mejom_n12",
+			"name_id": "mejom",
 			"children": [
 				{
 					"name": "북측 매점 (N12)",
@@ -92,7 +92,7 @@
 		{
 			"name": "음식",
 			"id": 8,
-			"name_id": "food_lotteria",
+			"name_id": "food",
 			"children": [
 				{
 					"name": "롯데리아 (N13)",
@@ -114,7 +114,7 @@
 		{
 			"name": "도서관",
 			"id": 12,
-			"name_id": "library_main",
+			"name_id": "library",
 			"children": [
 				{
 					"name": "도서관 (E9)",
@@ -183,7 +183,7 @@
 		{
 			"name": "커피",
 			"id": 25,
-			"name_id": "coffee_cafeEat",
+			"name_id": "coffee",
 			"children": [
 				{
 					"name": "카페잇 (W2-1)",
@@ -200,7 +200,7 @@
 		{
 			"name": "사무실",
 			"id": 28,
-			"name_id": "office_isss",
+			"name_id": "office",
 			"children": [
 				{
 					"name": "국제교원및학생지원팀 (ISSS 104호 W2-1)",
@@ -217,7 +217,7 @@
 		{
 			"name": "다른",
 			"id": 31,
-			"name_id": "other_hairShopWest",
+			"name_id": "other",
 			"children": [
 				{
 					"name": "카이스트 미용실 (W2)",
