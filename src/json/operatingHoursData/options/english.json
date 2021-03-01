@@ -194,39 +194,44 @@
 					"name": "Pascucci (E3-2)",
 					"id": 27,
 					"name_id": "coffee_pascucci"
+				},
+				{
+					"name": "Tous Les Jours (Bakery E6)",
+					"id": 28,
+					"name_id": "coffee_tousLesJours"
 				}
 			]
 		},
 		{
 			"name": "Office",
-			"id": 28,
+			"id": 29,
 			"name_id": "office",
 			"children": [
 				{
 					"name": "International Scholar and Student Services (ISSS Rm. 104 W2-1)",
-					"id": 29,
+					"id": 30,
 					"name_id": "office_isss"
 				},
 				{
 					"name": "International Relations Team (IRT Rm. 102 W2-1)",
-					"id": 30,
+					"id": 31,
 					"name_id": "office_irt"
 				}
 			]
 		},
 		{
 			"name": "Other",
-			"id": 31,
+			"id": 32,
 			"name_id": "other",
 			"children": [
 				{
 					"name": "KAIST Hair Shop (W2)",
-					"id": 32,
+					"id": 33,
 					"name_id": "other_hairShopWest"
 				},
 				{
 					"name": "Woori Bank (W2)",
-					"id": 33,
+					"id": 34,
 					"name_id": "other_wooriBank"
 				}
 			]

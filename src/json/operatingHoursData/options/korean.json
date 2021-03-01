@@ -194,39 +194,44 @@
 					"name": "파스쿠찌 (E3-2)",
 					"id": 27,
 					"name_id": "coffee_pascucci"
+				},
+				{
+					"name": "뚜레쥬르 (E6)",
+					"id": 28,
+					"name_id": "coffee_tousLesJours"
 				}
 			]
 		},
 		{
 			"name": "사무실",
-			"id": 28,
+			"id": 29,
 			"name_id": "office",
 			"children": [
 				{
 					"name": "국제교원및학생지원팀 (ISSS 104호 W2-1)",
-					"id": 29,
+					"id": 30,
 					"name_id": "office_isss"
 				},
 				{
 					"name": "국제협력팀 (IRT 102호 W2-1)",
-					"id": 30,
+					"id": 31,
 					"name_id": "office_irt"
 				}
 			]
 		},
 		{
 			"name": "다른",
-			"id": 31,
+			"id": 32,
 			"name_id": "other",
 			"children": [
 				{
 					"name": "카이스트 미용실 (W2)",
-					"id": 32,
+					"id": 33,
 					"name_id": "other_hairShopWest"
 				},
 				{
 					"name": "우리은행 (W2)",
-					"id": 33,
+					"id": 34,
 					"name_id": "other_wooriBank"
 				}
 			]
