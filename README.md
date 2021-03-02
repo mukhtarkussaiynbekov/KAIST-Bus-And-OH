@@ -1,5 +1,7 @@
 # KAIST Bus And Operating Hours
 
+Check out the app in <a href="https://apps.apple.com/kr/app/kaist-bus-and-operating-hours/id1555938858?l=en&fbclid=IwAR2RVZoF8KWJSYp-BrcUlNi_irIE4buxUS0SzcjE1J6xfm0Smwly_2FecsA">Apple App Store</a>.
+
 Implemented cross-platform mobile application that shows bus timetable and operating hours of some facilities at the Korea Advanced Institute of Science and Technology (KAIST). Got motivated by JaeRyoung Ka's <a target="_blank" href="https://github.com/JaeRyoungKa/KAIST-BUS-2.0.git">KAIST BUS 2.0</a> and Anuar Talipov's <a target="_blank" href="https://github.com/AnuarTB/doesitwork.git">Does it work?</a>
 
 ## Demo
