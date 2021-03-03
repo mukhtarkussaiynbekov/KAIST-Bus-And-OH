@@ -73,6 +73,7 @@
 							}
 						],
 						"holidays": {
+							"regular": "true",
 							"closed": "true"
 						}
 					}
@@ -183,6 +184,7 @@
 							}
 						],
 						"holidays": {
+							"03-01": { "regular": "true" },
 							"closed": "true"
 						}
 					}
@@ -403,6 +405,7 @@
 							}
 						],
 						"holidays": {
+							"03-01": { "regular": "true" },
 							"closed": "true"
 						}
 					}
@@ -1384,6 +1387,513 @@
 							{
 								"start": "09:00",
 								"finish": "16:00"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				}
+			]
+		},
+		{
+			"name": "cafeteria",
+			"locations": [
+				{
+					"name": "kaimaru",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"03-14": [
+							{
+								"start": "11:30",
+								"finish": "13:30"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"monday": [
+							{
+								"start": "11:30",
+								"finish": "13:30"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "11:30",
+								"finish": "13:30"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "11:30",
+								"finish": "13:30"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"thursday": [
+							{
+								"start": "11:30",
+								"finish": "13:30"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"friday": [
+							{
+								"start": "11:30",
+								"finish": "13:30"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				},
+				{
+					"name": "west",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"monday": [
+							{
+								"start": "08:00",
+								"finish": "10:00"
+							},
+							{
+								"start": "11:30",
+								"finish": "14:00"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "08:00",
+								"finish": "10:00"
+							},
+							{
+								"start": "11:30",
+								"finish": "14:00"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "08:00",
+								"finish": "10:00"
+							},
+							{
+								"start": "11:30",
+								"finish": "14:00"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"thursday": [
+							{
+								"start": "08:00",
+								"finish": "10:00"
+							},
+							{
+								"start": "11:30",
+								"finish": "14:00"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"friday": [
+							{
+								"start": "08:00",
+								"finish": "10:00"
+							},
+							{
+								"start": "11:30",
+								"finish": "14:00"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"saturday": [
+							{
+								"start": "08:00",
+								"finish": "10:00"
+							},
+							{
+								"start": "11:30",
+								"finish": "14:00"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						],
+						"sunday": [
+							{
+								"start": "08:00",
+								"finish": "10:00"
+							},
+							{
+								"start": "11:30",
+								"finish": "14:00"
+							},
+							{
+								"start": "17:30",
+								"finish": "19:30"
+							}
+						]
+					}
+				},
+				{
+					"name": "dosirak",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"monday": [
+							{
+								"start": "10:00",
+								"finish": "19:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "10:00",
+								"finish": "19:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "10:00",
+								"finish": "19:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "10:00",
+								"finish": "19:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "10:00",
+								"finish": "19:00"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				},
+				{
+					"name": "taewoolguan",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"03-21": [
+							{
+								"start": "10:00",
+								"finish": "19:30"
+							}
+						],
+						"monday": [
+							{
+								"start": "10:00",
+								"finish": "19:30"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "10:00",
+								"finish": "19:30"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "10:00",
+								"finish": "19:30"
+							}
+						],
+						"thursday": [
+							{
+								"start": "10:00",
+								"finish": "19:30"
+							}
+						],
+						"friday": [
+							{
+								"start": "10:00",
+								"finish": "19:30"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				},
+				{
+					"name": "hue",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"monday": [
+							{
+								"start": "08:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "08:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "08:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"thursday": [
+							{
+								"start": "08:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"friday": [
+							{
+								"start": "08:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"saturday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							}
+						],
+						"sunday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							}
+						]
+					}
+				},
+				{
+					"name": "kaimaru-ttukBaeGi",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"03-20": [
+							{
+								"start": "10:00",
+								"finish": "19:30"
+							}
+						],
+						"monday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:00",
+								"finish": "19:30"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:00",
+								"finish": "19:30"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:00",
+								"finish": "19:30"
+							}
+						],
+						"thursday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:00",
+								"finish": "19:30"
+							}
+						],
+						"friday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:00",
+								"finish": "19:30"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				},
+				{
+					"name": "onigiri",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"monday": [
+							{
+								"start": "10:30",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "10:30",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "10:30",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"thursday": [
+							{
+								"start": "10:30",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"friday": [
+							{
+								"start": "10:30",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"saturday": [],
+						"sunday": []
+					}
+				},
+				{
+					"name": "camto",
+					"hours": {
+						"holidays": { "closed": "true" },
+						"monday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"thursday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
+							}
+						],
+						"friday": [
+							{
+								"start": "10:00",
+								"finish": "14:30"
+							},
+							{
+								"start": "16:30",
+								"finish": "19:30"
 							}
 						],
 						"saturday": [],

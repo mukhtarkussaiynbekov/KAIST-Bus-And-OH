@@ -90,148 +90,195 @@
 			]
 		},
 		{
-			"name": "Food",
+			"name": "Cafeteria",
 			"id": 8,
+			"name_id": "cafeteria",
+			"children": [
+				{
+					"name": "Kaimaru (N11)",
+					"id": 9,
+					"name_id": "cafeteria_kaimaru"
+				},
+				{
+					"name": "West Cafeteria (W2)",
+					"id": 10,
+					"name_id": "cafeteria_west"
+				},
+				{
+					"name": "Durken Dosirak (W2)",
+					"id": 11,
+					"name_id": "cafeteria_dosirak"
+				},
+				{
+					"name": "Taewoolguan TTuk Bae Gi (N13)",
+					"id": 12,
+					"name_id": "cafeteria_taewoolguan"
+				},
+				{
+					"name": "Hue Gimbap (N11)",
+					"id": 13,
+					"name_id": "cafeteria_hue"
+				},
+				{
+					"name": "Kaimaru TTuk Bae Gi (N11)",
+					"id": 14,
+					"name_id": "cafeteria_kaimaru-ttukBaeGi"
+				},
+				{
+					"name": "Onigiri & gyudong (N11)",
+					"id": 15,
+					"name_id": "cafeteria_onigiri"
+				},
+				{
+					"name": "Camto (Toast Cafe N11)",
+					"id": 16,
+					"name_id": "cafeteria_camto"
+				}
+			]
+		},
+		{
+			"name": "Food",
+			"id": 17,
 			"name_id": "food",
 			"children": [
 				{
 					"name": "Lotteria (N13)",
-					"id": 9,
+					"id": 18,
 					"name_id": "food_lotteria"
 				},
 				{
 					"name": "Pulbitmaru (N12)",
-					"id": 10,
+					"id": 19,
 					"name_id": "food_pulbitmaru"
 				},
 				{
 					"name": "Subway E(16)",
-					"id": 11,
+					"id": 20,
 					"name_id": "food_subway"
 				}
 			]
 		},
 		{
 			"name": "Library",
-			"id": 12,
+			"id": 21,
 			"name_id": "library",
 			"children": [
 				{
 					"name": "Main Library (E9)",
-					"id": 13,
+					"id": 22,
 					"name_id": "library_main"
 				},
 				{
 					"name": "Academic Cultural Complex (E9)",
-					"id": 14,
+					"id": 23,
 					"name_id": "library_acc"
 				},
 				{
 					"name": "Undergraduate Branch Library (N10)",
-					"id": 15,
+					"id": 24,
 					"name_id": "library_n10"
 				}
 			]
 		},
 		{
 			"name": "Gym",
-			"id": 16,
+			"id": 25,
 			"name_id": "gym",
 			"children": [
 				{
 					"name": "Silloe Gym (N20)",
-					"id": 17,
+					"id": 26,
 					"name_id": "gym_silloe"
 				},
 				{
 					"name": "Areum Gym (N19)",
-					"id": 18,
+					"id": 27,
 					"name_id": "gym_areum"
 				},
 				{
 					"name": "Sejong Gym (E8)",
-					"id": 19,
+					"id": 28,
 					"name_id": "gym_sejong"
 				},
 				{
 					"name": "Galilei Gym (W3)",
-					"id": 20,
+					"id": 29,
 					"name_id": "gym_galilei"
 				},
 				{
 					"name": "Nadeul/Yeoul Gym (W4-2/W4-1)",
-					"id": 21,
+					"id": 30,
 					"name_id": "gym_nadeul"
 				},
 				{
 					"name": "Heemang/Dasom Gym (W4-4/W4-3)",
-					"id": 22,
+					"id": 31,
 					"name_id": "gym_heemang"
 				},
 				{
 					"name": "Mir/Narae Gym (W6)",
-					"id": 23,
+					"id": 32,
 					"name_id": "gym_mir"
 				},
 				{
 					"name": "Hwaam Gym",
-					"id": 24,
+					"id": 33,
 					"name_id": "gym_hwaam"
 				}
 			]
 		},
 		{
 			"name": "Coffee",
-			"id": 25,
+			"id": 34,
 			"name_id": "coffee",
 			"children": [
 				{
 					"name": "Cafe Eat (W2-1)",
-					"id": 26,
+					"id": 35,
 					"name_id": "coffee_cafeEat"
 				},
 				{
 					"name": "Pascucci (E3-2)",
-					"id": 27,
+					"id": 36,
 					"name_id": "coffee_pascucci"
 				},
 				{
 					"name": "Tous Les Jours (Bakery E6)",
-					"id": 28,
+					"id": 37,
 					"name_id": "coffee_tousLesJours"
 				}
 			]
 		},
 		{
 			"name": "Office",
-			"id": 29,
+			"id": 38,
 			"name_id": "office",
 			"children": [
 				{
 					"name": "International Scholar and Student Services (ISSS Rm. 104 W2-1)",
-					"id": 30,
+					"id": 39,
 					"name_id": "office_isss"
 				},
 				{
 					"name": "International Relations Team (IRT Rm. 102 W2-1)",
-					"id": 31,
+					"id": 40,
 					"name_id": "office_irt"
 				}
 			]
 		},
 		{
 			"name": "Other",
-			"id": 32,
+			"id": 41,
 			"name_id": "other",
 			"children": [
 				{
 					"name": "KAIST Hair Shop (W2)",
-					"id": 33,
+					"id": 42,
 					"name_id": "other_hairShopWest"
 				},
 				{
 					"name": "Woori Bank (W2)",
-					"id": 34,
+					"id": 43,
 					"name_id": "other_wooriBank"
 				}
 			]
