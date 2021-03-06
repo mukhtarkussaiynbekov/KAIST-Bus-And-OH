@@ -147,12 +147,12 @@
 					"name_id": "food_lotteria"
 				},
 				{
-					"name": "불핏마루 (N12)",
+					"name": "풀빛마루 (N12)",
 					"id": 19,
 					"name_id": "food_pulbitmaru"
 				},
 				{
-					"name": "서브웨이 E(16)",
+					"name": "서브웨이 (E16)",
 					"id": 20,
 					"name_id": "food_subway"
 				}
