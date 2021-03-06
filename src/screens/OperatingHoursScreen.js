@@ -27,7 +27,8 @@ import {
 	NAME_ID,
 	TODAY,
 	INFINITY,
-	ENGLISH
+	ENGLISH,
+	KOREAN
 } from '../constants';
 
 const OperatingHoursScreen = () => {
@@ -67,27 +68,39 @@ const OperatingHoursScreen = () => {
 		facilities,
 		holidays
 	);
-	const [initialTimeLeft, initialIsOpen] = getTimeLeftIsOpen(
+	const [
+		initialTimeLeft,
+		initialIsOpen,
+		,
+		inititalTimeMessage
+	] = getTimeLeftIsOpen(
 		state,
 		dayType,
 		facilities,
-		holidays
+		holidays,
+		language == KOREAN
 	);
 
 	const [facilityInfo, setFacilityInfo] = useState({
 		timeLeft: initialTimeLeft,
-		isOpen: initialIsOpen
+		isOpen: initialIsOpen,
+		timeMessage: inititalTimeMessage
 	});
 
 	useEffect(() => {
 		// update facility info whenever state changes
-		const [newTimeLeft, newIsOpen] = getTimeLeftIsOpen(
+		const [newTimeLeft, newIsOpen, , newTimeMessage] = getTimeLeftIsOpen(
 			state,
 			dayType,
 			facilities,
-			holidays
+			holidays,
+			language == KOREAN
 		);
-		setFacilityInfo({ timeLeft: newTimeLeft, isOpen: newIsOpen });
+		setFacilityInfo({
+			timeLeft: newTimeLeft,
+			isOpen: newIsOpen,
+			timeMessage: newTimeMessage
+		});
 	}, [state]);
 
 	return (
@@ -127,15 +140,25 @@ const OperatingHoursScreen = () => {
 						facilityName={facilityName}
 						isOpen={facilityInfo.isOpen}
 						timeLeft={facilityInfo.timeLeft}
+						timeMessage={facilityInfo.timeMessage}
 						language={language}
 						updateTimeLeft={() => {
 							const [
 								reevaluatedTimeLeft,
-								reevaluatedIsOpen
-							] = getTimeLeftIsOpen(state, dayType, facilities, holidays);
+								reevaluatedIsOpen,
+								,
+								reevaluatedTimeMessage
+							] = getTimeLeftIsOpen(
+								state,
+								dayType,
+								facilities,
+								holidays,
+								language == KOREAN
+							);
 							setFacilityInfo({
 								timeLeft: reevaluatedTimeLeft,
-								isOpen: reevaluatedIsOpen
+								isOpen: reevaluatedIsOpen,
+								timeMessage: reevaluatedTimeMessage
 							});
 						}}
 					/>

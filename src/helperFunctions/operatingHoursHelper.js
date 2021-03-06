@@ -24,6 +24,7 @@ import {
 	isRegularDay
 } from './commonFunctions';
 import moment from 'moment-timezone';
+import 'moment/locale/ko';
 
 export const getClassFacility = facility => {
 	// returns classification and facility name
@@ -142,7 +143,13 @@ export const getTimeLeftOH = (time, now, isNextDay = false) => {
 	return timeLeft;
 };
 
-export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
+export const getTimeLeftIsOpen = (
+	state,
+	dayType,
+	facilities,
+	holidays,
+	isKorean = false
+) => {
 	/*
     input parameters:
     1. state is operatingHoursReducer's state
@@ -152,10 +159,11 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
         getOperatingHoursList function.
     4. holidays is a list of dates like ["02-12", "03-25"]
 
-    output: [timeLeft, isOpen, isYesterday] - timeLeft: int, isOpen: boolean, isYesterday: boolean
+    output: [timeLeft, isOpen, isYesterday, nextTime] - timeLeft: int, isOpen: boolean, isYesterday: boolean, nextTime: string
     timeLeft indicates time left until closing if isOpen = true.
     Otherwise if isOpen = false, timeLeft indicates time left until opening.
-    isYesterday denotes whether yesterday opened facility still has not closed
+    isYesterday denotes whether yesterday opened facility still has not closed.
+    nextTime is the time for which timeLeft shows remaining time.
   */
 
 	if (dayType !== TODAY) {
@@ -178,6 +186,13 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 	let todayHours = getOperatingHoursList(state, dayType, facilities, holidays);
 
 	let now = moment().tz('Asia/Seoul');
+
+	if (isKorean) {
+		now.locale('ko');
+	} else {
+		now.locale('en');
+	}
+
 	let nowFormatted = now.format('HH:mm:ss');
 	let formattedDate = now.format('MM-DD');
 	// handle case when an office decides to close for some reasons other than holidays
@@ -200,7 +215,7 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 			if (lastTime.finish < lastTime.start) {
 				let timeLeftUntilClosing = getTimeLeftOH(lastTime.finish, nowFormatted);
 				if (timeLeftUntilClosing > 0) {
-					return [timeLeftUntilClosing, true, true];
+					return [timeLeftUntilClosing, true, true, lastTime.finish];
 				}
 			}
 		}
@@ -213,13 +228,13 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 		}
 		if (hour.start > nowFormatted) {
 			timeLeft = getTimeLeftOH(hour.start, nowFormatted);
-			return [timeLeft, false];
+			return [timeLeft, false, false, hour.start];
 		} else if (hour.finish > nowFormatted) {
 			timeLeft = getTimeLeftOH(hour.finish, nowFormatted);
-			return [timeLeft, true];
+			return [timeLeft, true, false, hour.finish];
 		} else if (hour.finish < hour.start) {
 			timeLeft = getTimeLeftOH(hour.finish, nowFormatted, true);
-			return [timeLeft, true];
+			return [timeLeft, true, false, hour.finish];
 		}
 	}
 
@@ -227,6 +242,7 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 	let dayHours = getOperatingHoursList(state, TODAY, facilities, holidays, now);
 	let foundProperTime = false;
 	let additionalDays = 0;
+	let openTime;
 	while (!foundProperTime) {
 		formattedDate = now.format('MM-DD');
 		// handle case when an office decides to close for some reasons other than holidays
@@ -237,7 +253,8 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 			dayHours = [];
 		}
 		for (let hour of dayHours) {
-			timeLeft = getTimeLeftOH(hour.start, nowFormatted);
+			openTime = hour.start;
+			timeLeft = getTimeLeftOH(openTime, nowFormatted);
 			foundProperTime = true;
 			break;
 		}
@@ -248,7 +265,11 @@ export const getTimeLeftIsOpen = (state, dayType, facilities, holidays) => {
 		}
 	}
 	timeLeft += additionalDays * 24 * 60 * 60;
-	return [timeLeft, false];
+
+	let timeMessage = now.format(
+		`${openTime}, dddd, MMMM D${isKorean ? '일' : ''}`
+	);
+	return [timeLeft, false, false, timeMessage];
 };
 
 export const getFacilityNote = (

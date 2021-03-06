@@ -9,7 +9,8 @@ const OperatingHourCountDown = ({
 	isOpen,
 	timeLeft,
 	updateTimeLeft,
-	language
+	language,
+	timeMessage
 }) => {
 	return (
 		<View style={styles.container}>
@@ -21,7 +22,7 @@ const OperatingHourCountDown = ({
 					) : (
 						<Text style={styles.closedText}>closed</Text>
 					)}{' '}
-					now.
+					now. {isOpen ? 'Closes' : 'Opens'} at {timeMessage}
 				</Text>
 			) : (
 				<Text style={styles.infoText}>
@@ -31,7 +32,7 @@ const OperatingHourCountDown = ({
 					) : (
 						<Text style={styles.closedText}>중이지 않습니다</Text>
 					)}
-					.
+					. {timeMessage}에 {isOpen ? '닫습니다' : '엽니다'}.
 				</Text>
 			)}
 			{timeLeft !== INFINITY && (

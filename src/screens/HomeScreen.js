@@ -25,7 +25,8 @@ import {
 	CHANGE_LANGUAGE,
 	ENGLISH,
 	TIMETABLE_LINK,
-	FEEDBACK_LINK
+	FEEDBACK_LINK,
+	KOREAN
 } from '../constants';
 import moment from 'moment-timezone';
 import * as Linking from 'expo-linking';
@@ -98,11 +99,12 @@ const HomeScreen = ({ navigation }) => {
 		ID,
 		NAME
 	);
-	const [_, isOpen] = getTimeLeftIsOpen(
+	const [, isOpen, , timeMessage] = getTimeLeftIsOpen(
 		operatingHoursState,
 		TODAY,
 		facilities,
-		holidaysState
+		holidaysState,
+		language === KOREAN
 	);
 
 	const facilityNoteObject = getFacilityNote(
@@ -199,7 +201,10 @@ const HomeScreen = ({ navigation }) => {
 					<Text style={styles.text}>
 						The <Text style={styles.boldText}>{facilityName}</Text> is{' '}
 						<Text style={styles.boldText}>{isOpen ? 'open' : 'closed'}</Text>{' '}
-						now.
+						now.{' '}
+						<Text style={styles.boldText}>
+							{isOpen ? 'Closes' : 'Opens'} at {timeMessage}
+						</Text>
 					</Text>
 				) : (
 					<Text style={styles.text}>
@@ -207,7 +212,10 @@ const HomeScreen = ({ navigation }) => {
 						<Text style={styles.boldText}>
 							{isOpen ? '중입니다' : '중이지 않습니다'}
 						</Text>
-						.
+						.{' '}
+						<Text style={styles.boldText}>
+							{timeMessage}에 {isOpen ? '닫습니다' : '엽니다'}.
+						</Text>
 					</Text>
 				)}
 				{facilityNote !== '' && (
