@@ -2,7 +2,7 @@
 	"expo": {
 		"name": "KAIST Bus and Operating Hours",
 		"slug": "kaist_bus_and_oh",
-		"version": "1.0.0",
+		"version": "1.1",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"splash": {
@@ -17,11 +17,11 @@
 		"ios": {
 			"supportsTablet": true,
 			"bundleIdentifier": "kr.ac.kaist.bus",
-			"buildNumber": "1.0.0"
+			"buildNumber": "1.1"
 		},
 		"android": {
 			"package": "kr.ac.kaist.bus",
-			"versionCode": 2,
+			"versionCode": 3,
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#00ADEF"
