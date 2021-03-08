@@ -13,7 +13,9 @@ import {
 	NOTES,
 	ANY,
 	INFINITY,
-	CLOSED
+	CLOSED,
+	ENGLISH,
+	KOREAN
 } from '../constants';
 import {
 	getPropValue,
@@ -31,6 +33,11 @@ export const getClassFacility = facility => {
 	// input format is "classification_facilityName"
 
 	let loDashIdx = facility.indexOf('_');
+
+	if (loDashIdx === -1) {
+		return [facility, ''];
+	}
+
 	let classification = facility.slice(0, loDashIdx);
 	let facilityName = facility.slice(loDashIdx + 1);
 	return [classification, facilityName];
@@ -103,7 +110,8 @@ export const getOperatingHours = (
 };
 
 export const getOperatingHoursList = (
-	state,
+	facilityID,
+	listOfOperatingHours,
 	dayType,
 	facilities,
 	holidays,
@@ -111,9 +119,11 @@ export const getOperatingHoursList = (
 ) => {
 	// returns a list of objects like [{start: '09:00', finish: '19:00'}]
 
-	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
-	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
+	let facility = getPropValue(facilities, facilityID, ID, NAME_ID);
 	let [classification, facilityName] = getClassFacility(facility);
+	if (facilityName === '') {
+		return [];
+	}
 	let operatingHoursObject = getOperatingHoursObject(
 		classification,
 		facilityName,
@@ -144,7 +154,8 @@ export const getTimeLeftOH = (time, now, isNextDay = false) => {
 };
 
 export const getTimeLeftIsOpen = (
-	state,
+	facilityID,
+	listOfOperatingHours,
 	dayType,
 	facilities,
 	holidays,
@@ -152,9 +163,8 @@ export const getTimeLeftIsOpen = (
 ) => {
 	/*
     input parameters:
-    1. state is operatingHoursReducer's state
-    2. todayHours is a list of objects where each object is of form
-        {start: 'HH:mm', finish: 'HH:mm'}
+    1. facilityID is a facility's id inside options
+    2. listOfOperatingHours is a database that is in the form of list that contains all facility infos.
     3. facilities is a list of objects that will be passed to
         getOperatingHoursList function.
     4. holidays is a list of dates like ["02-12", "03-25"]
@@ -170,9 +180,11 @@ export const getTimeLeftIsOpen = (
 		return [0, false];
 	}
 
-	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
-	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
+	let facility = getPropValue(facilities, facilityID, ID, NAME_ID);
 	let [classification, facilityName] = getClassFacility(facility);
+	if (facilityName === '') {
+		return [0, false];
+	}
 	let operatingHoursObject = getOperatingHoursObject(
 		classification,
 		facilityName,
@@ -183,7 +195,13 @@ export const getTimeLeftIsOpen = (
 		return [INFINITY, false];
 	}
 
-	let todayHours = getOperatingHoursList(state, dayType, facilities, holidays);
+	let todayHours = getOperatingHoursList(
+		facilityID,
+		listOfOperatingHours,
+		dayType,
+		facilities,
+		holidays
+	);
 
 	let now = moment().tz('Asia/Seoul');
 
@@ -205,7 +223,8 @@ export const getTimeLeftIsOpen = (
 
 	if (todayHours.length === 0 || todayHours[0].start > nowFormatted) {
 		const yesterdayHours = getOperatingHoursList(
-			state,
+			facilityID,
+			listOfOperatingHours,
 			YESTERDAY,
 			facilities,
 			holidays
@@ -239,7 +258,14 @@ export const getTimeLeftIsOpen = (
 	}
 
 	now.add(1, 'days');
-	let dayHours = getOperatingHoursList(state, TODAY, facilities, holidays, now);
+	let dayHours = getOperatingHoursList(
+		facilityID,
+		listOfOperatingHours,
+		TODAY,
+		facilities,
+		holidays,
+		now
+	);
 	let foundProperTime = false;
 	let additionalDays = 0;
 	let openTime;
@@ -261,7 +287,14 @@ export const getTimeLeftIsOpen = (
 		additionalDays += 1;
 		if (!foundProperTime) {
 			now.add(1, 'days');
-			dayHours = getOperatingHoursList(state, TODAY, facilities, holidays, now);
+			dayHours = getOperatingHoursList(
+				facilityID,
+				listOfOperatingHours,
+				TODAY,
+				facilities,
+				holidays,
+				now
+			);
 		}
 	}
 	timeLeft += additionalDays * 24 * 60 * 60;
@@ -298,6 +331,9 @@ export const getFacilityNote = (
 	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 	let [classification, facilityName] = getClassFacility(facility);
+	if (facilityName === '') {
+		return { [ENGLISH]: '', [KOREAN]: '' };
+	}
 	let operatingHoursObject = getOperatingHoursObject(
 		classification,
 		facilityName,

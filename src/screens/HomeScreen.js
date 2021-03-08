@@ -11,6 +11,7 @@ import Dropdown from '../components/Dropdown';
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import { getBusNote, getUpcomingTime } from '../helperFunctions/busHelper';
 import {
+	getClassFacility,
 	getFacilityNote,
 	getTimeLeftIsOpen
 } from '../helperFunctions/operatingHoursHelper';
@@ -26,7 +27,9 @@ import {
 	ENGLISH,
 	TIMETABLE_LINK,
 	FEEDBACK_LINK,
-	KOREAN
+	KOREAN,
+	CHILDREN,
+	OPERATING_HOURS
 } from '../constants';
 import moment from 'moment-timezone';
 import * as Linking from 'expo-linking';
@@ -99,8 +102,25 @@ const HomeScreen = ({ navigation }) => {
 		ID,
 		NAME
 	);
+
+	const facilityFullNameID = getPropValue(
+		facilities,
+		operatingHoursState.facility,
+		ID,
+		NAME_ID
+	);
+
+	const [classification, facilityNameID] = getClassFacility(facilityFullNameID);
+	if (facilityNameID === '') {
+		getPropValue(facilities, operatingHoursState.facility, ID, CHILDREN);
+	}
+
+	const listOfOperatingHours =
+		operatingHoursState.database.operatingHours[OPERATING_HOURS];
+
 	const [, isOpen, , timeMessage] = getTimeLeftIsOpen(
-		operatingHoursState,
+		operatingHoursState.facility,
+		listOfOperatingHours,
 		TODAY,
 		facilities,
 		holidaysState,
@@ -197,7 +217,9 @@ const HomeScreen = ({ navigation }) => {
 					onPress={() => navigation.navigate('OperatingHours')}
 					titleStyle={styles.title}
 				/>
-				{language === ENGLISH ? (
+				{facilityNameID === '' ? (
+					<Text>Parent is selected</Text>
+				) : language === ENGLISH ? (
 					<Text style={styles.text}>
 						The <Text style={styles.boldText}>{facilityName}</Text> is{' '}
 						<Text style={styles.boldText}>{isOpen ? 'open' : 'closed'}</Text>{' '}

@@ -13,11 +13,13 @@ import TimetableCell from '../components/TimetableCell';
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import {
+	getClassFacility,
 	getFacilityNote,
 	getOperatingHoursList,
 	getTimeLeftIsOpen
 } from '../helperFunctions/operatingHoursHelper';
 import {
+	OPERATING_HOURS,
 	CHANGE_OH_DAY,
 	CHANGE_FACILITY,
 	DAY_TYPES,
@@ -52,7 +54,7 @@ const OperatingHoursScreen = () => {
 	const dayTypes = options[DAY_TYPES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const facilities = options[FACILITIES];
-	const facilityName = getPropValue(facilities, state.facility, ID, NAME);
+	const facility = getPropValue(facilities, state.facility, ID, NAME);
 	const facilityNoteObject = getFacilityNote(
 		state,
 		dayType,
@@ -62,8 +64,20 @@ const OperatingHoursScreen = () => {
 	const facilityNote =
 		facilityNoteObject !== undefined ? facilityNoteObject[language] : '';
 
+	const facilityFullNameID = getPropValue(
+		facilities,
+		state.facility,
+		ID,
+		NAME_ID
+	);
+
+	const [classification, facilityNameID] = getClassFacility(facilityFullNameID);
+
+	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
+
 	const operatingHours = getOperatingHoursList(
-		state,
+		state.facility,
+		listOfOperatingHours,
 		dayType,
 		facilities,
 		holidays
@@ -74,7 +88,8 @@ const OperatingHoursScreen = () => {
 		,
 		inititalTimeMessage
 	] = getTimeLeftIsOpen(
-		state,
+		state.facility,
+		listOfOperatingHours,
 		dayType,
 		facilities,
 		holidays,
@@ -90,7 +105,8 @@ const OperatingHoursScreen = () => {
 	useEffect(() => {
 		// update facility info whenever state changes
 		const [newTimeLeft, newIsOpen, , newTimeMessage] = getTimeLeftIsOpen(
-			state,
+			state.facility,
+			listOfOperatingHours,
 			dayType,
 			facilities,
 			holidays,
@@ -124,7 +140,6 @@ const OperatingHoursScreen = () => {
 					dispatch({ type: CHANGE_FACILITY, payload: selectedItem })
 				}
 				chosenItem={state.facility}
-				readOnlyHeadings
 			/>
 			{facilityNote !== '' && (
 				<Text style={styles.note}>
@@ -134,10 +149,12 @@ const OperatingHoursScreen = () => {
 					{facilityNote}
 				</Text>
 			)}
-			{dayType === TODAY ? (
+			{facilityNameID === '' ? (
+				<Text>parent is selected</Text>
+			) : dayType === TODAY ? (
 				<View style={styles.countDown}>
 					<OperatingHourCountDown
-						facilityName={facilityName}
+						facility={facility}
 						isOpen={facilityInfo.isOpen}
 						timeLeft={facilityInfo.timeLeft}
 						timeMessage={facilityInfo.timeMessage}
@@ -149,7 +166,8 @@ const OperatingHoursScreen = () => {
 								,
 								reevaluatedTimeMessage
 							] = getTimeLeftIsOpen(
-								state,
+								state.facility,
+								listOfOperatingHours,
 								dayType,
 								facilities,
 								holidays,
