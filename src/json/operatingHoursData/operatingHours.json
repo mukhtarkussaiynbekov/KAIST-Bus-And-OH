@@ -15,40 +15,24 @@
 						"tuesday": [
 							{
 								"start": "09:00",
-								"finish": "13:10"
-							},
-							{
-								"start": "14:00",
 								"finish": "02:00"
 							}
 						],
 						"wednesday": [
 							{
 								"start": "09:00",
-								"finish": "13:10"
-							},
-							{
-								"start": "14:00",
 								"finish": "02:00"
 							}
 						],
 						"thursday": [
 							{
 								"start": "09:00",
-								"finish": "13:10"
-							},
-							{
-								"start": "14:00",
 								"finish": "02:00"
 							}
 						],
 						"friday": [
 							{
 								"start": "09:00",
-								"finish": "13:10"
-							},
-							{
-								"start": "14:00",
 								"finish": "02:00"
 							}
 						],
