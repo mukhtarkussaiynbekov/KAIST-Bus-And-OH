@@ -24,7 +24,8 @@ import {
 	ENGLISH,
 	TIMETABLE_LINK,
 	FEEDBACK_LINK,
-	CHILDREN
+	CHILDREN,
+	PROGRESS_LINK
 } from '../constants';
 import moment from 'moment-timezone';
 import * as Linking from 'expo-linking';
@@ -230,6 +231,18 @@ const HomeScreen = ({ navigation }) => {
 					{language === ENGLISH ? 'leave a feedback' : '피드백을 남겨'}
 				</Text>
 				{language === ENGLISH ? '.' : ' 주세요!'}
+				{'\n'}
+				{language === ENGLISH
+					? 'We value your feedback. Check out our '
+					: '학우분들께서 남겨주신 피드백에 대한 '}
+				<Text
+					style={{ color: 'blue' }}
+					onPress={() => Linking.openURL(PROGRESS_LINK)}
+				>
+					{language === ENGLISH
+						? 'current progress.'
+						: '진행 상황을 체크해 보세요.'}
+				</Text>
 			</Text>
 		</>
 	);

@@ -79,3 +79,5 @@ export const TIMETABLE_LINK =
 	'https://docs.google.com/forms/d/e/1FAIpQLSeVLfIGWPZMaLHGmdGAL7k40GuSTAnknJbJE5KLheQJRvmbHg/viewform?usp=sf_link';
 export const FEEDBACK_LINK =
 	'https://docs.google.com/forms/d/e/1FAIpQLSeDXDio7OpYjmIAIfIiL048RCU80qu-N0exTV-YJHpR3gVPwg/viewform?usp=sf_link';
+export const PROGRESS_LINK =
+	'https://docs.google.com/document/d/1pbxqrsyAIBy_LaHu7LbsFupv_kGcA42sVzSV6uhs5jo/edit?usp=sharing';
