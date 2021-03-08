@@ -306,7 +306,8 @@ export const getTimeLeftIsOpen = (
 };
 
 export const getFacilityNote = (
-	state,
+	facilityID,
+	listOfOperatingHours,
 	dayType,
 	facilities,
 	holidays,
@@ -318,18 +319,25 @@ export const getFacilityNote = (
 
 	if (dayType === TODAY) {
 		let [, , isYesterday = false] = getTimeLeftIsOpen(
-			state,
+			facilityID,
+			listOfOperatingHours,
 			dayType,
 			facilities,
 			holidays
 		);
 		if (isYesterday) {
-			return getFacilityNote(state, YESTERDAY, facilities, holidays, now);
+			return getFacilityNote(
+				facilityID,
+				listOfOperatingHours,
+				YESTERDAY,
+				facilities,
+				holidays,
+				now
+			);
 		}
 	}
 
-	let facility = getPropValue(facilities, state.facility, ID, NAME_ID);
-	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
+	let facility = getPropValue(facilities, facilityID, ID, NAME_ID);
 	let [classification, facilityName] = getClassFacility(facility);
 	if (facilityName === '') {
 		return { [ENGLISH]: '', [KOREAN]: '' };

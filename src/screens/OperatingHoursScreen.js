@@ -1,10 +1,9 @@
 // hooks
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // components
-import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { StyleSheet, FlatList } from 'react-native';
 import Dropdown from '../components/Dropdown';
 import OperatingHourCountDown from '../components/OperatingHourCountDown';
 import Timetable from '../components/Timetable';
@@ -14,9 +13,7 @@ import TimetableCell from '../components/TimetableCell';
 import { getPropValue } from '../helperFunctions/commonFunctions';
 import {
 	getClassFacility,
-	getFacilityNote,
-	getOperatingHoursList,
-	getTimeLeftIsOpen
+	getOperatingHoursList
 } from '../helperFunctions/operatingHoursHelper';
 import {
 	OPERATING_HOURS,
@@ -28,9 +25,8 @@ import {
 	NAME,
 	NAME_ID,
 	TODAY,
-	INFINITY,
 	ENGLISH,
-	KOREAN
+	CHILDREN
 } from '../constants';
 
 const OperatingHoursScreen = () => {
@@ -54,15 +50,6 @@ const OperatingHoursScreen = () => {
 	const dayTypes = options[DAY_TYPES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const facilities = options[FACILITIES];
-	const facility = getPropValue(facilities, state.facility, ID, NAME);
-	const facilityNoteObject = getFacilityNote(
-		state,
-		dayType,
-		facilities,
-		holidays
-	);
-	const facilityNote =
-		facilityNoteObject !== undefined ? facilityNoteObject[language] : '';
 
 	const facilityFullNameID = getPropValue(
 		facilities,
@@ -73,6 +60,17 @@ const OperatingHoursScreen = () => {
 
 	const [classification, facilityNameID] = getClassFacility(facilityFullNameID);
 
+	let displayOperatingHours = [];
+	if (facilityNameID === '') {
+		let children = getPropValue(facilities, classification, NAME_ID, CHILDREN);
+		for (let child of children) {
+			displayOperatingHours.push({ [ID]: child[ID], [NAME]: child[NAME] });
+		}
+	} else {
+		let facilityName = getPropValue(facilities, state.facility, ID, NAME);
+		displayOperatingHours = [{ [ID]: state.facility, [NAME]: facilityName }];
+	}
+
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
 
 	const operatingHours = getOperatingHoursList(
@@ -82,42 +80,6 @@ const OperatingHoursScreen = () => {
 		facilities,
 		holidays
 	);
-	const [
-		initialTimeLeft,
-		initialIsOpen,
-		,
-		inititalTimeMessage
-	] = getTimeLeftIsOpen(
-		state.facility,
-		listOfOperatingHours,
-		dayType,
-		facilities,
-		holidays,
-		language == KOREAN
-	);
-
-	const [facilityInfo, setFacilityInfo] = useState({
-		timeLeft: initialTimeLeft,
-		isOpen: initialIsOpen,
-		timeMessage: inititalTimeMessage
-	});
-
-	useEffect(() => {
-		// update facility info whenever state changes
-		const [newTimeLeft, newIsOpen, , newTimeMessage] = getTimeLeftIsOpen(
-			state.facility,
-			listOfOperatingHours,
-			dayType,
-			facilities,
-			holidays,
-			language == KOREAN
-		);
-		setFacilityInfo({
-			timeLeft: newTimeLeft,
-			isOpen: newIsOpen,
-			timeMessage: newTimeMessage
-		});
-	}, [state]);
 
 	return (
 		<>
@@ -141,68 +103,43 @@ const OperatingHoursScreen = () => {
 				}
 				chosenItem={state.facility}
 			/>
-			{facilityNote !== '' && (
-				<Text style={styles.note}>
-					<Text style={styles.boldText}>
-						{language === ENGLISH ? 'Note' : '참고'}:{' '}
-					</Text>
-					{facilityNote}
-				</Text>
-			)}
-			{facilityNameID === '' ? (
-				<Text>parent is selected</Text>
-			) : dayType === TODAY ? (
-				<View style={styles.countDown}>
-					<OperatingHourCountDown
-						facility={facility}
-						isOpen={facilityInfo.isOpen}
-						timeLeft={facilityInfo.timeLeft}
-						timeMessage={facilityInfo.timeMessage}
-						language={language}
-						updateTimeLeft={() => {
-							const [
-								reevaluatedTimeLeft,
-								reevaluatedIsOpen,
-								,
-								reevaluatedTimeMessage
-							] = getTimeLeftIsOpen(
-								state.facility,
-								listOfOperatingHours,
-								dayType,
-								facilities,
-								holidays,
-								language == KOREAN
-							);
-							setFacilityInfo({
-								timeLeft: reevaluatedTimeLeft,
-								isOpen: reevaluatedIsOpen,
-								timeMessage: reevaluatedTimeMessage
-							});
-						}}
-					/>
-				</View>
-			) : (
-				facilityInfo.timeLeft !== INFINITY && (
-					<Timetable
-						header={
-							<TimetableCell
-								columnTexts={
-									language === ENGLISH
-										? { first: 'Open At', second: 'Close At' }
-										: { first: '여는 시각', second: '닫는 시각' }
-								}
+			{dayType === TODAY ? (
+				<FlatList
+					data={displayOperatingHours}
+					keyExtractor={facility => facility[ID].toString()}
+					renderItem={({ item }) => {
+						return (
+							<OperatingHourCountDown
+								state={state}
+								language={language}
+								facilityID={item[ID]}
+								facilityName={item[NAME]}
+								holidays={holidays}
+								showCountDown={displayOperatingHours.length === 1}
 							/>
-						}
-						timetable={operatingHours}
-						renderFunction={({ item }) => {
-							return (
-								<TimetableCell
-									columnTexts={{ first: item.start, second: item.finish }}
-								/>
-							);
-						}}
-					/>
-				)
+						);
+					}}
+				/>
+			) : (
+				<Timetable
+					header={
+						<TimetableCell
+							columnTexts={
+								language === ENGLISH
+									? { first: 'Open At', second: 'Close At' }
+									: { first: '여는 시각', second: '닫는 시각' }
+							}
+						/>
+					}
+					timetable={operatingHours}
+					renderFunction={({ item }) => {
+						return (
+							<TimetableCell
+								columnTexts={{ first: item.start, second: item.finish }}
+							/>
+						);
+					}}
+				/>
 			)}
 		</>
 	);
@@ -212,18 +149,6 @@ OperatingHoursScreen.navigationOptions = {
 	title: 'Operating Hours'
 };
 
-const styles = StyleSheet.create({
-	countDown: {
-		marginTop: 40
-	},
-	note: {
-		paddingHorizontal: 10,
-		marginVertical: 10,
-		fontSize: 16
-	},
-	boldText: {
-		fontWeight: 'bold'
-	}
-});
+const styles = StyleSheet.create({});
 
 export default OperatingHoursScreen;
