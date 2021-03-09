@@ -181,7 +181,7 @@ const HomeScreen = ({ navigation }) => {
 				title={language === ENGLISH ? 'Bus Timetable' : '버스 시간표'}
 				titleStyle={styles.title}
 				onPress={() => navigation.navigate('Bus')}
-				style={styles.button}
+				buttonStyle={styles.button}
 			/>
 			<Button
 				icon={
@@ -196,7 +196,7 @@ const HomeScreen = ({ navigation }) => {
 				title={language === ENGLISH ? 'Operating Hours' : '운영 시간'}
 				onPress={() => navigation.navigate('OperatingHours')}
 				titleStyle={styles.title}
-				style={styles.button}
+				buttonStyle={styles.button}
 			/>
 			<FlatList
 				data={displayOperatingHours}

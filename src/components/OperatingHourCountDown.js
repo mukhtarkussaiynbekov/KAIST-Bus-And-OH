@@ -148,7 +148,7 @@ const OperatingHourCountDown = ({
 					</Text>
 				)}
 				{facilityInfo.timeLeft !== INFINITY && (
-					<View style={{ display: showCountDown ? '' : 'none' }}>
+					<View style={!showCountDown && { display: 'none' }}>
 						<CountDown
 							until={facilityInfo.timeLeft}
 							onFinish={updateTimeLeft}
