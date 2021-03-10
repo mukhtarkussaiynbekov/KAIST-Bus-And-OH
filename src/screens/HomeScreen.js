@@ -212,8 +212,9 @@ const HomeScreen = ({ navigation }) => {
 						/>
 					);
 				}}
+				style={styles.list}
 			/>
-			<Text style={styles.note}>
+			<Text style={styles.feedbackNote}>
 				{language === ENGLISH ? 'Any suggestions? ' : '건의사항이 있으신가요? '}
 				<Text
 					style={{ color: 'blue' }}
@@ -268,6 +269,14 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		marginVertical: 10,
 		fontSize: 16
+	},
+	feedbackNote: {
+		paddingHorizontal: 10,
+		marginVertical: 30,
+		fontSize: 16
+	},
+	list: {
+		flexGrow: 0
 	}
 });
 
