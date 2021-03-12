@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		textAlign: 'center',
 		marginVertical: 10,
-		fontSize: 16
+		fontSize: 18
 	},
 	boldText: {
 		fontWeight: 'bold'
