@@ -7,6 +7,7 @@ import { StyleSheet, FlatList } from 'react-native';
 import { Button, Icon, Text } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import OperatingHourCountDown from '../components/OperatingHourCountDown';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
@@ -121,16 +122,22 @@ const HomeScreen = ({ navigation }) => {
 
 	return (
 		<>
-			<Dropdown
-				title="Language"
-				titleWidth={80}
-				items={languageState.items}
-				hideSearch={true}
-				onSelectedItemChange={selectedItem =>
-					dispatch({ type: CHANGE_LANGUAGE, payload: selectedItem })
-				}
-				chosenItem={languageState.selected}
-			/>
+			<LinearGradient
+				// Background Linear Gradient
+				colors={['rgb(113, 23, 234)', 'rgb(155, 48, 185)']}
+			>
+				<Dropdown
+					title="Language"
+					titleWidth={80}
+					items={languageState.items}
+					hideSearch={true}
+					onSelectedItemChange={selectedItem =>
+						dispatch({ type: CHANGE_LANGUAGE, payload: selectedItem })
+					}
+					chosenItem={languageState.selected}
+				/>
+			</LinearGradient>
+
 			{busNote !== '' && (
 				<Text style={styles.note}>
 					<Text style={styles.boldText}>

@@ -8,6 +8,7 @@ import { Text, Icon } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import Timetable from '../components/Timetable';
 import TimetableCell from '../components/TimetableCell';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
@@ -105,66 +106,72 @@ const BusScreen = () => {
 
 	return (
 		<>
-			<View style={styles.topDropdowns}>
-				<View style={{ flex: 1 }}>
-					<Dropdown
-						title={language === ENGLISH ? 'Type' : '종류'}
-						items={busTypes}
-						hideSearch={true}
-						onSelectedItemChange={selectedItem =>
-							dispatch({ type: CHANGE_TYPE, payload: selectedItem })
-						}
-						chosenItem={state.busType}
-					/>
+			<LinearGradient
+				// Background Linear Gradient
+				colors={['rgb(113, 23, 234)', 'rgb(155, 48, 185)']}
+			>
+				<View style={styles.topDropdowns}>
+					<View style={{ flex: 1 }}>
+						<Dropdown
+							title={language === ENGLISH ? 'Type' : '종류'}
+							items={busTypes}
+							hideSearch={true}
+							onSelectedItemChange={selectedItem =>
+								dispatch({ type: CHANGE_TYPE, payload: selectedItem })
+							}
+							chosenItem={state.busType}
+						/>
+					</View>
+					<View style={{ flex: 1 }}>
+						<Dropdown
+							title={language === ENGLISH ? 'Day' : '요일'}
+							items={dayTypes}
+							hideSearch={true}
+							onSelectedItemChange={selectedItem =>
+								dispatch({ type: CHANGE_DAY, payload: selectedItem })
+							}
+							chosenItem={state.dayType}
+						/>
+					</View>
 				</View>
-				<View style={{ flex: 1 }}>
-					<Dropdown
-						title={language === ENGLISH ? 'Day' : '요일'}
-						items={dayTypes}
-						hideSearch={true}
-						onSelectedItemChange={selectedItem =>
-							dispatch({ type: CHANGE_DAY, payload: selectedItem })
-						}
-						chosenItem={state.dayType}
-					/>
+				<Dropdown
+					title={language === ENGLISH ? 'From' : '출발지'}
+					items={busStops}
+					searchPlaceholderText={
+						language === ENGLISH ? 'Search a bus stop' : '버스 정류장 검색'
+					}
+					onSelectedItemChange={selectedItem =>
+						dispatch({ type: CHANGE_FROM, payload: selectedItem })
+					}
+					chosenItem={state.from}
+				/>
+				<View style={styles.iconContainer}>
+					<TouchableOpacity onPress={() => dispatch({ type: SWAP_STOPS })}>
+						<Icon
+							reverse
+							name="swap-vertical"
+							type="ionicon"
+							color="#517fa4"
+							size={20}
+						/>
+					</TouchableOpacity>
+					<Text style={styles.iconGuide}>
+						{language === ENGLISH ? 'Press to swap locations' : '위치 변경'}
+					</Text>
 				</View>
-			</View>
-			<Dropdown
-				title={language === ENGLISH ? 'From' : '출발지'}
-				items={busStops}
-				searchPlaceholderText={
-					language === ENGLISH ? 'Search a bus stop' : '버스 정류장 검색'
-				}
-				onSelectedItemChange={selectedItem =>
-					dispatch({ type: CHANGE_FROM, payload: selectedItem })
-				}
-				chosenItem={state.from}
-			/>
-			<View style={styles.iconContainer}>
-				<TouchableOpacity onPress={() => dispatch({ type: SWAP_STOPS })}>
-					<Icon
-						reverse
-						name="swap-vertical"
-						type="ionicon"
-						color="#517fa4"
-						size={20}
-					/>
-				</TouchableOpacity>
-				<Text style={styles.iconGuide}>
-					{language === ENGLISH ? 'Press to swap locations' : '위치 변경'}
-				</Text>
-			</View>
-			<Dropdown
-				title={language === ENGLISH ? 'To' : '도착지'}
-				items={busStops}
-				searchPlaceholderText={
-					language === ENGLISH ? 'Search a bus stop' : '버스 정류장 검색'
-				}
-				onSelectedItemChange={selectedItem =>
-					dispatch({ type: CHANGE_TO, payload: selectedItem })
-				}
-				chosenItem={state.to}
-			/>
+				<Dropdown
+					title={language === ENGLISH ? 'To' : '도착지'}
+					items={busStops}
+					searchPlaceholderText={
+						language === ENGLISH ? 'Search a bus stop' : '버스 정류장 검색'
+					}
+					onSelectedItemChange={selectedItem =>
+						dispatch({ type: CHANGE_TO, payload: selectedItem })
+					}
+					chosenItem={state.to}
+				/>
+			</LinearGradient>
+
 			{busNote !== '' && (
 				<Text style={styles.note}>
 					<Text style={styles.boldText}>
@@ -216,7 +223,8 @@ const styles = StyleSheet.create({
 	},
 	iconGuide: {
 		paddingLeft: 20,
-		alignSelf: 'center'
+		alignSelf: 'center',
+		color: 'white'
 	},
 	note: {
 		paddingHorizontal: 10,

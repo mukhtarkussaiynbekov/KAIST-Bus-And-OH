@@ -17,7 +17,13 @@ const navigator = createStackNavigator(
 	{
 		initialRouteName: 'Home',
 		defaultNavigationOptions: {
-			title: 'Home'
+			title: 'Home',
+			headerStyle: {
+				backgroundColor: 'rgb(65, 59, 152)!important'
+			},
+			headerTitleStyle: {
+				color: 'white'
+			}
 		}
 	}
 );

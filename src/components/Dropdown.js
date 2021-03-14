@@ -66,10 +66,14 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		fontSize: 16,
 		width: 55,
-		textAlign: 'center'
+		textAlign: 'center',
+		color: 'white'
 	},
 	selectToggle: {
 		marginLeft: 10
+	},
+	selectToggleText: {
+		color: '#fff'
 	}
 });
 

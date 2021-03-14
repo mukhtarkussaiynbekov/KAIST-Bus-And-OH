@@ -9,6 +9,7 @@ import Dropdown from '../components/Dropdown';
 import OperatingHourCountDown from '../components/OperatingHourCountDown';
 import Timetable from '../components/Timetable';
 import TimetableCell from '../components/TimetableCell';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // helper functions and constants
 import { getPropValue } from '../helperFunctions/commonFunctions';
@@ -93,26 +94,32 @@ const OperatingHoursScreen = () => {
 
 	return (
 		<>
-			<Dropdown
-				title={language === ENGLISH ? 'Day' : '요일'}
-				items={dayTypes}
-				hideSearch={true}
-				onSelectedItemChange={selectedItem =>
-					dispatch({ type: CHANGE_OH_DAY, payload: selectedItem })
-				}
-				chosenItem={state.dayType}
-			/>
-			<Dropdown
-				title={language === ENGLISH ? 'Facility' : '시설'}
-				items={facilities}
-				searchPlaceholderText={
-					language === ENGLISH ? 'Search a facility' : '시설 검색'
-				}
-				onSelectedItemChange={selectedItem =>
-					dispatch({ type: CHANGE_FACILITY, payload: selectedItem })
-				}
-				chosenItem={state.facility}
-			/>
+			<LinearGradient
+				// Background Linear Gradient
+				colors={['rgb(113, 23, 234)', 'rgb(155, 48, 185)']}
+			>
+				<Dropdown
+					title={language === ENGLISH ? 'Day' : '요일'}
+					items={dayTypes}
+					hideSearch={true}
+					onSelectedItemChange={selectedItem =>
+						dispatch({ type: CHANGE_OH_DAY, payload: selectedItem })
+					}
+					chosenItem={state.dayType}
+				/>
+				<Dropdown
+					title={language === ENGLISH ? 'Facility' : '시설'}
+					items={facilities}
+					searchPlaceholderText={
+						language === ENGLISH ? 'Search a facility' : '시설 검색'
+					}
+					onSelectedItemChange={selectedItem =>
+						dispatch({ type: CHANGE_FACILITY, payload: selectedItem })
+					}
+					chosenItem={state.facility}
+				/>
+			</LinearGradient>
+
 			{dayType === TODAY ? (
 				<FlatList
 					data={displayOperatingHours}
