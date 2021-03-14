@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // components
-import { View, StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { Button, Icon, Text } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import OperatingHourCountDown from '../components/OperatingHourCountDown';

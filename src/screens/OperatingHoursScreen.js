@@ -3,7 +3,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // components
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import Dropdown from '../components/Dropdown';
 import OperatingHourCountDown from '../components/OperatingHourCountDown';
 import Timetable from '../components/Timetable';
@@ -60,26 +61,35 @@ const OperatingHoursScreen = () => {
 
 	const [classification, facilityNameID] = getClassFacility(facilityFullNameID);
 
+	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
+
 	let displayOperatingHours = [];
+	let operatingHoursList = [];
 	if (facilityNameID === '') {
 		let children = getPropValue(facilities, classification, NAME_ID, CHILDREN);
 		for (let child of children) {
+			let operatingHours = getOperatingHoursList(
+				child[ID],
+				listOfOperatingHours,
+				dayType,
+				facilities,
+				holidays
+			);
 			displayOperatingHours.push({ [ID]: child[ID], [NAME]: child[NAME] });
+			operatingHoursList.push([child[NAME], operatingHours]);
 		}
 	} else {
+		let operatingHours = getOperatingHoursList(
+			state.facility,
+			listOfOperatingHours,
+			dayType,
+			facilities,
+			holidays
+		);
 		let facilityName = getPropValue(facilities, state.facility, ID, NAME);
 		displayOperatingHours = [{ [ID]: state.facility, [NAME]: facilityName }];
+		operatingHoursList.push([facilityName, operatingHours]);
 	}
-
-	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];
-
-	const operatingHours = getOperatingHoursList(
-		state.facility,
-		listOfOperatingHours,
-		dayType,
-		facilities,
-		holidays
-	);
 
 	return (
 		<>
@@ -121,22 +131,48 @@ const OperatingHoursScreen = () => {
 					}}
 				/>
 			) : (
-				<Timetable
-					header={
-						<TimetableCell
-							columnTexts={
-								language === ENGLISH
-									? { first: 'Open At', second: 'Close At' }
-									: { first: '여는 시각', second: '닫는 시각' }
-							}
-						/>
-					}
-					timetable={operatingHours}
-					renderFunction={({ item }) => {
+				<FlatList
+					data={operatingHoursList}
+					keyExtractor={(item, index) => index.toString()}
+					renderItem={({ item }) => {
+						const facility = item[0];
+						const operatingHours = item[1];
+						const isClosed = operatingHours.length === 0;
+
 						return (
-							<TimetableCell
-								columnTexts={{ first: item.start, second: item.finish }}
-							/>
+							<View style={styles.timetable}>
+								<Text style={styles.text}>
+									<Text style={styles.boldText}>{facility}</Text>{' '}
+									{isClosed &&
+										(language === ENGLISH
+											? 'is closed on that day.'
+											: '이 날에는 운영하지 않습니다.')}
+								</Text>
+								{!isClosed && (
+									<Timetable
+										header={
+											<TimetableCell
+												columnTexts={
+													language === ENGLISH
+														? { first: 'Open At', second: 'Close At' }
+														: { first: '여는 시각', second: '닫는 시각' }
+												}
+											/>
+										}
+										timetable={item[1]}
+										renderFunction={({ item }) => {
+											return (
+												<TimetableCell
+													columnTexts={{
+														first: item.start,
+														second: item.finish
+													}}
+												/>
+											);
+										}}
+									/>
+								)}
+							</View>
 						);
 					}}
 				/>
@@ -149,6 +185,20 @@ OperatingHoursScreen.navigationOptions = {
 	title: 'Operating Hours'
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	timetable: {
+		marginVertical: 10,
+		borderBottomWidth: 1
+	},
+	text: {
+		paddingHorizontal: 10,
+		textAlign: 'center',
+		marginVertical: 5,
+		fontSize: 18
+	},
+	boldText: {
+		fontWeight: 'bold'
+	}
+});
 
 export default OperatingHoursScreen;
