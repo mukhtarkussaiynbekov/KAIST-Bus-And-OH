@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-elements';
 import CountDown from 'react-native-countdown-component';
 import {
@@ -28,6 +28,7 @@ const OperatingHourCountDown = ({
 	facilityID,
 	facilityName
 }) => {
+	const [toggle, setToggle] = useState(showCountDown);
 	const options = state.database.options[language];
 	const dayTypes = options[DAY_TYPES];
 	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
@@ -103,6 +104,10 @@ const OperatingHourCountDown = ({
 		});
 	};
 
+	const handleToggle = () => {
+		setToggle(!toggle);
+	};
+
 	return (
 		<View>
 			{facilityNote !== '' && (
@@ -113,42 +118,46 @@ const OperatingHourCountDown = ({
 					{facilityNote}
 				</Text>
 			)}
+
 			<View style={showCountDown && styles.countDown}>
-				{language === ENGLISH ? (
-					<Text style={styles.infoText}>
-						The <Text style={styles.boldText}>{facilityName}</Text> is{' '}
-						{facilityInfo.isOpen ? (
-							<Text style={styles.openText}>open</Text>
-						) : (
-							<Text style={styles.closedText}>closed</Text>
-						)}{' '}
-						now.{' '}
-						{facilityInfo.timeMessage && (
-							<Text>
-								{facilityInfo.isOpen ? 'Closes' : 'Opens'} at{' '}
-								{facilityInfo.timeMessage}
-							</Text>
-						)}
-					</Text>
-				) : (
-					<Text style={styles.infoText}>
-						<Text style={styles.boldText}>{facilityName}</Text>는 지금 운영{' '}
-						{facilityInfo.isOpen ? (
-							<Text style={styles.openText}>중입니다</Text>
-						) : (
-							<Text style={styles.closedText}>중이지 않습니다</Text>
-						)}
-						.{' '}
-						{facilityInfo.timeMessage && (
-							<Text>
-								{facilityInfo.timeMessage}에{' '}
-								{facilityInfo.isOpen ? '닫습니다' : '엽니다'}.
-							</Text>
-						)}
-					</Text>
-				)}
+				<TouchableOpacity onPress={handleToggle}>
+					{language === ENGLISH ? (
+						<Text style={styles.infoText}>
+							The <Text style={styles.boldText}>{facilityName}</Text> is{' '}
+							{facilityInfo.isOpen ? (
+								<Text style={styles.openText}>open</Text>
+							) : (
+								<Text style={styles.closedText}>closed</Text>
+							)}{' '}
+							now.{' '}
+							{facilityInfo.timeMessage && (
+								<Text>
+									{facilityInfo.isOpen ? 'Closes' : 'Opens'} at{' '}
+									{facilityInfo.timeMessage}
+								</Text>
+							)}
+						</Text>
+					) : (
+						<Text style={styles.infoText}>
+							<Text style={styles.boldText}>{facilityName}</Text>는 지금 운영{' '}
+							{facilityInfo.isOpen ? (
+								<Text style={styles.openText}>중입니다</Text>
+							) : (
+								<Text style={styles.closedText}>중이지 않습니다</Text>
+							)}
+							.{' '}
+							{facilityInfo.timeMessage && (
+								<Text>
+									{facilityInfo.timeMessage}에{' '}
+									{facilityInfo.isOpen ? '닫습니다' : '엽니다'}.
+								</Text>
+							)}
+						</Text>
+					)}
+				</TouchableOpacity>
+
 				{facilityInfo.timeLeft !== INFINITY && (
-					<View style={!showCountDown && { display: 'none' }}>
+					<View style={!toggle && { display: 'none' }}>
 						<CountDown
 							until={facilityInfo.timeLeft}
 							onFinish={updateTimeLeft}
