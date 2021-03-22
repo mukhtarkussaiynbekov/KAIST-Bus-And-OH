@@ -26,6 +26,9 @@ const OperatingHourCountDown = ({
 	dayType
 }) => {
 	const [toggle, setToggle] = useState(showCountDown);
+	useEffect(() => {
+		setToggle(showCountDown);
+	}, [state]);
 	const options = state.database.options[language];
 	const facilities = options[FACILITIES];
 
@@ -52,7 +55,7 @@ const OperatingHourCountDown = ({
 		dayType,
 		facilities,
 		holidays,
-		language == KOREAN
+		language === KOREAN
 	);
 
 	const [facilityInfo, setFacilityInfo] = useState({
@@ -69,14 +72,14 @@ const OperatingHourCountDown = ({
 			dayType,
 			facilities,
 			holidays,
-			language == KOREAN
+			language === KOREAN
 		);
 		setFacilityInfo({
 			timeLeft: newTimeLeft,
 			isOpen: newIsOpen,
 			timeMessage: newTimeMessage
 		});
-	}, [state]);
+	}, [state, language]);
 
 	const updateTimeLeft = () => {
 		const [
@@ -90,7 +93,7 @@ const OperatingHourCountDown = ({
 			dayType,
 			facilities,
 			holidays,
-			language == KOREAN
+			language === KOREAN
 		);
 		setFacilityInfo({
 			timeLeft: reevaluatedTimeLeft,

@@ -55,6 +55,8 @@ export const getDayMonth = (dayType, now = moment().tz('Asia/Seoul')) => {
 		return '00-00';
 	}
 
+	now = now.clone();
+
 	if (dayType === TOMORROW) {
 		now.add(1, 'days');
 	} else if (dayType === YESTERDAY) {

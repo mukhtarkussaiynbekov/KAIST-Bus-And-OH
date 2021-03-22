@@ -64,7 +64,6 @@ export const getOperatingHoursObject = (
 
 export const convertDayToIndex = (dayType, now) => {
 	// converts now (moment instance) to day index according to dayType
-
 	let day_of_week = now.format('E') - 1; // function returns value in range [1,7]
 	switch (dayType) {
 		case YESTERDAY:
@@ -91,7 +90,7 @@ export const getOperatingHours = (
 		return [];
 	}
 
-	let formattedDate = getDayMonth(dayType);
+	let formattedDate = getDayMonth(dayType, now);
 
 	// if there is a key with particular date, that will take precedence over other keys
 	if (formattedDate in operatingHoursObject) {
@@ -195,21 +194,16 @@ export const getTimeLeftIsOpen = (
 		return [INFINITY, false];
 	}
 
+	let now = moment().tz('Asia/Seoul');
+
 	let todayHours = getOperatingHoursList(
 		facilityID,
 		listOfOperatingHours,
 		dayType,
 		facilities,
-		holidays
+		holidays,
+		now
 	);
-
-	let now = moment().tz('Asia/Seoul');
-
-	if (isKorean) {
-		now.locale('ko');
-	} else {
-		now.locale('en');
-	}
 
 	let nowFormatted = now.format('HH:mm:ss');
 	let formattedDate = now.format('MM-DD');
@@ -227,7 +221,8 @@ export const getTimeLeftIsOpen = (
 			listOfOperatingHours,
 			YESTERDAY,
 			facilities,
-			holidays
+			holidays,
+			now
 		);
 		if (yesterdayHours.length > 0) {
 			let lastTime = yesterdayHours[yesterdayHours.length - 1];
@@ -257,6 +252,7 @@ export const getTimeLeftIsOpen = (
 		}
 	}
 
+	now = now.clone();
 	now.add(1, 'days');
 	let dayHours = getOperatingHoursList(
 		facilityID,
@@ -298,6 +294,12 @@ export const getTimeLeftIsOpen = (
 		}
 	}
 	timeLeft += additionalDays * 24 * 60 * 60;
+
+	if (isKorean) {
+		now.locale('ko');
+	} else {
+		now.locale('en');
+	}
 
 	let timeMessage = now.format(
 		`${openTime}, dddd, MMMM D${isKorean ? '일' : ''}`
@@ -349,7 +351,7 @@ export const getFacilityNote = (
 	);
 	if (NOTES in operatingHoursObject) {
 		let notes = operatingHoursObject[NOTES];
-		let formattedDate = getDayMonth(dayType);
+		let formattedDate = getDayMonth(dayType, now);
 		// if there is a key with particular date, that will take precedence over other keys
 		if (formattedDate in notes) {
 			return notes[formattedDate];

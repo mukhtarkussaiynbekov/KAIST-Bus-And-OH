@@ -91,195 +91,200 @@
 		},
 		{
 			"name": "식당",
-			"id": 8,
+			"id": 100,
 			"name_id": "cafeteria",
 			"children": [
 				{
 					"name": "카이마루 (N11)",
-					"id": 9,
+					"id": 101,
 					"name_id": "cafeteria_kaimaru"
 				},
 				{
 					"name": "서측식당 (맛나 W2)",
-					"id": 10,
+					"id": 102,
 					"name_id": "cafeteria_west"
 				},
 				{
 					"name": "더큰도시락 (W2)",
-					"id": 11,
+					"id": 103,
 					"name_id": "cafeteria_dosirak"
 				},
 				{
 					"name": "태울관 뚝배기 (N13)",
-					"id": 12,
+					"id": 104,
 					"name_id": "cafeteria_taewoolguan"
 				},
 				{
 					"name": "휴김밥전문점 (N11)",
-					"id": 13,
+					"id": 105,
 					"name_id": "cafeteria_hue"
 				},
 				{
 					"name": "카이마루 뚝배기 (N11)",
-					"id": 14,
+					"id": 106,
 					"name_id": "cafeteria_kaimaru-ttukBaeGi"
 				},
 				{
 					"name": "오니기리와 이규동 (N11)",
-					"id": 15,
+					"id": 107,
 					"name_id": "cafeteria_onigiri"
 				},
 				{
 					"name": "캠토 (N11)",
-					"id": 16,
+					"id": 108,
 					"name_id": "cafeteria_camto"
 				}
 			]
 		},
 		{
 			"name": "음식",
-			"id": 17,
+			"id": 200,
 			"name_id": "food",
 			"children": [
 				{
 					"name": "롯데리아 (N13)",
-					"id": 18,
+					"id": 201,
 					"name_id": "food_lotteria"
 				},
 				{
 					"name": "풀빛마루 (N12)",
-					"id": 19,
+					"id": 202,
 					"name_id": "food_pulbitmaru"
 				},
 				{
 					"name": "서브웨이 (E16)",
-					"id": 20,
+					"id": 203,
 					"name_id": "food_subway"
 				}
 			]
 		},
 		{
 			"name": "도서관",
-			"id": 21,
+			"id": 300,
 			"name_id": "library",
 			"children": [
 				{
 					"name": "도서관 (E9)",
-					"id": 22,
+					"id": 301,
 					"name_id": "library_main"
 				},
 				{
 					"name": "학술문화관 (E9)",
-					"id": 23,
+					"id": 302,
 					"name_id": "library_acc"
 				},
 				{
 					"name": "교양분관 (N10)",
-					"id": 24,
+					"id": 303,
 					"name_id": "library_n10"
 				}
 			]
 		},
 		{
 			"name": "체육관",
-			"id": 25,
+			"id": 400,
 			"name_id": "gym",
 			"children": [
 				{
 					"name": "신뢰관 체육관 (N20)",
-					"id": 26,
+					"id": 401,
 					"name_id": "gym_silloe"
 				},
 				{
 					"name": "아름관 체육관 (N19)",
-					"id": 27,
+					"id": 402,
 					"name_id": "gym_areum"
 				},
 				{
 					"name": "세종관 체육관 (E8)",
-					"id": 28,
+					"id": 403,
 					"name_id": "gym_sejong"
 				},
 				{
 					"name": "갈릴레이관 체육관 (W3)",
-					"id": 29,
+					"id": 404,
 					"name_id": "gym_galilei"
 				},
 				{
 					"name": "나들관/여울관 체육관 (W4-2/W4-1)",
-					"id": 30,
+					"id": 405,
 					"name_id": "gym_nadeul"
 				},
 				{
 					"name": "희망관/다솜관 체육관 (W4-4/W4-3)",
-					"id": 31,
+					"id": 406,
 					"name_id": "gym_heemang"
 				},
 				{
 					"name": "미르관/나래관 체육관 (W6)",
-					"id": 32,
+					"id": 407,
 					"name_id": "gym_mir"
 				},
 				{
 					"name": "화암관 체육관",
-					"id": 33,
+					"id": 408,
 					"name_id": "gym_hwaam"
 				}
 			]
 		},
 		{
 			"name": "커피",
-			"id": 34,
+			"id": 500,
 			"name_id": "coffee",
 			"children": [
 				{
 					"name": "카페잇 (W2-1)",
-					"id": 35,
+					"id": 501,
 					"name_id": "coffee_cafeEat"
 				},
 				{
 					"name": "파스쿠찌 (E3-2)",
-					"id": 36,
+					"id": 502,
 					"name_id": "coffee_pascucci"
 				},
 				{
 					"name": "뚜레쥬르 (E6)",
-					"id": 37,
+					"id": 503,
 					"name_id": "coffee_tousLesJours"
 				}
 			]
 		},
 		{
 			"name": "사무실",
-			"id": 38,
+			"id": 600,
 			"name_id": "office",
 			"children": [
 				{
 					"name": "국제교원및학생지원팀 (ISSS 104호 W2-1)",
-					"id": 39,
+					"id": 601,
 					"name_id": "office_isss"
 				},
 				{
 					"name": "국제협력팀 (IRT 102호 W2-1)",
-					"id": 40,
+					"id": 602,
 					"name_id": "office_irt"
 				}
 			]
 		},
 		{
-			"name": "다른",
-			"id": 41,
+			"name": "기타",
+			"id": 700,
 			"name_id": "other",
 			"children": [
 				{
 					"name": "카이스트 미용실 (W2)",
-					"id": 42,
+					"id": 701,
 					"name_id": "other_hairShopWest"
 				},
 				{
 					"name": "우리은행 (W2)",
-					"id": 43,
+					"id": 702,
 					"name_id": "other_wooriBank"
+				},
+				{
+					"name": "잡화점 (N13)",
+					"id": 703,
+					"name_id": "other_convenienceStore"
 				}
 			]
 		}

@@ -1376,6 +1376,49 @@
 						"saturday": [],
 						"sunday": []
 					}
+				},
+				{
+					"name": "convenienceStore",
+					"hours": {
+						"monday": [
+							{
+								"start": "09:00",
+								"finish": "19:00"
+							}
+						],
+						"tuesday": [
+							{
+								"start": "09:00",
+								"finish": "19:00"
+							}
+						],
+						"wednesday": [
+							{
+								"start": "09:00",
+								"finish": "19:00"
+							}
+						],
+						"thursday": [
+							{
+								"start": "09:00",
+								"finish": "19:00"
+							}
+						],
+						"friday": [
+							{
+								"start": "09:00",
+								"finish": "19:00"
+							}
+						],
+						"saturday": [
+							{
+								"start": "09:00",
+								"finish": "15:00"
+							}
+						],
+						"sunday": [],
+						"holidays": { "closed": "true" }
+					}
 				}
 			]
 		},
