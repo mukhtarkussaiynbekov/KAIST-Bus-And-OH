@@ -216,6 +216,7 @@ const HomeScreen = ({ navigation }) => {
 							facilityID={item[ID]}
 							facilityName={item[NAME]}
 							holidays={holidaysState}
+							dayType={TODAY}
 						/>
 					);
 				}}

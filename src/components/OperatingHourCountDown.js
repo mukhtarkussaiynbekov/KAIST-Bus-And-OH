@@ -6,15 +6,11 @@ import {
 	ENGLISH,
 	KOREAN,
 	INFINITY,
-	DAY_TYPES,
-	NAME_ID,
-	ID,
 	FACILITIES,
 	OPERATING_HOURS
 } from '../constants';
 
 // helper functions and constants
-import { getPropValue } from '../helperFunctions/commonFunctions';
 import {
 	getFacilityNote,
 	getTimeLeftIsOpen
@@ -26,12 +22,11 @@ const OperatingHourCountDown = ({
 	holidays,
 	showCountDown,
 	facilityID,
-	facilityName
+	facilityName,
+	dayType
 }) => {
 	const [toggle, setToggle] = useState(showCountDown);
 	const options = state.database.options[language];
-	const dayTypes = options[DAY_TYPES];
-	const dayType = getPropValue(dayTypes, state.dayType, ID, NAME_ID);
 	const facilities = options[FACILITIES];
 
 	const listOfOperatingHours = state.database.operatingHours[OPERATING_HOURS];

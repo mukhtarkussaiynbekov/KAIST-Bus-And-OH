@@ -133,6 +133,7 @@ const OperatingHoursScreen = () => {
 								facilityName={item[NAME]}
 								holidays={holidays}
 								showCountDown={displayOperatingHours.length === 1}
+								dayType={dayType}
 							/>
 						);
 					}}
