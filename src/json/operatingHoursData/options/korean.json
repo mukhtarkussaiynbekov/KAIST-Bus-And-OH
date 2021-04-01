@@ -233,19 +233,29 @@
 			"name_id": "coffee",
 			"children": [
 				{
-					"name": "카페잇 (W2-1)",
+					"name": "파스쿠찌 (E3-2)",
 					"id": 501,
-					"name_id": "coffee_cafeEat"
+					"name_id": "coffee_pascucci"
 				},
 				{
-					"name": "파스쿠찌 (E3-2)",
+					"name": "그라지에 (E4)",
 					"id": 502,
-					"name_id": "coffee_pascucci"
+					"name_id": "coffee_grazie"
 				},
 				{
 					"name": "뚜레쥬르 (E6)",
 					"id": 503,
 					"name_id": "coffee_tousLesJours"
+				},
+				{
+					"name": "카페잇 (W2-1)",
+					"id": 504,
+					"name_id": "coffee_cafeEat"
+				},
+				{
+					"name": "투썸플레이스 (N1)",
+					"id": 505,
+					"name_id": "coffee_twosome"
 				}
 			]
 		},

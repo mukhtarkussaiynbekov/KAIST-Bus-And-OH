@@ -233,19 +233,29 @@
 			"name_id": "coffee",
 			"children": [
 				{
-					"name": "Cafe Eat (W2-1)",
+					"name": "Pascucci (E3-2)",
 					"id": 501,
-					"name_id": "coffee_cafeEat"
+					"name_id": "coffee_pascucci"
 				},
 				{
-					"name": "Pascucci (E3-2)",
+					"name": "Cafe Grazie (E4)",
 					"id": 502,
-					"name_id": "coffee_pascucci"
+					"name_id": "coffee_grazie"
 				},
 				{
 					"name": "Tous Les Jours (Bakery E6)",
 					"id": 503,
 					"name_id": "coffee_tousLesJours"
+				},
+				{
+					"name": "Cafe Eat (W2-1)",
+					"id": 504,
+					"name_id": "coffee_cafeEat"
+				},
+				{
+					"name": "A Twosome Place (N1)",
+					"id": 505,
+					"name_id": "coffee_twosome"
 				}
 			]
 		},
